@@ -27,9 +27,9 @@ public class VideoJson {
 	private String url;
 	private LocalDate dataPublicacao;
 	private Long quantidadeVisualizacao;
-	private List<FavoritoJson> favoritos;
 	
 	@NotBlank
 	private String categoria;
+	private List<FavoritoJson> favoritos;
 
 }
