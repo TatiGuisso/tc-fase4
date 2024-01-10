@@ -49,6 +49,8 @@ class VideoControllerUnitTest {
 			.expectSubscription()
 			.expectNextMatches(vj -> {
 				assertEquals(video.getTitulo(), vj.getTitulo());
+				assertEquals(video.getDescricao(), vj.getDescricao());
+				assertEquals(video.getDataPublicacao(), vj.getDataPublicacao());
 				return true;
 			})
 			.verifyComplete();

@@ -32,11 +32,11 @@ public class VideoController {
 		log.trace("Start videoJson={}", videoJson);
 		
 		Video video = videoJson.mapperJsonToDomain();
-		
 		Mono<Video> videoSalvo = criarAlterarVideoUseCase.salvar(video);
+		Mono<VideoJson> result = videoSalvo.map(VideoJson::new);
 		
-		log.trace("End videoSalvo={}", videoSalvo);
-		return videoSalvo.map(VideoJson::new);
+		log.trace("End result={}", result);
+		return result;
 	}
 
 }
