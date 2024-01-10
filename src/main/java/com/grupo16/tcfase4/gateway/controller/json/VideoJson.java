@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.grupo16.tcfase4.domain.Video;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -31,5 +32,25 @@ public class VideoJson {
 	@NotBlank
 	private String categoria;
 	private List<FavoritoJson> favoritos;
+	
+	public Video mapperJsonToDomain() {
+		return Video.builder()
+				.id(id)
+				.titulo(titulo)
+				.descricao(descricao)
+				.url(url)
+				.dataPublicacao(dataPublicacao)
+				.build();
+	}
+	
+	public VideoJson(Video video) {
+		if(video.getId() != null) {
+			this.id = video.getId();
+		}
+		this.titulo = video.getTitulo();
+		this.descricao = video.getDescricao();
+		this.url = video.getUrl();
+		this.dataPublicacao = video.getDataPublicacao();
+	}
 
 }
