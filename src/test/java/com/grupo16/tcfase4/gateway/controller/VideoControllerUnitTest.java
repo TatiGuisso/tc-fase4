@@ -2,6 +2,8 @@ package com.grupo16.tcfase4.gateway.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
@@ -16,9 +18,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.grupo16.tcfase4.domain.Video;
 import com.grupo16.tcfase4.gateway.controller.json.VideoJson;
 import com.grupo16.tcfase4.service.CriarAlterarVideoUseCase;
-
-import reactor.core.publisher.Mono;
-import reactor.test.StepVerifier;
 
 @ExtendWith(MockitoExtension.class)
 class VideoControllerUnitTest {
@@ -42,20 +41,16 @@ class VideoControllerUnitTest {
 		
 		when(videoJsonMock.mapperJsonToDomain()).thenReturn(video);
 
-		when(criarAlterarVideoUseCase.salvar(any(Video.class))).thenReturn(Mono.just(video));
+		when(criarAlterarVideoUseCase.salvar(any(Video.class))).thenReturn(video);
 
+		VideoJson videoJson = videoController.create(videoJsonMock);
 		
-		StepVerifier.create(videoController.create(videoJsonMock))
-			.expectSubscription()
-			.expectNextMatches(vj -> {
-				assertEquals(video.getTitulo(), vj.getTitulo());
-				assertEquals(video.getDescricao(), vj.getDescricao());
-				assertEquals(video.getDataPublicacao(), vj.getDataPublicacao());
-				return true;
-			})
-			.verifyComplete();
+		verify(criarAlterarVideoUseCase, times(1)).salvar(any(Video.class));
 		
-					
+		assertEquals(video.getTitulo(), videoJson.getTitulo());
+		assertEquals(video.getDescricao(), videoJson.getDescricao());
+		assertEquals(video.getDataPublicacao(), videoJson.getDataPublicacao());
+		
 	}
 
 }

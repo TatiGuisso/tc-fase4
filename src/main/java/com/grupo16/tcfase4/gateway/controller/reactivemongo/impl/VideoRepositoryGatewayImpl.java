@@ -9,19 +9,17 @@ import com.grupo16.tcfase4.domain.Video;
 import com.grupo16.tcfase4.exception.ErroAoAcessarBancoDadosException;
 import com.grupo16.tcfase4.gateway.controller.VideoRepositoryGateway;
 
-import reactor.core.publisher.Mono;
-
 @Component
 public class VideoRepositoryGatewayImpl implements VideoRepositoryGateway {
 
 	@Override
-	public Mono<Video> salvar(Video video) {
+	public Video salvar(Video video) {
 		
 		try {
 			
-			int a = 1/0;
+//			int a = 1/0;
 			
-			Video result = Video.builder()
+			return Video.builder()
 					.titulo("Tests")
 					.descricao("teste")
 					.url("www.tests")
@@ -29,12 +27,10 @@ public class VideoRepositoryGatewayImpl implements VideoRepositoryGateway {
 					.dataPublicacao(LocalDate.now())
 					.build(); 
 			
-			return Mono.just(result);
+			
 		} catch (Exception e) {
 			throw new ErroAoAcessarBancoDadosException();
-			//throw e;
 		}
-		
 	}
 
 }

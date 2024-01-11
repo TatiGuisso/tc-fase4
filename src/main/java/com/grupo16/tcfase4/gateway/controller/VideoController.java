@@ -24,16 +24,32 @@ public class VideoController {
 	@Autowired
 	private CriarAlterarVideoUseCase criarAlterarVideoUseCase;
 	
+//	@ResponseStatus(HttpStatus.CREATED)
+//	@PostMapping
+//	public Mono<VideoJson> create(
+//			@Valid
+//			@RequestBody(required = true) VideoJson videoJson){
+//		log.trace("Start videoJson={}", videoJson);
+//		
+//		Video video = videoJson.mapperJsonToDomain();
+//		Mono<Video> videoSalvo = criarAlterarVideoUseCase.salvar(video);
+//		Mono<VideoJson> result = videoSalvo.map(VideoJson::new);
+//		
+//		log.trace("End result={}", result);
+//		return result;
+//	}
+	
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
-	public Mono<VideoJson> create(
+	public VideoJson create(
 			@Valid
 			@RequestBody(required = true) VideoJson videoJson){
 		log.trace("Start videoJson={}", videoJson);
-		
 		Video video = videoJson.mapperJsonToDomain();
-		Mono<Video> videoSalvo = criarAlterarVideoUseCase.salvar(video);
-		Mono<VideoJson> result = videoSalvo.map(VideoJson::new);
+
+		Video videoSalvo = criarAlterarVideoUseCase.salvar(video);
+		
+		VideoJson result = new VideoJson(videoSalvo);
 		
 		log.trace("End result={}", result);
 		return result;
