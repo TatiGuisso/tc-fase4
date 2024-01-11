@@ -18,6 +18,8 @@ public class CriarAlterarVideoUseCase {
 		
 		//TODO: verificar se vamos implementar alguma regra antes de salvar;
 		
+		
+		
 		return videoRepositoryGateway.salvar(video);
 		
 	}
