@@ -1,32 +1,28 @@
 package com.grupo16.tcfase4.gateway.controller.reactivemongo.impl;
 
-import java.time.LocalDate;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.grupo16.tcfase4.domain.Categoria;
 import com.grupo16.tcfase4.domain.Video;
 import com.grupo16.tcfase4.exception.ErroAoAcessarBancoDadosException;
 import com.grupo16.tcfase4.gateway.controller.VideoRepositoryGateway;
+import com.grupo16.tcfase4.gateway.controller.reactivemongo.document.VideoDocument;
+import com.grupo16.tcfase4.gateway.controller.reactivemongo.repository.VideoRepository;
 
 @Component
 public class VideoRepositoryGatewayImpl implements VideoRepositoryGateway {
+	
+	@Autowired
+	private VideoRepository videoRepository;
 
 	@Override
 	public Video salvar(Video video) {
 		
 		try {
 			
-//			int a = 1/0;
+			VideoDocument videoDocument = new VideoDocument(video);
 			
-			return Video.builder()
-					.titulo("Tests")
-					.descricao("teste")
-					.url("www.tests")
-					.categoria(Categoria.valueOf("TERROR"))
-					.dataPublicacao(LocalDate.now())
-					.build(); 
-			
+			return videoRepository.save(videoDocument).mapperDocumentToDomain();
 			
 		} catch (Exception e) {
 			throw new ErroAoAcessarBancoDadosException();

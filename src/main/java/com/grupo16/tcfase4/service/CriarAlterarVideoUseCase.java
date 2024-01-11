@@ -14,7 +14,12 @@ public class CriarAlterarVideoUseCase {
 
 	public Video salvar(Video video) {
 		
-		//TODO: verificar se vamos implementar alguma regra antes de salvar;
+		/*
+		 * TODO: implementar alguma regra antes de salvar????
+		 * talvez verificar se o video ja existe para nao duplicar
+		 * 
+		 */
+		
 		return videoRepositoryGateway.salvar(video);
 	}
 
