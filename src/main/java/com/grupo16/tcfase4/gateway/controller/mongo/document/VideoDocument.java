@@ -1,4 +1,4 @@
-package com.grupo16.tcfase4.gateway.controller.reactivemongo.document;
+package com.grupo16.tcfase4.gateway.controller.mongo.document;
 
 import java.time.LocalDate;
 

@@ -1,4 +1,4 @@
-package com.grupo16.tcfase4.gateway.controller.reactivemongo.impl;
+package com.grupo16.tcfase4.gateway.controller.mongo.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -6,8 +6,8 @@ import org.springframework.stereotype.Component;
 import com.grupo16.tcfase4.domain.Video;
 import com.grupo16.tcfase4.exception.ErroAoAcessarBancoDadosException;
 import com.grupo16.tcfase4.gateway.controller.VideoRepositoryGateway;
-import com.grupo16.tcfase4.gateway.controller.reactivemongo.document.VideoDocument;
-import com.grupo16.tcfase4.gateway.controller.reactivemongo.repository.VideoRepository;
+import com.grupo16.tcfase4.gateway.controller.mongo.document.VideoDocument;
+import com.grupo16.tcfase4.gateway.controller.mongo.repository.VideoRepository;
 
 @Component
 public class VideoRepositoryGatewayImpl implements VideoRepositoryGateway {
