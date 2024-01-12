@@ -16,13 +16,13 @@ public class VideoRepositoryGatewayImpl implements VideoRepositoryGateway {
 	private VideoRepository videoRepository;
 
 	@Override
-	public Video salvar(Video video) {
+	public String salvar(Video video) {
 		
 		try {
 			
 			VideoDocument videoDocument = new VideoDocument(video);
 			
-			return videoRepository.save(videoDocument).mapperDocumentToDomain();
+			return videoRepository.save(videoDocument).getId(); 
 			
 		} catch (Exception e) {
 			throw new ErroAoAcessarBancoDadosException();

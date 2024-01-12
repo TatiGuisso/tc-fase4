@@ -7,6 +7,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,23 +29,22 @@ class CriarAlterarVideoUseCaseUnitTest {
 	
 	@Test
 	void deveSalvar() {
-		
+		String id = UUID.randomUUID().toString();
 		LocalDate data = LocalDate.of(2022, 10, 8);
 		Video video = Video.builder()
+				.id(id)
 				.titulo("TESTEAAA")
 				.descricao("BlaBla")
 				.dataPublicacao(data)
 				.build();
 		
-		doReturn(video).when(videoRepositoryGateway).salvar(any(Video.class));
+		doReturn(video.getId()).when(videoRepositoryGateway).salvar(any(Video.class));
 		
-		Video result = criarAlterarVideoUseCase.salvar(video);
+		String result = criarAlterarVideoUseCase.salvar(video);
 		
 		verify(videoRepositoryGateway, times(1)).salvar(any(Video.class));
 		
-		assertEquals(video.getTitulo(), result.getTitulo());
-		assertEquals(video.getDescricao(), result.getDescricao());
-		assertEquals(video.getDataPublicacao(), result.getDataPublicacao());
+		assertEquals(video.getId(), result);
 		
 	}
 

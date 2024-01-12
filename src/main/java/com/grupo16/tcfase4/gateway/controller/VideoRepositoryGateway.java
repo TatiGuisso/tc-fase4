@@ -4,6 +4,6 @@ import com.grupo16.tcfase4.domain.Video;
 
 public interface VideoRepositoryGateway {
 
-	Video salvar(Video video);
+	String salvar(Video video);
 
 }

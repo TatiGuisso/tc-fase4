@@ -7,6 +7,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,8 +31,10 @@ class VideoControllerUnitTest {
 	
 	@Test
 	void deveSalvar() {
+		String id = UUID.randomUUID().toString();
 		LocalDate data = LocalDate.of(2022, 10, 8);
 		Video video = Video.builder()
+				.id(id)
 				.titulo("TESTEAAA")
 				.descricao("BlaBla")
 				.dataPublicacao(data)
@@ -41,15 +44,13 @@ class VideoControllerUnitTest {
 		
 		when(videoJsonMock.mapperJsonToDomain()).thenReturn(video);
 
-		when(criarAlterarVideoUseCase.salvar(any(Video.class))).thenReturn(video);
+		when(criarAlterarVideoUseCase.salvar(any(Video.class))).thenReturn(video.getId());
 
-		VideoJson videoJson = videoController.salvar(videoJsonMock);
+		String result = videoController.salvar(videoJsonMock);
 		
 		verify(criarAlterarVideoUseCase, times(1)).salvar(any(Video.class));
 		
-		assertEquals(video.getTitulo(), videoJson.getTitulo());
-		assertEquals(video.getDescricao(), videoJson.getDescricao());
-		assertEquals(video.getDataPublicacao(), videoJson.getDataPublicacao());
+		assertEquals(video.getId(), result);
 		
 	}
 

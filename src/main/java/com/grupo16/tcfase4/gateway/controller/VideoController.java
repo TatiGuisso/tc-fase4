@@ -40,18 +40,16 @@ public class VideoController {
 	
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
-	public VideoJson salvar(
+	public String salvar(
 			@Valid
 			@RequestBody(required = true) VideoJson videoJson){
 		log.trace("Start videoJson={}", videoJson);
 		Video video = videoJson.mapperJsonToDomain();
 
-		Video videoSalvo = criarAlterarVideoUseCase.salvar(video);
+		String videoId = criarAlterarVideoUseCase.salvar(video);
 		
-		VideoJson result = new VideoJson(videoSalvo);
-		
-		log.trace("End result={}", result);
-		return result;
+		log.trace("End videoId={}", videoId);
+		return videoId;
 	}
 
 }

@@ -12,7 +12,7 @@ public class CriarAlterarVideoUseCase {
 	@Autowired
 	private VideoRepositoryGateway videoRepositoryGateway;
 
-	public Video salvar(Video video) {
+	public String salvar(Video video) {
 		
 		/*
 		 * TODO: implementar alguma regra antes de salvar????
