@@ -55,8 +55,12 @@ class VideoRepositoryGatewayImplUnitTest {
 		VideoDocument videoDoc = videoDocCaptor.getValue();
 		
 		assertEquals(video.getId(), result);
+		assertEquals(video.getId(), videoDoc.getId());
 		assertEquals(video.getTitulo(), videoDoc.getTitulo());
 		assertEquals(video.getDescricao(), videoDoc.getDescricao());
+		assertEquals(video.getDataPublicacao(), videoDoc.getDataPublicacao());
+		assertEquals(video.getCategoria().toString(), videoDoc.getCategoria());
+		assertEquals(video.getQuantidadeVisualizacao(), videoDoc.getQuantidadeVisualizacao());
 		
 	}
 
