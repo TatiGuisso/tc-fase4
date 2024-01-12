@@ -43,7 +43,7 @@ class VideoControllerUnitTest {
 
 		when(criarAlterarVideoUseCase.salvar(any(Video.class))).thenReturn(video);
 
-		VideoJson videoJson = videoController.create(videoJsonMock);
+		VideoJson videoJson = videoController.salvar(videoJsonMock);
 		
 		verify(criarAlterarVideoUseCase, times(1)).salvar(any(Video.class));
 		

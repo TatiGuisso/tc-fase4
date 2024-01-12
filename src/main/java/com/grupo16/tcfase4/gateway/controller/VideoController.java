@@ -40,7 +40,7 @@ public class VideoController {
 	
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
-	public VideoJson create(
+	public VideoJson salvar(
 			@Valid
 			@RequestBody(required = true) VideoJson videoJson){
 		log.trace("Start videoJson={}", videoJson);
