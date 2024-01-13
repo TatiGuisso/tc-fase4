@@ -33,9 +33,9 @@ public class VideoJson {
 	private String categoria;
 	private List<FavoritoJson> favoritos;
 	
-	public Video mapperJsonToDomain() {
+	public Video mapperJsonToDomain(String videoId) {
 		return Video.builder()
-				.id(id)
+				.id(videoId == null ? this.id : videoId)
 				.titulo(titulo)
 				.descricao(descricao)
 				.url(url)
@@ -44,9 +44,7 @@ public class VideoJson {
 	}
 	
 	public VideoJson(Video video) {
-		if(video.getId() != null) {
-			this.id = video.getId();
-		}
+		this.id = video.getId();
 		this.titulo = video.getTitulo();
 		this.descricao = video.getDescricao();
 		this.url = video.getUrl();

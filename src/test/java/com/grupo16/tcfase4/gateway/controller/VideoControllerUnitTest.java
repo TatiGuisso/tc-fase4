@@ -6,7 +6,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.time.LocalDate;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
@@ -32,17 +31,10 @@ class VideoControllerUnitTest {
 	@Test
 	void deveSalvar() {
 		String id = UUID.randomUUID().toString();
-		LocalDate data = LocalDate.of(2022, 10, 8);
-		Video video = Video.builder()
-				.id(id)
-				.titulo("TESTEAAA")
-				.descricao("BlaBla")
-				.dataPublicacao(data)
-				.build();
+		Video video = Video.builder().id(id).build();
 		
-		VideoJson videoJsonMock = Mockito.mock(VideoJson.class); 
-		
-		when(videoJsonMock.mapperJsonToDomain()).thenReturn(video);
+		VideoJson videoJsonMock = Mockito.mock(VideoJson.class); 		
+		when(videoJsonMock.mapperJsonToDomain(null)).thenReturn(video);
 
 		when(criarAlterarVideoUseCase.salvar(any(Video.class))).thenReturn(video.getId());
 

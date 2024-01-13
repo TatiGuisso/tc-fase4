@@ -23,4 +23,9 @@ public class CriarAlterarVideoUseCase {
 		return videoRepositoryGateway.salvar(video);
 	}
 
+	public void update(Video video) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
