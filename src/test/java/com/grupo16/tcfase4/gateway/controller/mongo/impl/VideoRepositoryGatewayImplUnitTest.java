@@ -1,7 +1,9 @@
 package com.grupo16.tcfase4.gateway.controller.mongo.impl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -17,6 +19,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.grupo16.tcfase4.domain.Categoria;
 import com.grupo16.tcfase4.domain.Video;
+import com.grupo16.tcfase4.exception.ErroAoAcessarBancoDadosException;
 import com.grupo16.tcfase4.gateway.mongo.document.VideoDocument;
 import com.grupo16.tcfase4.gateway.mongo.impl.VideoRepositoryGatewayImpl;
 import com.grupo16.tcfase4.gateway.mongo.repository.VideoRepository;
@@ -31,7 +34,7 @@ class VideoRepositoryGatewayImplUnitTest {
 	private VideoRepositoryGatewayImpl videoRepositoryGatewayImpl;
 	
 	@Test
-	void deveSalvar() {
+	void deveSalvarOuAlterar() {
 		Video video = Video.builder()
 				.id(UUID.randomUUID().toString())
 				.titulo("TESTEAAA")
@@ -59,6 +62,23 @@ class VideoRepositoryGatewayImplUnitTest {
 		assertEquals(video.getDataPublicacao(), videoDoc.getDataPublicacao());
 		assertEquals(video.getCategoria().toString(), videoDoc.getCategoria());
 		
+	}
+	
+	@Test
+	void deveGerarExceptionAoSalvarOuAlterarVideo() {
+		
+		Video video = Video.builder()
+				.id(UUID.randomUUID().toString())
+				.categoria(Categoria.DRAMA)
+				.build();
+				
+		doThrow(new RuntimeException())
+			.when(videoRepository).save(any(VideoDocument.class));
+		
+		assertThrows(ErroAoAcessarBancoDadosException.class,
+				() -> videoRepositoryGatewayImpl.salvar(video));
+		
+		verify(videoRepository).save(any(VideoDocument.class));
 	}
 
 }
