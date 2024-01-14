@@ -9,23 +9,34 @@ import com.grupo16.tcfase4.gateway.controller.VideoRepositoryGateway;
 @Service
 public class CriarAlterarVideoUseCase {
 	
-	@Autowired
 	private VideoRepositoryGateway videoRepositoryGateway;
+	
+	private ObterVideoUseCase obterVideoUseCase;
+	
+	@Autowired
+	public CriarAlterarVideoUseCase(
+			VideoRepositoryGateway videoRepositoryGateway,
+			ObterVideoUseCase obterVideoUseCase) {
+		this.videoRepositoryGateway = videoRepositoryGateway;
+		this.obterVideoUseCase = obterVideoUseCase;
+	}
 
 	public String salvar(Video video) {
-		
-		/*
-		 * TODO: implementar alguma regra antes de salvar????
-		 * talvez verificar se o video ja existe para nao duplicar
-		 * 
-		 */
-		
 		return videoRepositoryGateway.salvar(video);
 	}
 
 	public void alterar(Video video) {
-		// TODO Auto-generated method stub
+		Video videoAntigo = obterVideoUseCase.obterPorId(video.getId());
 		
+		Video videoNovo = Video.builder()
+				.id(videoAntigo.getId())
+				.titulo(video.getTitulo())
+				.descricao(video.getDescricao())
+				.categoria(video.getCategoria())
+				.dataPublicacao(videoAntigo.getDataPublicacao())
+				.build();
+		
+		videoRepositoryGateway.salvar(videoNovo);
 	}
-
+	
 }
