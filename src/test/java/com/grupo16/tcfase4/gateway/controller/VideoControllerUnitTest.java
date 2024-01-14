@@ -2,6 +2,7 @@ package com.grupo16.tcfase4.gateway.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -12,7 +13,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.grupo16.tcfase4.domain.Video;
@@ -33,7 +33,7 @@ class VideoControllerUnitTest {
 		String id = UUID.randomUUID().toString();
 		Video video = Video.builder().id(id).build();
 		
-		VideoJson videoJsonMock = Mockito.mock(VideoJson.class); 		
+		VideoJson videoJsonMock = mock(VideoJson.class); 		
 		when(videoJsonMock.mapperJsonToDomain(null)).thenReturn(video);
 
 		when(criarAlterarVideoUseCase.salvar(any(Video.class))).thenReturn(video.getId());
@@ -43,6 +43,20 @@ class VideoControllerUnitTest {
 		verify(criarAlterarVideoUseCase, times(1)).salvar(any(Video.class));
 		
 		assertEquals(video.getId(), result);
+		
+	}
+	
+	@Test
+	void deveAlterar() {
+		String id = UUID.randomUUID().toString();
+		Video video = Video.builder().id(id).build();
+		
+		VideoJson videoJsonMock = mock(VideoJson.class);
+		when(videoJsonMock.mapperJsonToDomain(id)).thenReturn(video);
+		
+		videoController.alterar(id, videoJsonMock);
+		
+		verify(criarAlterarVideoUseCase, times(1)).alterar(video);
 		
 	}
 

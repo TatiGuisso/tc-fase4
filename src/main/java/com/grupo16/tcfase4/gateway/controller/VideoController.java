@@ -63,7 +63,7 @@ public class VideoController {
 		
 		Video video = videoJson.mapperJsonToDomain(videoId);
 		
-		criarAlterarVideoUseCase.update(video);
+		criarAlterarVideoUseCase.alterar(video);
 		log.trace("End");
 	}
 
