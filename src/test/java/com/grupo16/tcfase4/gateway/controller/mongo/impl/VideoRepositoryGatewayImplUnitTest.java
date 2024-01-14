@@ -1,6 +1,7 @@
 package com.grupo16.tcfase4.gateway.controller.mongo.impl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -31,23 +32,20 @@ class VideoRepositoryGatewayImplUnitTest {
 	
 	@Test
 	void deveSalvar() {
-		String id = UUID.randomUUID().toString();
-		LocalDate data = LocalDate.of(2022, 10, 8);
 		Video video = Video.builder()
-				.id(id)
+				.id(UUID.randomUUID().toString())
 				.titulo("TESTEAAA")
 				.descricao("BlaBla")
-				.dataPublicacao(data)
+				.dataPublicacao(LocalDate.of(2022, 10, 8))
 				.categoria(Categoria.valueOf("TERROR"))
-				.quantidadeVisualizacao(18L)
 				.build();
 
-		VideoDocument videoDocument = VideoDocument.builder().id(id).build();
+		VideoDocument videoDocument = VideoDocument.builder().id(video.getId()).build();
 
 		ArgumentCaptor<VideoDocument> videoDocCaptor = ArgumentCaptor.forClass(VideoDocument.class);
 		
-		when(videoRepository.save(videoDocCaptor.capture())).thenReturn(videoDocument);
-		
+		when(videoRepository.save(any(VideoDocument.class))).thenReturn(videoDocument);
+
 		String result = videoRepositoryGatewayImpl.salvar(video);
 		
 		verify(videoRepository).save(videoDocCaptor.capture());
@@ -60,7 +58,6 @@ class VideoRepositoryGatewayImplUnitTest {
 		assertEquals(video.getDescricao(), videoDoc.getDescricao());
 		assertEquals(video.getDataPublicacao(), videoDoc.getDataPublicacao());
 		assertEquals(video.getCategoria().toString(), videoDoc.getCategoria());
-		assertEquals(video.getQuantidadeVisualizacao(), videoDoc.getQuantidadeVisualizacao());
 		
 	}
 

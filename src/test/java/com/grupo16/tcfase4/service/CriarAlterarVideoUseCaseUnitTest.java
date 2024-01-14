@@ -1,9 +1,7 @@
 package com.grupo16.tcfase4.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -37,11 +35,11 @@ class CriarAlterarVideoUseCaseUnitTest {
 	void deveSalvar() {
 		Video video = Video.builder().id(UUID.randomUUID().toString()).build();
 		
-		doReturn(video.getId()).when(videoRepositoryGateway).salvar(any(Video.class));
+		doReturn(video.getId()).when(videoRepositoryGateway).salvar(video);
 		
 		String result = criarAlterarVideoUseCase.salvar(video);
 		
-		verify(videoRepositoryGateway, times(1)).salvar(any(Video.class));
+		verify(videoRepositoryGateway).salvar(video);
 		
 		assertEquals(video.getId(), result);
 		
@@ -71,7 +69,7 @@ class CriarAlterarVideoUseCaseUnitTest {
 		criarAlterarVideoUseCase.alterar(videoNovo);
 		
 		ArgumentCaptor<Video> videoCaptor = ArgumentCaptor.forClass(Video.class);
-		verify(videoRepositoryGateway, times(1)).salvar(videoCaptor.capture());
+		verify(videoRepositoryGateway).salvar(videoCaptor.capture());
 		
 		Video videoSalvo = videoCaptor.getValue();
 		

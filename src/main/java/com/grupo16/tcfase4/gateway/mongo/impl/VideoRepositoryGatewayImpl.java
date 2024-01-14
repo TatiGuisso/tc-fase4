@@ -17,9 +17,7 @@ public class VideoRepositoryGatewayImpl implements VideoRepositoryGateway {
 
 	@Override
 	public String salvar(Video video) {
-		
 		try {
-			
 			VideoDocument videoDocument = new VideoDocument(video);
 			
 			return videoRepository.save(videoDocument).getId(); 
