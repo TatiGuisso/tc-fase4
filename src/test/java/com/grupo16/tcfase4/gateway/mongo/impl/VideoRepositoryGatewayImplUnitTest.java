@@ -1,4 +1,4 @@
-package com.grupo16.tcfase4.gateway.controller.mongo.impl;
+package com.grupo16.tcfase4.gateway.mongo.impl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -21,7 +21,6 @@ import com.grupo16.tcfase4.domain.Categoria;
 import com.grupo16.tcfase4.domain.Video;
 import com.grupo16.tcfase4.exception.ErroAoAcessarBancoDadosException;
 import com.grupo16.tcfase4.gateway.mongo.document.VideoDocument;
-import com.grupo16.tcfase4.gateway.mongo.impl.VideoRepositoryGatewayImpl;
 import com.grupo16.tcfase4.gateway.mongo.repository.VideoRepository;
 
 @ExtendWith(MockitoExtension.class)
