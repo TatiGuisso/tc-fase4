@@ -39,4 +39,13 @@ public class VideoRepositoryGatewayImpl implements VideoRepositoryGateway {
 		return null;
 	}
 
+	@Override
+	public void remover(String id) {
+		try {
+			videoRepository.deleteById(id);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw new ErroAoAcessarBancoDadosException();
+		}
+	}
 }
