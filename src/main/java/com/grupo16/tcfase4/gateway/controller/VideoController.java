@@ -1,13 +1,8 @@
 package com.grupo16.tcfase4.gateway.controller;
 
+import com.grupo16.tcfase4.service.RemoverVideoUseCase;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.grupo16.tcfase4.domain.Video;
 import com.grupo16.tcfase4.gateway.controller.json.VideoJson;
@@ -24,7 +19,10 @@ import lombok.extern.slf4j.Slf4j;
 public class VideoController {
 	
 	private CriarAlterarVideoUseCase criarAlterarVideoUseCase;
-	
+
+	private RemoverVideoUseCase removerVideoUseCase;
+
+
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
 	public String salvar(
@@ -52,4 +50,13 @@ public class VideoController {
 		log.trace("End");
 	}
 
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@DeleteMapping("{id}")
+	public void remover(
+			@PathVariable(required = true, name = "id") String id) {
+		log.trace("Start id={}", id);
+
+		removerVideoUseCase.remover(id);
+		log.trace("End");
+	}
 }
