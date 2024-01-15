@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.grupo16.tcfase4.domain.Categoria;
 import com.grupo16.tcfase4.domain.Video;
 
 import jakarta.validation.constraints.NotBlank;
@@ -34,12 +35,14 @@ public class VideoJson {
 	private List<FavoritoJson> favoritos;
 	
 	public Video mapperJsonToDomain(String videoId) {
+		this.dataPublicacao = LocalDate.now();
 		return Video.builder()
 				.id(videoId == null ? this.id : videoId)
 				.titulo(titulo)
 				.descricao(descricao)
 				.url(url)
 				.dataPublicacao(dataPublicacao)
+				.categoria(Categoria.valueOf(categoria))
 				.build();
 	}
 	
@@ -49,6 +52,7 @@ public class VideoJson {
 		this.descricao = video.getDescricao();
 		this.url = video.getUrl();
 		this.dataPublicacao = video.getDataPublicacao();
+		this.categoria = video.getCategoria().toString();
 	}
 
 }

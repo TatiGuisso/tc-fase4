@@ -1,26 +1,20 @@
 package com.grupo16.tcfase4.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.grupo16.tcfase4.domain.Video;
 import com.grupo16.tcfase4.gateway.controller.VideoRepositoryGateway;
 
+import lombok.AllArgsConstructor;
+
 @Service
+@AllArgsConstructor
 public class CriarAlterarVideoUseCase {
 	
 	private VideoRepositoryGateway videoRepositoryGateway;
 	
 	private ObterVideoUseCase obterVideoUseCase;
 	
-	@Autowired
-	public CriarAlterarVideoUseCase(
-			VideoRepositoryGateway videoRepositoryGateway,
-			ObterVideoUseCase obterVideoUseCase) {
-		this.videoRepositoryGateway = videoRepositoryGateway;
-		this.obterVideoUseCase = obterVideoUseCase;
-	}
-
 	public String salvar(Video video) {
 		return videoRepositoryGateway.salvar(video);
 	}

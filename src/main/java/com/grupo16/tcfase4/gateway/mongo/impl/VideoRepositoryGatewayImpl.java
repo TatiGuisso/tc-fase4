@@ -1,6 +1,5 @@
 package com.grupo16.tcfase4.gateway.mongo.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.grupo16.tcfase4.domain.Video;
@@ -9,10 +8,14 @@ import com.grupo16.tcfase4.gateway.controller.VideoRepositoryGateway;
 import com.grupo16.tcfase4.gateway.mongo.document.VideoDocument;
 import com.grupo16.tcfase4.gateway.mongo.repository.VideoRepository;
 
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 @Component
+@Slf4j
+@AllArgsConstructor
 public class VideoRepositoryGatewayImpl implements VideoRepositoryGateway {
 	
-	@Autowired
 	private VideoRepository videoRepository;
 
 	@Override
@@ -23,6 +26,7 @@ public class VideoRepositoryGatewayImpl implements VideoRepositoryGateway {
 			return videoRepository.save(videoDocument).getId(); 
 			
 		} catch (Exception e) {
+			log.error(e.getMessage());
 			throw new ErroAoAcessarBancoDadosException();
 		}
 	}
