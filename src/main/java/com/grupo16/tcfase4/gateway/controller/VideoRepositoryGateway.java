@@ -10,4 +10,5 @@ public interface VideoRepositoryGateway {
 
 	Optional<Video> obterPorId(String id);
 
+	void remover(String id);
 }
