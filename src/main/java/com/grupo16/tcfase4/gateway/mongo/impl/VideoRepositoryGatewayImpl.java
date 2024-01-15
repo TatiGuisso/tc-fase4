@@ -1,5 +1,7 @@
 package com.grupo16.tcfase4.gateway.mongo.impl;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Component;
 
 import com.grupo16.tcfase4.domain.Video;
@@ -29,6 +31,12 @@ public class VideoRepositoryGatewayImpl implements VideoRepositoryGateway {
 			log.error(e.getMessage());
 			throw new ErroAoAcessarBancoDadosException();
 		}
+	}
+
+	@Override
+	public Optional<Video> obterPorId(String id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
