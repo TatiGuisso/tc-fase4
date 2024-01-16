@@ -35,8 +35,21 @@ public class VideoRepositoryGatewayImpl implements VideoRepositoryGateway {
 
 	@Override
 	public Optional<Video> obterPorId(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			Optional<Video> videoOptional = Optional.empty(); 
+			Optional<VideoDocument> videoDocumentOp = videoRepository.findById(id);
+			
+			if(videoDocumentOp.isPresent()) {
+				VideoDocument videoDoc = videoDocumentOp.get();
+				Video video = videoDoc.mapperDocumentToDomain();
+				videoOptional = Optional.of(video);
+			}
+			
+			return videoOptional;
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			throw new ErroAoAcessarBancoDadosException();
+		}
 	}
 
 	@Override
