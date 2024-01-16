@@ -9,9 +9,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.grupo16.tcfase4.domain.Favorito;
+import com.grupo16.tcfase4.domain.Usuario;
 import com.grupo16.tcfase4.domain.Video;
 import com.grupo16.tcfase4.gateway.controller.json.VideoJson;
 import com.grupo16.tcfase4.service.CriarAlterarVideoUseCase;
+import com.grupo16.tcfase4.service.FavoritoUseCase;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -24,6 +27,8 @@ import lombok.extern.slf4j.Slf4j;
 public class VideoController {
 	
 	private CriarAlterarVideoUseCase criarAlterarVideoUseCase;
+	
+	private FavoritoUseCase favoritoUseCase;
 	
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
@@ -50,6 +55,24 @@ public class VideoController {
 		
 		criarAlterarVideoUseCase.alterar(video);
 		log.trace("End");
+	}
+	
+	@ResponseStatus(HttpStatus.CREATED)
+	@PostMapping("{id}/{usuarioId}")
+	public String favoritar(
+			@PathVariable(required = true, name = "id") String videoId,
+			@PathVariable(required = true, name = "usuarioId") String usuarioId) {
+		log.trace("Start videoId={}, usuarioId={}", videoId, usuarioId);
+		
+		Favorito favorito = Favorito.builder()
+				.video(Video.builder().id(videoId).build())
+				.usuario(Usuario.builder().id(usuarioId).build())
+				.build();
+		
+		String idFavorito = favoritoUseCase.salvar(favorito);
+		
+		log.trace("End idFavorito={}", idFavorito);
+		return idFavorito;
 	}
 
 }
