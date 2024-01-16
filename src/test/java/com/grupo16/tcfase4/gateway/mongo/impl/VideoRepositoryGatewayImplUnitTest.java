@@ -3,11 +3,10 @@ package com.grupo16.tcfase4.gateway.mongo.impl;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
@@ -15,6 +14,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.grupo16.tcfase4.domain.Categoria;
@@ -65,11 +65,7 @@ class VideoRepositoryGatewayImplUnitTest {
 	
 	@Test
 	void deveGerarExceptionAoSalvarOuAlterarVideo() {
-		
-		Video video = Video.builder()
-				.id(UUID.randomUUID().toString())
-				.categoria(Categoria.DRAMA)
-				.build();
+		Video video = Video.builder().id(UUID.randomUUID().toString()).categoria(Categoria.DRAMA).build();
 				
 		doThrow(new RuntimeException())
 			.when(videoRepository).save(any(VideoDocument.class));
@@ -78,6 +74,24 @@ class VideoRepositoryGatewayImplUnitTest {
 				() -> videoRepositoryGatewayImpl.salvar(video));
 		
 		verify(videoRepository).save(any(VideoDocument.class));
+	}
+	
+	@Test
+	void deveObterPorId() {
+		String id = UUID.randomUUID().toString();
+
+		Video video = Video.builder().build();
+		VideoDocument videoDocMock = Mockito.mock(VideoDocument.class);
+		when(videoDocMock.mapperDocumentToDomain()).thenReturn(video);
+		Optional<VideoDocument> videoDocumentOp = Optional.of(videoDocMock);
+		
+		when(videoRepository.findById(id)).thenReturn(videoDocumentOp);
+
+		Optional<Video> videoOptionalResult = videoRepositoryGatewayImpl.obterPorId(id);
+		
+		verify(videoRepository).findById(id);
+		assertEquals(video, videoOptionalResult.get());
+		
 	}
 
 }

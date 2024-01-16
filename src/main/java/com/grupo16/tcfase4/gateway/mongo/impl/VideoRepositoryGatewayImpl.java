@@ -40,8 +40,8 @@ public class VideoRepositoryGatewayImpl implements VideoRepositoryGateway {
 			Optional<VideoDocument> videoDocumentOp = videoRepository.findById(id);
 			
 			if(videoDocumentOp.isPresent()) {
-				VideoDocument videoDoc = videoDocumentOp.get();
-				Video video = videoDoc.mapperDocumentToDomain();
+				VideoDocument videoDocument = videoDocumentOp.get();
+				Video video = videoDocument.mapperDocumentToDomain();
 				videoOptional = Optional.of(video);
 			}
 			
