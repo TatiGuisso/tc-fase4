@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.grupo16.tcfase4.domain.Video;
-import com.grupo16.tcfase4.gateway.controller.VideoRepositoryGateway;
+import com.grupo16.tcfase4.gateway.VideoRepositoryGateway;
 import com.grupo16.tcfase4.service.exception.VideoNaoEncontradoException;
 
 import lombok.AllArgsConstructor;

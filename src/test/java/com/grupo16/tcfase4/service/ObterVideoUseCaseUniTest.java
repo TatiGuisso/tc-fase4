@@ -15,7 +15,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.grupo16.tcfase4.domain.Video;
-import com.grupo16.tcfase4.gateway.controller.VideoRepositoryGateway;
+import com.grupo16.tcfase4.gateway.VideoRepositoryGateway;
 import com.grupo16.tcfase4.service.exception.VideoNaoEncontradoException;
 
 @ExtendWith(MockitoExtension.class)

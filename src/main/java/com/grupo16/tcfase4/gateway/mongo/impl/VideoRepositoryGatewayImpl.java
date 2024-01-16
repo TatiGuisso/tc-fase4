@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 import com.grupo16.tcfase4.domain.Video;
 import com.grupo16.tcfase4.exception.ErroAoAcessarBancoDadosException;
-import com.grupo16.tcfase4.gateway.controller.VideoRepositoryGateway;
+import com.grupo16.tcfase4.gateway.VideoRepositoryGateway;
 import com.grupo16.tcfase4.gateway.mongo.document.VideoDocument;
 import com.grupo16.tcfase4.gateway.mongo.repository.VideoRepository;
 

@@ -93,5 +93,18 @@ class VideoRepositoryGatewayImplUnitTest {
 		assertEquals(video, videoOptionalResult.get());
 		
 	}
+	
+	@Test
+	void deveGerarExceptionAoObterPorId() {
+		String id = UUID.randomUUID().toString();
+		
+		doThrow(new RuntimeException()).when(videoRepository).findById(id);
+		
+		assertThrows(ErroAoAcessarBancoDadosException.class, 
+				() -> videoRepositoryGatewayImpl.obterPorId(id));
+		
+		verify(videoRepository).findById(id);
+		
+	}
 
 }
