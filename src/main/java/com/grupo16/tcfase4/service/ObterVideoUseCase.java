@@ -18,10 +18,9 @@ public class ObterVideoUseCase {
 
 	private VideoRepositoryGateway videoRepositoryGateway;
 	
-	public Video obterPorId(String id) {
-		
+	public Video obterPorId(String id) {		
 		Optional<Video> videoOp = videoRepositoryGateway.obterPorId(id);
-		
+
 		if(videoOp.isEmpty()) {
 			log.warn("Video não encontrado: id={}", id);
 			throw new VideoNaoEncontradoException();
