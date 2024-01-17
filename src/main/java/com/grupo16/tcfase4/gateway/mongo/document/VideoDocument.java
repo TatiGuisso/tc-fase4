@@ -1,14 +1,12 @@
 package com.grupo16.tcfase4.gateway.mongo.document;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.grupo16.tcfase4.domain.Categoria;
-import com.grupo16.tcfase4.domain.Favorito;
 import com.grupo16.tcfase4.domain.Video;
 
 import lombok.AllArgsConstructor;

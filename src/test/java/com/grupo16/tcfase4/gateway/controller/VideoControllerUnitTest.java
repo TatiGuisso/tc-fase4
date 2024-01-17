@@ -17,6 +17,7 @@ import com.grupo16.tcfase4.domain.Video;
 import com.grupo16.tcfase4.gateway.controller.json.VideoJson;
 import com.grupo16.tcfase4.service.CriarAlterarVideoUseCase;
 import com.grupo16.tcfase4.service.FavoritoUseCase;
+import com.grupo16.tcfase4.service.RemoverVideoUseCase;
 
 @ExtendWith(MockitoExtension.class)
 class VideoControllerUnitTest {
@@ -27,6 +28,9 @@ class VideoControllerUnitTest {
 	@Mock
 	private CriarAlterarVideoUseCase criarAlterarVideoUseCase;
 
+	@Mock
+	private RemoverVideoUseCase removerVideoUseCase;
+	
 	@Mock
 	private FavoritoUseCase favoritoUseCase;
 	
@@ -57,6 +61,13 @@ class VideoControllerUnitTest {
 		
 		verify(criarAlterarVideoUseCase).alterar(video);
 		
+	}
+	
+	@Test
+	void deveRemover() {
+		String videoId = UUID.randomUUID().toString();
+		videoController.remover(videoId);		
+		verify(removerVideoUseCase).remover(videoId);
 	}
 	
 //	@Test
