@@ -1,6 +1,9 @@
 package com.grupo16.tcfase4.gateway.controller;
 
+import com.grupo16.tcfase4.service.ObterVideoUseCase;
 import com.grupo16.tcfase4.service.RemoverVideoUseCase;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +30,21 @@ public class VideoController {
 
 	private RemoverVideoUseCase removerVideoUseCase;
 
+	private ObterVideoUseCase obterVideoUseCase;
+
+
+	@GetMapping
+	public Page<VideoJson> listar(
+			@RequestParam(required = true, value = "pagina", defaultValue = "0") Integer pagina,
+			@RequestParam(required = true, value = "tamanho", defaultValue = "10") Integer tamanho,
+			@RequestParam(required = true, value = "dataPublicacao", defaultValue = "true") Boolean dataPublicacao
+	) {
+		log.trace("Start pagina={}, tamanho={}, dataPublicacao={}", pagina, tamanho, dataPublicacao);
+		PageRequest pageRequest = PageRequest.of(pagina, tamanho);
+
+		log.trace("End");
+		return obterVideoUseCase.listarTodos(pageRequest, dataPublicacao);
+	}
 
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
