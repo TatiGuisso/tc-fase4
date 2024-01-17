@@ -52,6 +52,18 @@ public class VideoController {
 		log.trace("End");
 		return obterVideoUseCase.listarTodos(pageRequest, dataPublicacao);
 	}
+	
+	@GetMapping("{id}")
+	public VideoJson obterPorId(
+			@PathVariable(required = true, name = "id") String id) {
+		log.trace("Start id={}", id);
+		
+		Video video = obterVideoUseCase.obterPorId(id);
+		VideoJson videoJson = new VideoJson(video);
+
+		log.trace("End videoJson={}", videoJson);
+		return videoJson;
+	}
 
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
