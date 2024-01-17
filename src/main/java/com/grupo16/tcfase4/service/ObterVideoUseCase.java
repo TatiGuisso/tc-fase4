@@ -2,6 +2,9 @@ package com.grupo16.tcfase4.service;
 
 import java.util.Optional;
 
+import com.grupo16.tcfase4.gateway.controller.json.VideoJson;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.grupo16.tcfase4.domain.Video;
@@ -18,7 +21,12 @@ public class ObterVideoUseCase {
 
 	private VideoRepositoryGateway videoRepositoryGateway;
 	
-	public Video obterPorId(String id) {		
+
+	public Page<VideoJson> listarTodos(PageRequest pagina, Boolean dataPublicacao) {
+		return videoRepositoryGateway.listarTodos(pagina, dataPublicacao).map(VideoJson::new);
+	}
+
+	public Video obterPorId(String id) {
 		Optional<Video> videoOp = videoRepositoryGateway.obterPorId(id);
 
 		if(videoOp.isEmpty()) {
@@ -28,5 +36,4 @@ public class ObterVideoUseCase {
 		
 		return videoOp.get();
 	}
-
 }
