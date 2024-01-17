@@ -1,13 +1,11 @@
 package com.grupo16.tcfase4.gateway.controller;
 
+import com.grupo16.tcfase4.service.ObterVideoUseCase;
+import com.grupo16.tcfase4.service.RemoverVideoUseCase;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.grupo16.tcfase4.domain.Favorito;
 import com.grupo16.tcfase4.domain.Usuario;
@@ -29,7 +27,25 @@ public class VideoController {
 	private CriarAlterarVideoUseCase criarAlterarVideoUseCase;
 	
 	private FavoritoUseCase favoritoUseCase;
-	
+
+	private RemoverVideoUseCase removerVideoUseCase;
+
+	private ObterVideoUseCase obterVideoUseCase;
+
+
+	@GetMapping
+	public Page<VideoJson> listar(
+			@RequestParam(required = true, value = "pagina", defaultValue = "0") Integer pagina,
+			@RequestParam(required = true, value = "tamanho", defaultValue = "10") Integer tamanho,
+			@RequestParam(required = true, value = "dataPublicacao", defaultValue = "true") Boolean dataPublicacao
+	) {
+		log.trace("Start pagina={}, tamanho={}, dataPublicacao={}", pagina, tamanho, dataPublicacao);
+		PageRequest pageRequest = PageRequest.of(pagina, tamanho);
+
+		log.trace("End");
+		return obterVideoUseCase.listarTodos(pageRequest, dataPublicacao);
+	}
+
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
 	public String salvar(
@@ -75,4 +91,13 @@ public class VideoController {
 		return idFavorito;
 	}
 
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@DeleteMapping("{id}")
+	public void remover(
+			@PathVariable(required = true, name = "id") String id) {
+		log.trace("Start id={}", id);
+
+		removerVideoUseCase.remover(id);
+		log.trace("End");
+	}
 }
