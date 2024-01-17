@@ -3,7 +3,7 @@ package com.grupo16.tcfase4.service;
 import org.springframework.stereotype.Service;
 
 import com.grupo16.tcfase4.domain.Video;
-import com.grupo16.tcfase4.gateway.controller.VideoRepositoryGateway;
+import com.grupo16.tcfase4.gateway.VideoRepositoryGateway;
 
 import lombok.AllArgsConstructor;
 

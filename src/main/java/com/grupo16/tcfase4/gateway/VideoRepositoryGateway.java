@@ -1,4 +1,4 @@
-package com.grupo16.tcfase4.gateway.controller;
+package com.grupo16.tcfase4.gateway;
 
 import java.util.Optional;
 

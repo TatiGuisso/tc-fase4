@@ -15,6 +15,7 @@ import lombok.ToString;
 @JsonInclude(Include.NON_NULL)
 public class FavoritoJson {
 	
+	private String id;
 	private VideoJson video;
 	private UsuarioJson usuario;
 

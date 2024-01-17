@@ -17,7 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.grupo16.tcfase4.domain.Categoria;
 import com.grupo16.tcfase4.domain.Video;
-import com.grupo16.tcfase4.gateway.controller.VideoRepositoryGateway;
+import com.grupo16.tcfase4.gateway.VideoRepositoryGateway;
 
 @ExtendWith(MockitoExtension.class)
 class CriarAlterarVideoUseCaseUnitTest {
