@@ -64,12 +64,12 @@ public class VideoController {
 			@PathVariable(required = true, name = "usuarioId") String usuarioId) {
 		log.trace("Start videoId={}, usuarioId={}", videoId, usuarioId);
 		
-		Favorito favorito = Favorito.builder()
-				.video(Video.builder().id(videoId).build())
-				.usuario(Usuario.builder().id(usuarioId).build())
-				.build();
+//		Favorito favorito = Favorito.builder()
+//				.video(Video.builder().id(videoId).build())
+//				.usuario(Usuario.builder().id(usuarioId).build())
+//				.build();
 		
-		String idFavorito = favoritoUseCase.salvar(favorito);
+		String idFavorito = favoritoUseCase.salvar(videoId, usuarioId);
 		
 		log.trace("End idFavorito={}", idFavorito);
 		return idFavorito;
