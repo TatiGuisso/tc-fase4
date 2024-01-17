@@ -98,12 +98,7 @@ public class VideoController {
 			@PathVariable(required = true, name = "id") String videoId,
 			@PathVariable(required = true, name = "usuarioId") String usuarioId) {
 		log.trace("Start videoId={}, usuarioId={}", videoId, usuarioId);
-		
-//		Favorito favorito = Favorito.builder()
-//				.video(Video.builder().id(videoId).build())
-//				.usuario(Usuario.builder().id(usuarioId).build())
-//				.build();
-		
+
 		String idFavorito = favoritoUseCase.salvar(videoId, usuarioId);
 		
 		log.trace("End idFavorito={}", idFavorito);

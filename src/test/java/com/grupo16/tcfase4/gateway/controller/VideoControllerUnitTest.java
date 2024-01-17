@@ -1,6 +1,7 @@
 package com.grupo16.tcfase4.gateway.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -13,10 +14,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.grupo16.tcfase4.domain.Categoria;
 import com.grupo16.tcfase4.domain.Video;
 import com.grupo16.tcfase4.gateway.controller.json.VideoJson;
 import com.grupo16.tcfase4.service.CriarAlterarVideoUseCase;
 import com.grupo16.tcfase4.service.FavoritoUseCase;
+import com.grupo16.tcfase4.service.ObterVideoUseCase;
 import com.grupo16.tcfase4.service.RemoverVideoUseCase;
 
 @ExtendWith(MockitoExtension.class)
@@ -30,6 +33,9 @@ class VideoControllerUnitTest {
 
 	@Mock
 	private RemoverVideoUseCase removerVideoUseCase;
+
+	@Mock
+	private ObterVideoUseCase obterVideoUseCase;
 	
 	@Mock
 	private FavoritoUseCase favoritoUseCase;
@@ -68,6 +74,28 @@ class VideoControllerUnitTest {
 		String videoId = UUID.randomUUID().toString();
 		videoController.remover(videoId);		
 		verify(removerVideoUseCase).remover(videoId);
+	}
+	
+	@Test
+	void deveObterPorId() {
+		String id = UUID.randomUUID().toString();
+		Video video = Video.builder()
+				.id(id)
+				.titulo("ABCD")
+				.descricao("Novo filme")
+				.categoria(Categoria.GERRA)
+				.build();
+		
+		when(obterVideoUseCase.obterPorId(id)).thenReturn(video);
+		
+		VideoJson videoJson = videoController.obterPorId(id);
+		
+		verify(obterVideoUseCase).obterPorId(id);
+		assertEquals(video.getId(), videoJson.getId());
+		assertEquals(video.getTitulo(), videoJson.getTitulo());
+		assertEquals(video.getDescricao(), videoJson.getDescricao());
+		assertEquals(video.getCategoria().toString(), videoJson.getCategoria());
+		
 	}
 	
 //	@Test
