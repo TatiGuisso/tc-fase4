@@ -2,6 +2,8 @@ package com.grupo16.tcfase4.gateway.mongo.impl;
 
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import com.grupo16.tcfase4.domain.Video;
@@ -19,6 +21,19 @@ import lombok.extern.slf4j.Slf4j;
 public class VideoRepositoryGatewayImpl implements VideoRepositoryGateway {
 	
 	private VideoRepository videoRepository;
+
+	@Override
+	public Page<Video> listarTodos(Pageable pageable, Boolean dataPublicacao) {
+		try {
+			if (Boolean.TRUE.equals(dataPublicacao)) {
+				return videoRepository.findAllByOrderByDataPublicacaoDesc(pageable).map(VideoDocument::mapperDocumentToDomain);
+			}
+			return videoRepository.findAll(pageable).map(VideoDocument::mapperDocumentToDomain);
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			throw new ErroAoAcessarBancoDadosException();
+		}
+	}
 
 	@Override
 	public String salvar(Video video) {
