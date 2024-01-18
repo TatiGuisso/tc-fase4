@@ -1,7 +1,7 @@
 package com.grupo16.tcfase4.gateway.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -72,6 +72,7 @@ class VideoControllerUnitTest {
 	@Test
 	void deveRemover() {
 		String videoId = UUID.randomUUID().toString();
+		doNothing().when(removerVideoUseCase).remover(videoId);
 		videoController.remover(videoId);		
 		verify(removerVideoUseCase).remover(videoId);
 	}
@@ -98,22 +99,18 @@ class VideoControllerUnitTest {
 		
 	}
 	
-//	@Test
-//	void deveSalvarFavorito() {
-//		String videoId = UUID.randomUUID().toString();
-//		String usuarioId = UUID.randomUUID().toString();
-//		
-//		ArgumentCaptor<Favorito> favoritoCaptor = ArgumentCaptor.forClass(Favorito.class);
-//		
-//		when(favoritoUseCase.salvar(any(Favorito.class))).thenReturn(anyString());
-//				
-//		videoController.favoritar(videoId, usuarioId);
-//		
-//		verify(favoritoUseCase).salvar(favoritoCaptor.capture());
-//		Favorito favorito = favoritoCaptor.getValue();
-//		
-//		assertEquals(videoId, favorito.getVideo().getId());
-//		assertEquals(usuarioId, favorito.getUsuario().getId());
-//	}
+	@Test
+	void deveSalvarFavorito() {
+		String videoId = UUID.randomUUID().toString();
+		String usuarioId = UUID.randomUUID().toString();
+		String favoritoId = UUID.randomUUID().toString();
+		
+		when(favoritoUseCase.salvar(videoId, usuarioId)).thenReturn(favoritoId);
+				
+		String result = videoController.favoritar(videoId, usuarioId);
+		
+		verify(favoritoUseCase).salvar(videoId, usuarioId);
+		assertEquals(favoritoId, result);
+	}
 
 }
