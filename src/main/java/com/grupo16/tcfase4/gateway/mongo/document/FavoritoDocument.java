@@ -4,6 +4,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.grupo16.tcfase4.domain.Favorito;
+import com.grupo16.tcfase4.domain.Usuario;
+import com.grupo16.tcfase4.domain.Video;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,5 +30,13 @@ public class FavoritoDocument {
 		this.id = favorito.getId();
 		this.videoId = favorito.getVideo().getId();
 		this.usuarioId = favorito.getUsuario().getId();
+	}
+	
+	public Favorito mapperDocumentToDomain() {
+		return Favorito.builder()
+				.id(id)
+				.video(Video.builder().id(videoId).build())
+				.usuario(Usuario.builder().id(usuarioId).build())
+				.build();
 	}
 }

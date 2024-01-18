@@ -24,10 +24,16 @@ public class UsuarioDocument {
 	@Id
 	private String id;
 	private String nome;
-	private List<FavoritoDocument> favoritos;
 
 	public UsuarioDocument(Usuario usuario) {
 		this.id = usuario.getId();
 		this.nome = usuario.getNome();
+	}
+	
+	public Usuario mapperDocumentToDomain() {
+		return Usuario.builder()
+				.id(id)
+				.nome(nome)
+				.build();
 	}
 }

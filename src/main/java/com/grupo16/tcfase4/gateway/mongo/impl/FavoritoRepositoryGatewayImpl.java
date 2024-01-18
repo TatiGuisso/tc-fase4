@@ -34,8 +34,23 @@ public class FavoritoRepositoryGatewayImpl implements FavoritoRepositoryGateway 
 
 	@Override
 	public Optional<Favorito> obterPorUsuarioIdEVideoId(String usuarioId, String videoId) {
-		// TODO Auto-generated method stub
-		return Optional.empty();
+		try {
+			Optional<Favorito> favoritoOp = Optional.empty();
+			Optional<FavoritoDocument> favoritoDocOp = favoritoRepository.findByUsuarioIdAndVideoId(usuarioId,videoId);
+			
+			if(favoritoDocOp.isPresent()) {
+				FavoritoDocument favoritoDocument = favoritoDocOp.get();
+				Favorito favorito = favoritoDocument.mapperDocumentToDomain();
+				favoritoOp = Optional.of(favorito);
+			}
+			
+			return favoritoOp;
+			
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			throw new ErroAoAcessarBancoDadosException();
+		}
+		
 	}
 
 }
