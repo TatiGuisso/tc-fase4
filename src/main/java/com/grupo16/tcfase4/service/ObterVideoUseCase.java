@@ -2,7 +2,6 @@ package com.grupo16.tcfase4.service;
 
 import java.util.Optional;
 
-import com.grupo16.tcfase4.gateway.controller.json.VideoJson;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -22,8 +21,8 @@ public class ObterVideoUseCase {
 	private VideoRepositoryGateway videoRepositoryGateway;
 	
 
-	public Page<VideoJson> listarTodos(PageRequest pagina, Boolean dataPublicacao) {
-		return videoRepositoryGateway.listarTodos(pagina, dataPublicacao).map(VideoJson::new);
+	public Page<Video> listarTodos(PageRequest pagina, Boolean dataPublicacao) {
+		return videoRepositoryGateway.listarTodos(pagina, dataPublicacao);
 	}
 
 	public Video obterPorId(String id) {
