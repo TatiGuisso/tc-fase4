@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.grupo16.tcfase4.domain.Video;
 import com.grupo16.tcfase4.gateway.controller.json.VideoJson;
 import com.grupo16.tcfase4.service.CriarAlterarVideoUseCase;
-import com.grupo16.tcfase4.service.FavoritoUseCase;
+import com.grupo16.tcfase4.service.CriarFavoritoUseCase;
 import com.grupo16.tcfase4.service.ObterVideoUseCase;
 import com.grupo16.tcfase4.service.RemoverVideoUseCase;
 
@@ -33,7 +33,7 @@ public class VideoController {
 	
 	private CriarAlterarVideoUseCase criarAlterarVideoUseCase;
 	
-	private FavoritoUseCase favoritoUseCase;
+	private CriarFavoritoUseCase favoritoUseCase;
 
 	private RemoverVideoUseCase removerVideoUseCase;
 

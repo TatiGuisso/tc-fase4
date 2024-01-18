@@ -1,5 +1,7 @@
 package com.grupo16.tcfase4.gateway.mongo.impl;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Component;
 
 import com.grupo16.tcfase4.domain.Favorito;
@@ -28,6 +30,12 @@ public class FavoritoRepositoryGatewayImpl implements FavoritoRepositoryGateway 
 			throw new ErroAoAcessarBancoDadosException();
 		}
 		
+	}
+
+	@Override
+	public Optional<Favorito> obterPorUsuarioIdEVideoId(String usuarioId, String videoId) {
+		// TODO Auto-generated method stub
+		return Optional.empty();
 	}
 
 }

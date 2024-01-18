@@ -19,6 +19,8 @@ import lombok.ToString;
 @NoArgsConstructor
 public class FavoritoDocument {
 	
+	//FIXME alterar atributos para id apenas.
+	
 	@Id
 	private String id;
 	private VideoDocument video;

@@ -1,7 +1,6 @@
 package com.grupo16.tcfase4.gateway.mongo.document;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -31,7 +30,6 @@ public class VideoDocument {
 	private LocalDate dataPublicacao;
 	private Long quantidadeVisualizacao;
 	private String categoria;
-	private List<FavoritoDocument> favoritos;
 	
 	public VideoDocument(Video video) {
 		this.id = video.getId();
@@ -44,14 +42,6 @@ public class VideoDocument {
 	}
 	
 	public Video mapperDocumentToDomain() {
-//		List<Favorito> favoritosDomain = new ArrayList<>();
-//		if(!favoritos.isEmpty() || favoritos != null) {
-//			for (FavoritoDocument favoritoDocument : favoritos) {
-//				favoritosDomain.add(Favorito.builder().id(favoritoDocument.getId()).build());
-//			}
-//		}
-			
-		
 		return Video.builder()
 				.id(id)
 				.titulo(titulo)
@@ -60,7 +50,6 @@ public class VideoDocument {
 				.dataPublicacao(dataPublicacao)
 				.quantidadeVisualizacao(quantidadeVisualizacao)
 				.categoria(Categoria.valueOf(categoria))
-//				.favoritos(favoritosDomain)
 				.build();
 	}
 
