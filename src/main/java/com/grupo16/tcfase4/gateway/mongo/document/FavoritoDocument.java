@@ -19,19 +19,14 @@ import lombok.ToString;
 @NoArgsConstructor
 public class FavoritoDocument {
 	
-	//FIXME alterar atributos para id apenas.
-	
 	@Id
 	private String id;
-	private VideoDocument video;
-	private UsuarioDocument usuario;
+	private String videoId;
+	private String usuarioId;
 
 	public FavoritoDocument(Favorito favorito) {
-		VideoDocument videoDocument = new VideoDocument(favorito.getVideo());
-		UsuarioDocument usuarioDocument = new UsuarioDocument(favorito.getUsuario());
-		
 		this.id = favorito.getId();
-		this.video = videoDocument;
-		this.usuario = usuarioDocument;
+		this.videoId = favorito.getVideo().getId();
+		this.usuarioId = favorito.getUsuario().getId();
 	}
 }
