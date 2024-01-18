@@ -21,8 +21,8 @@ public class ObterVideoUseCase {
 	private VideoRepositoryGateway videoRepositoryGateway;
 	
 
-	public Page<Video> listarTodos(PageRequest pagina, Boolean dataPublicacao) {
-		return videoRepositoryGateway.listarTodos(pagina, dataPublicacao);
+	public Page<Video> listarTodos(PageRequest pagina) {
+		return videoRepositoryGateway.listarTodos(pagina);
 	}
 
 	public Video obterPorId(String id) {

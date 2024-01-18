@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface VideoRepositoryGateway {
 
-	Page<Video> listarTodos(Pageable pageable, Boolean dataPublicacao);
+	Page<Video> listarTodos(Pageable pageable);
 
 	String salvar(Video video);
 

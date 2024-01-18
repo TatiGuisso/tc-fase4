@@ -23,12 +23,9 @@ public class VideoRepositoryGatewayImpl implements VideoRepositoryGateway {
 	private VideoRepository videoRepository;
 
 	@Override
-	public Page<Video> listarTodos(Pageable pageable, Boolean dataPublicacao) {
+	public Page<Video> listarTodos(Pageable pageable) {
 		try {
-			if (Boolean.TRUE.equals(dataPublicacao)) {
-				return videoRepository.findAllByOrderByDataPublicacaoDesc(pageable).map(VideoDocument::mapperDocumentToDomain);
-			}
-			return videoRepository.findAll(pageable).map(VideoDocument::mapperDocumentToDomain);
+			return videoRepository.findAllByOrderByDataPublicacaoDesc(pageable).map(VideoDocument::mapperDocumentToDomain);
 		} catch (Exception e) {
 			log.error(e.getMessage());
 			throw new ErroAoAcessarBancoDadosException();
