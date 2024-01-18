@@ -35,13 +35,13 @@ public class VideoJson {
 	private List<FavoritoJson> favoritos;
 	
 	public Video mapperJsonToDomain(String videoId) {
-		this.dataPublicacao = LocalDate.now();
+//		this.dataPublicacao = LocalDate.now();
 		return Video.builder()
 				.id(videoId == null ? this.id : videoId)
 				.titulo(titulo)
 				.descricao(descricao)
 				.url(url)
-				.dataPublicacao(dataPublicacao)
+				.dataPublicacao(LocalDate.now())
 				.categoria(Categoria.valueOf(categoria))
 				.build();
 	}
