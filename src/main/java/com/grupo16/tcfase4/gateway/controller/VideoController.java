@@ -50,7 +50,7 @@ public class VideoController {
 		PageRequest pageRequest = PageRequest.of(pagina, tamanho);
 
 		log.trace("End");
-		return obterVideoUseCase.listarTodos(pageRequest, dataPublicacao);
+		return obterVideoUseCase.listarTodos(pageRequest, dataPublicacao).map(VideoJson::new);
 	}
 	
 	@GetMapping("{id}")
