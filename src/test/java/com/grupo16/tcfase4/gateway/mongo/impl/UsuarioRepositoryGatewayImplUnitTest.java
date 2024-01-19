@@ -1,7 +1,9 @@
 package com.grupo16.tcfase4.gateway.mongo.impl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Optional;
@@ -45,7 +47,25 @@ class UsuarioRepositoryGatewayImplUnitTest {
 		assertEquals(usuario, result);
 		assertEquals(usuario.getId(), result.getId());
 		assertEquals(usuario.getNome(), result.getNome());
+		verify(usuarioRepository).findById(usuario.getId());
 
+	}
+	
+	@Test
+	void deveRetornarOptionalVazioAoObterUsuarioPorId() {
+		String id = UUID.randomUUID().toString();
+		
+		when(usuarioRepository.findById(id)).thenReturn(Optional.empty());
+		
+		Optional<Usuario> result = usuarioRepositoryGatewayImpl.obterPorId(id);
+		
+		verify(usuarioRepository).findById(id);		
+		assertTrue(result.isEmpty());
+	}
+	
+	@Test
+	void deveRetornarExceptionAoObterUsuarioPorId() {
+		
 	}
 
 }
