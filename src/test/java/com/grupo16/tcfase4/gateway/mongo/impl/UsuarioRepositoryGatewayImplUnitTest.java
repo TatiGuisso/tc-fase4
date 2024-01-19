@@ -1,7 +1,9 @@
 package com.grupo16.tcfase4.gateway.mongo.impl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -16,6 +18,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.grupo16.tcfase4.domain.Usuario;
+import com.grupo16.tcfase4.exception.ErroAoAcessarBancoDadosException;
 import com.grupo16.tcfase4.gateway.mongo.document.UsuarioDocument;
 import com.grupo16.tcfase4.gateway.mongo.repository.UsuarioRepository;
 
@@ -65,7 +68,14 @@ class UsuarioRepositoryGatewayImplUnitTest {
 	
 	@Test
 	void deveRetornarExceptionAoObterUsuarioPorId() {
+		String id = UUID.randomUUID().toString();
 		
+		doThrow(new RuntimeException()).when(usuarioRepository).findById(id);
+		
+		assertThrows(ErroAoAcessarBancoDadosException.class, 
+				() -> usuarioRepositoryGatewayImpl.obterPorId(id));
+		
+		verify(usuarioRepository).findById(id);
 	}
 
 }
