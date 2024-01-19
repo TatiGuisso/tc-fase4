@@ -2,6 +2,7 @@ package com.grupo16.tcfase4.gateway.mongo.impl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
@@ -104,6 +105,23 @@ class FavoritoRepositoryGatewayImplUnitTest {
 		assertEquals(favorito.getId(), result.getId());
 		assertEquals(favorito.getUsuario(), result.getUsuario());
 		assertEquals(favorito.getVideo(), result.getVideo());
+		
+	}
+	
+	@Test
+	void deveRetornarOptionalVazioAoObterPorUsuarioIdeVideoId() {
+		String id = UUID.randomUUID().toString();
+		
+		when(favoritoRepository.findByUsuarioIdAndVideoId(id, id)).thenReturn(Optional.empty());
+		
+		Optional<Favorito> favoritoOp = favoritoRepositoryGatewayImpl.obterPorUsuarioIdEVideoId(id, id);
+		
+		assertTrue(favoritoOp.isEmpty());
+		
+	}
+	
+	@Test
+	void deveRetornarExceptionAoObterFavoritoPorUsuarioIdEVideoId() {
 		
 	}
 
