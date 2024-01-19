@@ -24,8 +24,6 @@ import com.grupo16.tcfase4.domain.Usuario;
 import com.grupo16.tcfase4.domain.Video;
 import com.grupo16.tcfase4.exception.ErroAoAcessarBancoDadosException;
 import com.grupo16.tcfase4.gateway.mongo.document.FavoritoDocument;
-import com.grupo16.tcfase4.gateway.mongo.document.UsuarioDocument;
-import com.grupo16.tcfase4.gateway.mongo.document.VideoDocument;
 import com.grupo16.tcfase4.gateway.mongo.repository.FavoritoRepository;
 
 @ExtendWith(MockitoExtension.class)
