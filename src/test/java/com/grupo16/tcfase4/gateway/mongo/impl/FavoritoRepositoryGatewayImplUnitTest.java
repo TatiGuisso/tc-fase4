@@ -1,0 +1,77 @@
+package com.grupo16.tcfase4.gateway.mongo.impl;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.UUID;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import com.grupo16.tcfase4.domain.Favorito;
+import com.grupo16.tcfase4.domain.Usuario;
+import com.grupo16.tcfase4.domain.Video;
+import com.grupo16.tcfase4.exception.ErroAoAcessarBancoDadosException;
+import com.grupo16.tcfase4.gateway.mongo.document.FavoritoDocument;
+import com.grupo16.tcfase4.gateway.mongo.repository.FavoritoRepository;
+
+@ExtendWith(MockitoExtension.class)
+class FavoritoRepositoryGatewayImplUnitTest {
+	
+	@InjectMocks
+	private FavoritoRepositoryGatewayImpl favoritoRepositoryGatewayImpl;
+	
+	@Mock
+	private FavoritoRepository favoritoRepository;
+	
+	@Test
+	void deveSalvar() {
+		Video video = Video.builder().id(UUID.randomUUID().toString()).build();
+		Usuario usuario = Usuario.builder().id(UUID.randomUUID().toString()).build();
+		Favorito favorito = Favorito.builder()
+				.id(UUID.randomUUID().toString())
+				.video(video)
+				.usuario(usuario).build();
+		
+		FavoritoDocument favoritoDocument = FavoritoDocument.builder().id(favorito.getId()).build();
+		
+		when(favoritoRepository.save(any(FavoritoDocument.class))).thenReturn(favoritoDocument);
+		
+		String id = favoritoRepositoryGatewayImpl.salvar(favorito);
+		ArgumentCaptor<FavoritoDocument> favoritoDocCaptor = ArgumentCaptor.forClass(FavoritoDocument.class);
+		verify(favoritoRepository).save(favoritoDocCaptor.capture());
+		
+		FavoritoDocument favoritoDoc = favoritoDocCaptor.getValue();
+		
+		assertEquals(favorito.getId(), id);
+		assertEquals(favorito.getUsuario().getId(), favoritoDoc.getUsuarioId());
+		assertEquals(favorito.getVideo().getId(), favoritoDoc.getVideoId());
+	}
+	
+	@Test
+	void deveRetornarExceptionAoSalvar() {
+		Video video = Video.builder().id(UUID.randomUUID().toString()).build();
+		Usuario usuario = Usuario.builder().id(UUID.randomUUID().toString()).build();
+		Favorito favorito = Favorito.builder()
+				.id(UUID.randomUUID().toString())
+				.video(video)
+				.usuario(usuario).build();
+		
+		doThrow(new RuntimeException())
+			.when(favoritoRepository).save(any(FavoritoDocument.class));
+		
+		assertThrows(ErroAoAcessarBancoDadosException.class, 
+				() -> favoritoRepositoryGatewayImpl.salvar(favorito));
+		
+		verify(favoritoRepository).save(any(FavoritoDocument.class));		
+	}
+
+}
