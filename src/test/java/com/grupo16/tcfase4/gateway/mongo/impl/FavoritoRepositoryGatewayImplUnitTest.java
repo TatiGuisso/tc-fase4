@@ -4,9 +4,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
@@ -21,6 +23,8 @@ import com.grupo16.tcfase4.domain.Usuario;
 import com.grupo16.tcfase4.domain.Video;
 import com.grupo16.tcfase4.exception.ErroAoAcessarBancoDadosException;
 import com.grupo16.tcfase4.gateway.mongo.document.FavoritoDocument;
+import com.grupo16.tcfase4.gateway.mongo.document.UsuarioDocument;
+import com.grupo16.tcfase4.gateway.mongo.document.VideoDocument;
 import com.grupo16.tcfase4.gateway.mongo.repository.FavoritoRepository;
 
 @ExtendWith(MockitoExtension.class)
@@ -72,6 +76,35 @@ class FavoritoRepositoryGatewayImplUnitTest {
 				() -> favoritoRepositoryGatewayImpl.salvar(favorito));
 		
 		verify(favoritoRepository).save(any(FavoritoDocument.class));		
+	}
+	
+	@Test
+	void deveObterPorUsuarioIdeVideoId() {
+		Video video = Video.builder().id(UUID.randomUUID().toString()).build();
+		Usuario usuario = Usuario.builder().id(UUID.randomUUID().toString()).build();
+		Favorito favorito = Favorito.builder()
+				.id(UUID.randomUUID().toString())
+				.video(video)
+				.usuario(usuario)
+				.build();
+		
+		FavoritoDocument favoritoDocMock = mock(FavoritoDocument.class);
+		
+		when(favoritoRepository.findByUsuarioIdAndVideoId(usuario.getId(), video.getId()))
+			.thenReturn(Optional.of(favoritoDocMock));
+		
+		when(favoritoDocMock.mapperDocumentToDomain()).thenReturn(favorito);
+		
+		Optional<Favorito> favoritoOptional = favoritoRepositoryGatewayImpl.obterPorUsuarioIdEVideoId(usuario.getId(), video.getId());
+		Favorito result = favoritoOptional.get();
+		
+		verify(favoritoRepository).findByUsuarioIdAndVideoId(usuario.getId(), video.getId());
+		
+		assertEquals(favorito, result);
+		assertEquals(favorito.getId(), result.getId());
+		assertEquals(favorito.getUsuario(), result.getUsuario());
+		assertEquals(favorito.getVideo(), result.getVideo());
+		
 	}
 
 }
