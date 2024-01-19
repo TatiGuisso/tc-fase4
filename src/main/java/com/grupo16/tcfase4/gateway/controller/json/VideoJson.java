@@ -35,7 +35,6 @@ public class VideoJson {
 	private List<FavoritoJson> favoritos;
 	
 	public Video mapperJsonToDomain(String videoId) {
-//		this.dataPublicacao = LocalDate.now();
 		return Video.builder()
 				.id(videoId == null ? this.id : videoId)
 				.titulo(titulo)
