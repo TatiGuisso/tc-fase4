@@ -28,6 +28,9 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.time.LocalDate;
+import java.util.List;
+
 @Slf4j
 @RequestMapping("videos")
 @RestController
@@ -67,6 +70,20 @@ public class VideoController {
 
 		log.trace("End videoJson={}", videoJson);
 		return videoJson;
+	}
+
+	@GetMapping("filtros")
+	public List<VideoJson> pesquisar(
+		@RequestParam(required = false, name = "titulo") String titulo,
+		@RequestParam(required = false, name = "dataPublicacao") LocalDate dataPublicacao,
+		@RequestParam(required = false, name = "categoria") String categoria
+	) {
+		log.trace("Start titulo={}, dataPublicacao={}, categoria={}", titulo, dataPublicacao, categoria);
+
+		List<Video> videos = obterVideoUseCase.buscaFiltrada(titulo, dataPublicacao, categoria);
+
+		log.trace("End");
+		return videos.stream().map(VideoJson::new).toList();
 	}
 
 	@ResponseStatus(HttpStatus.CREATED)

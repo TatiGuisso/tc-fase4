@@ -1,9 +1,15 @@
 package com.grupo16.tcfase4.gateway.mongo.impl;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
+import com.grupo16.tcfase4.domain.Categoria;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 
 import com.grupo16.tcfase4.domain.Video;
@@ -21,6 +27,8 @@ import lombok.extern.slf4j.Slf4j;
 public class VideoRepositoryGatewayImpl implements VideoRepositoryGateway {
 	
 	private VideoRepository videoRepository;
+
+	private final MongoTemplate mongoTemplate;
 
 	@Override
 	public Page<Video> listarTodos(Pageable pageable) {
@@ -68,6 +76,33 @@ public class VideoRepositoryGatewayImpl implements VideoRepositoryGateway {
 	public void remover(String id) {
 		try {
 			videoRepository.deleteById(id);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw new ErroAoAcessarBancoDadosException();
+		}
+	}
+
+	@Override
+	public List<Video> buscaFiltrada(String titulo, LocalDate dataPublicacao, String categoria) {
+		try {
+			Criteria criteria = new Criteria();
+
+			if (titulo != null && !titulo.isEmpty()) {
+				criteria.and("titulo").regex(titulo, "i");
+			}
+
+			if (dataPublicacao != null) {
+				criteria.and("dataPublicacao").is(dataPublicacao);
+			}
+
+			if (categoria != null && !categoria.isEmpty()) {
+				criteria.and("categoria").is(Categoria.valueOf(categoria));
+			}
+
+			Query query = new Query(criteria);
+			List<VideoDocument> videosDocument = this.mongoTemplate.find(query, VideoDocument.class);
+
+			return videosDocument.stream().map(VideoDocument::mapperDocumentToDomain).toList();
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			throw new ErroAoAcessarBancoDadosException();

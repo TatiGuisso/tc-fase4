@@ -1,5 +1,7 @@
 package com.grupo16.tcfase4.service;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -34,5 +36,15 @@ public class ObterVideoUseCase {
 		}
 		
 		return videoOp.get();
+	}
+
+	public List<Video> buscaFiltrada(String titulo, LocalDate dataPublicacao, String categoria) {
+		if (titulo == null && dataPublicacao == null && categoria == null) {
+			log.warn("Nenhum filtro informado");
+			// TODO: criar uma nova exceção?
+			throw new VideoNaoEncontradoException();
+		}
+
+		return videoRepositoryGateway.buscaFiltrada(titulo, dataPublicacao, categoria);
 	}
 }
