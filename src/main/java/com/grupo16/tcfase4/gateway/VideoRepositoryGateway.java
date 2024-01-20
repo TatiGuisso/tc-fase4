@@ -1,5 +1,7 @@
 package com.grupo16.tcfase4.gateway;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 import com.grupo16.tcfase4.domain.Video;
@@ -15,4 +17,6 @@ public interface VideoRepositoryGateway {
 	Optional<Video> obterPorId(String id);
 
 	void remover(String id);
+
+	List<Video> buscaFiltrada(String titulo, LocalDate dataPublicacao, String categoria);
 }
