@@ -1,5 +1,7 @@
 package com.grupo16.tcfase4.gateway.controller;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -19,6 +21,7 @@ import com.grupo16.tcfase4.gateway.controller.json.VideoJson;
 import com.grupo16.tcfase4.service.CriarAlterarVideoUseCase;
 import com.grupo16.tcfase4.service.CriarFavoritoUseCase;
 import com.grupo16.tcfase4.service.ObterVideoUseCase;
+import com.grupo16.tcfase4.service.RecomendarVideoUseCase;
 import com.grupo16.tcfase4.service.RemoverVideoUseCase;
 
 import jakarta.validation.Valid;
@@ -38,6 +41,8 @@ public class VideoController {
 	private RemoverVideoUseCase removerVideoUseCase;
 
 	private ObterVideoUseCase obterVideoUseCase;
+	
+	private RecomendarVideoUseCase recomendarVideoUseCase;
 
 
 	@GetMapping
@@ -92,7 +97,7 @@ public class VideoController {
 	}
 	
 	@ResponseStatus(HttpStatus.CREATED)
-	@PostMapping("{id}/{usuarioId}")
+	@PostMapping("{id}/favoritos/{usuarioId}")
 	public String favoritar(
 			@PathVariable(required = true, name = "id") String videoId,
 			@PathVariable(required = true, name = "usuarioId") String usuarioId) {
@@ -112,5 +117,18 @@ public class VideoController {
 
 		removerVideoUseCase.remover(id);
 		log.trace("End");
+	}
+	
+	@GetMapping("recomendacoes/{usuarioId}")
+	public List<VideoJson> recomendar(
+			@PathVariable(required = true, name = "usuarioId") String usuarioId){
+		log.trace("Start usuarioId={}", usuarioId);
+		
+		List<Video> videos = recomendarVideoUseCase.recomendar(usuarioId);
+		
+		List<VideoJson> videosJson = videos.stream().map(VideoJson::new).toList();
+		
+		log.trace("End videosJson={}", videosJson);
+		return videosJson;
 	}
 }
