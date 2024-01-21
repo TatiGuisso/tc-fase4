@@ -16,6 +16,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.grupo16.tcfase4.domain.Categoria;
 import com.grupo16.tcfase4.domain.Video;
@@ -149,5 +151,25 @@ class VideoControllerUnitTest {
 		assertEquals(video2.getId(), videos.get(1).getId());
 		
 	}
-
+	
+	@Test
+	void deveFazerUpload() {
+		String videoId = UUID.randomUUID().toString();
+		String contentType = "QVR37Hb9xm";
+		MultipartFile file = new MockMultipartFile(
+				"AC6RIMpusn", 
+				"yoBSqO69GA", 
+				"VNMZyotcIp", 
+				contentType.getBytes());
+		
+		String url = "www.url.com.br";
+		
+		when(criarAlterarVideoUseCase.upload(videoId, file)).thenReturn(url);
+		
+		String result = videoController.upload(videoId, file);
+		
+		verify(criarAlterarVideoUseCase).upload(videoId, file);
+		assertEquals(url, result);
+	}
+	
 }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.grupo16.tcfase4.domain.Video;
 import com.grupo16.tcfase4.gateway.controller.json.VideoJson;
@@ -145,5 +146,17 @@ public class VideoController {
 		
 		log.trace("End videosJson={}", videosJson);
 		return videosJson;
+	}
+	
+	@PostMapping("{id}/upload")
+	public String upload(
+			@PathVariable(required = true, name = "videoId") String videoId,
+			@RequestParam(required = true, value = "file") MultipartFile file) {
+		log.trace("Start videoId={}, file={}",videoId, file);
+		
+		String url = criarAlterarVideoUseCase.upload(videoId, file);
+		
+		log.trace("End url={}",url);
+		return url;
 	}
 }

@@ -1,6 +1,7 @@
 package com.grupo16.tcfase4.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.grupo16.tcfase4.domain.Video;
 import com.grupo16.tcfase4.gateway.VideoRepositoryGateway;
@@ -31,6 +32,11 @@ public class CriarAlterarVideoUseCase {
 				.build();
 		
 		videoRepositoryGateway.salvar(videoNovo);
+	}
+
+	public String upload(String videoId, MultipartFile file) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }
