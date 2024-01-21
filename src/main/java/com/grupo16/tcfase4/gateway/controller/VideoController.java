@@ -1,5 +1,6 @@
 package com.grupo16.tcfase4.gateway.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -27,9 +28,6 @@ import com.grupo16.tcfase4.service.RemoverVideoUseCase;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
-import java.time.LocalDate;
-import java.util.List;
 
 @Slf4j
 @RequestMapping("videos")

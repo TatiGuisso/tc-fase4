@@ -41,11 +41,7 @@ public class RecomendarVideoUseCase {
 		    }
 		}
 		
-		//TODO concluir
-		
-		//chamar um metodo obterPorCategoria
-		
-		return null;
+		return obterVideoUseCase.obterPorCategoria(categoriaMaisFavorita);
 	}
 
 }

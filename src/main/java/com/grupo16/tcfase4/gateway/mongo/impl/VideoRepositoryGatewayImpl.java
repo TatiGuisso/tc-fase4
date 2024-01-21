@@ -108,4 +108,16 @@ public class VideoRepositoryGatewayImpl implements VideoRepositoryGateway {
 			throw new ErroAoAcessarBancoDadosException();
 		}
 	}
+
+	@Override
+	public List<Video> obterPorCategoria(Categoria categoriaMaisFavorita) {
+		try {
+			List<VideoDocument> videosDocument = videoRepository.findTop3ByCategoria(categoriaMaisFavorita);
+			
+			return videosDocument.stream().map(VideoDocument::mapperDocumentToDomain).toList();
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw new ErroAoAcessarBancoDadosException();
+		}
+	}
 }

@@ -56,8 +56,13 @@ public class FavoritoRepositoryGatewayImpl implements FavoritoRepositoryGateway 
 
 	@Override
 	public List<Favorito> obterPorUsuarioId(String usuarioId) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			List<FavoritoDocument> favoritosDoc = favoritoRepository.findByUsuarioId(usuarioId);
+			return favoritosDoc.stream().map(FavoritoDocument::mapperDocumentToDomain).toList(); 
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			throw new ErroAoAcessarBancoDadosException();
+		}
 	}
 
 }

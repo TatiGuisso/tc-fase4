@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.grupo16.tcfase4.domain.Categoria;
 import com.grupo16.tcfase4.domain.Video;
 import com.grupo16.tcfase4.gateway.VideoRepositoryGateway;
 import com.grupo16.tcfase4.service.exception.VideoNaoEncontradoException;
@@ -46,5 +47,10 @@ public class ObterVideoUseCase {
 		}
 
 		return videoRepositoryGateway.buscaFiltrada(titulo, dataPublicacao, categoria);
+	}
+
+	public List<Video> obterPorCategoria(Categoria categoriaMaisFavorita) {
+		
+		return videoRepositoryGateway.obterPorCategoria(categoriaMaisFavorita);
 	}
 }
