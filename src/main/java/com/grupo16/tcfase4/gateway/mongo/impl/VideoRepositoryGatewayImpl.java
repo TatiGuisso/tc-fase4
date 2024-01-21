@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.grupo16.tcfase4.domain.Video;
 import com.grupo16.tcfase4.exception.ErroAoAcessarBancoDadosException;
@@ -120,4 +121,5 @@ public class VideoRepositoryGatewayImpl implements VideoRepositoryGateway {
 			throw new ErroAoAcessarBancoDadosException();
 		}
 	}
+
 }

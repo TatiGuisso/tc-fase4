@@ -1,9 +1,9 @@
 package com.grupo16.tcfase4.service;
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.grupo16.tcfase4.domain.Video;
+import com.grupo16.tcfase4.gateway.UploadRepositoryGateway;
 import com.grupo16.tcfase4.gateway.VideoRepositoryGateway;
 
 import lombok.AllArgsConstructor;
@@ -15,6 +15,8 @@ public class CriarAlterarVideoUseCase {
 	private VideoRepositoryGateway videoRepositoryGateway;
 	
 	private ObterVideoUseCase obterVideoUseCase;
+	
+	private UploadRepositoryGateway uploadRepositoryGateway;
 	
 	public String salvar(Video video) {
 		return videoRepositoryGateway.salvar(video);
@@ -34,8 +36,10 @@ public class CriarAlterarVideoUseCase {
 		videoRepositoryGateway.salvar(videoNovo);
 	}
 
-	public String upload(String videoId, MultipartFile file) {
-		// TODO Auto-generated method stub
+	public String upload(String videoId, byte[] file) {
+		
+		String url = uploadRepositoryGateway.upload(videoId, file);
+		
 		return null;
 	}
 	
