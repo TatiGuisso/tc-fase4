@@ -6,6 +6,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -153,23 +154,16 @@ class VideoControllerUnitTest {
 	}
 	
 	@Test
-	void deveFazerUpload() {
+	void deveFazerUpload() throws IOException {
 		String videoId = UUID.randomUUID().toString();
 		String contentType = "QVR37Hb9xm";
-		MultipartFile file = new MockMultipartFile(
-				"AC6RIMpusn", 
-				"yoBSqO69GA", 
-				"VNMZyotcIp", 
-				contentType.getBytes());
+		MultipartFile multipartFile = new MockMultipartFile("AC6RIMpusn","yoBSqO69GA","VNMZyotcIp",contentType.getBytes());
 		
-		String url = "www.url.com.br";
+		doNothing().when(criarAlterarVideoUseCase).upload(videoId, multipartFile.getBytes());
 		
-		when(criarAlterarVideoUseCase.upload(videoId, file)).thenReturn(url);
+		videoController.upload(videoId, multipartFile);
 		
-		String result = videoController.upload(videoId, file);
-		
-		verify(criarAlterarVideoUseCase).upload(videoId, file);
-		assertEquals(url, result);
+		verify(criarAlterarVideoUseCase).upload(videoId, multipartFile.getBytes());
 	}
 	
 }

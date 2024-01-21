@@ -150,16 +150,15 @@ public class VideoController {
 	}
 	
 	@PostMapping("{id}/upload")
-	public String upload(
+	public void upload(
 			@PathVariable(required = true, name = "videoId") String videoId,
 			@RequestParam(required = true, value = "file") MultipartFile multipartFile) throws IOException {
 		log.trace("Start videoId={}, file={}",videoId, multipartFile);
 		
 		byte[] file = multipartFile.getBytes();
 		
-		String url = criarAlterarVideoUseCase.upload(videoId, file);
+		criarAlterarVideoUseCase.upload(videoId, file);
 		
-		log.trace("End url={}",url);
-		return url;
+		log.trace("End");
 	}
 }

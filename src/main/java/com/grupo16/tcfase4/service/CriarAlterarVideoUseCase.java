@@ -3,7 +3,7 @@ package com.grupo16.tcfase4.service;
 import org.springframework.stereotype.Service;
 
 import com.grupo16.tcfase4.domain.Video;
-import com.grupo16.tcfase4.gateway.UploadRepositoryGateway;
+import com.grupo16.tcfase4.gateway.FileRepositoryGateway;
 import com.grupo16.tcfase4.gateway.VideoRepositoryGateway;
 
 import lombok.AllArgsConstructor;
@@ -16,7 +16,7 @@ public class CriarAlterarVideoUseCase {
 	
 	private ObterVideoUseCase obterVideoUseCase;
 	
-	private UploadRepositoryGateway uploadRepositoryGateway;
+	private FileRepositoryGateway uploadRepositoryGateway;
 	
 	public String salvar(Video video) {
 		return videoRepositoryGateway.salvar(video);
@@ -36,11 +36,8 @@ public class CriarAlterarVideoUseCase {
 		videoRepositoryGateway.salvar(videoNovo);
 	}
 
-	public String upload(String videoId, byte[] file) {
-		
-		String url = uploadRepositoryGateway.upload(videoId, file);
-		
-		return null;
+	public void upload(String videoId, byte[] file) {
+		uploadRepositoryGateway.upload(videoId, file);
 	}
 	
 }
