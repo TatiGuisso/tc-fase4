@@ -35,7 +35,7 @@ public class VideoRepositoryGatewayImpl implements VideoRepositoryGateway {
 		try {
 			return videoRepository.findAllByOrderByDataPublicacaoDesc(pageable).map(VideoDocument::mapperDocumentToDomain);
 		} catch (Exception e) {
-			log.error(e.getMessage());
+			log.error(e.getMessage(),e);
 			throw new ErroAoAcessarBancoDadosException();
 		}
 	}
@@ -48,7 +48,7 @@ public class VideoRepositoryGatewayImpl implements VideoRepositoryGateway {
 			return videoRepository.save(videoDocument).getId(); 
 			
 		} catch (Exception e) {
-			log.error(e.getMessage());
+			log.error(e.getMessage(),e);
 			throw new ErroAoAcessarBancoDadosException();
 		}
 	}
@@ -67,7 +67,7 @@ public class VideoRepositoryGatewayImpl implements VideoRepositoryGateway {
 			
 			return videoOptional;
 		} catch (Exception e) {
-			log.error(e.getMessage());
+			log.error(e.getMessage(),e);
 			throw new ErroAoAcessarBancoDadosException();
 		}
 	}

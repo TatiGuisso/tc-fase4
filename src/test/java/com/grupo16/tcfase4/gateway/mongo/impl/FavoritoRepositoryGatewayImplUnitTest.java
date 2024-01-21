@@ -152,5 +152,18 @@ class FavoritoRepositoryGatewayImplUnitTest {
 		
 	}
 	
+	@Test
+	void deveRetornarExceptionAoObterPorUsuarioId() {
+		String id = UUID.randomUUID().toString();
+		
+		doThrow(new RuntimeException()).when(favoritoRepository).findByUsuarioId(id);
+		
+		assertThrows(ErroAoAcessarBancoDadosException.class, 
+				() -> favoritoRepositoryGatewayImpl.obterPorUsuarioId(id));
+		
+		verify(favoritoRepository).findByUsuarioId(id);
+		
+	}
+	
 
 }

@@ -3,9 +3,13 @@ package com.grupo16.tcfase4.gateway.mongo.impl;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -106,5 +110,26 @@ class VideoRepositoryGatewayImplUnitTest {
 		verify(videoRepository).findById(id);
 		
 	}
-
+	
+	@Test
+	void deveObterPorCategoria() {
+		VideoDocument video1 = VideoDocument.builder().categoria("ACAO").build();
+		VideoDocument video2 = VideoDocument.builder().categoria("ACAO").build();
+		List<VideoDocument> videosDoc = Arrays.asList(video1, video2);
+		when(videoRepository.findTop3ByCategoria(Categoria.ACAO)).thenReturn(videosDoc);
+		
+		List<Video> videos = videoRepositoryGatewayImpl.obterPorCategoria(Categoria.ACAO);
+		
+		assertEquals(2, videos.size());
+	}
+	
+	@Test
+	void deveRetornarExceptionAoObterPorCategoria() {
+		
+		doThrow(new RuntimeException()).when(videoRepository).findTop3ByCategoria(Categoria.ACAO);
+		
+		assertThrows(ErroAoAcessarBancoDadosException.class, 
+				() -> videoRepositoryGatewayImpl.obterPorCategoria(Categoria.ACAO));
+	}
+	
 }

@@ -34,7 +34,7 @@ public class UsuarioRepositoryGatewayImpl implements UsuarioRepositoryGateway {
 			return usuarioOptional;
 			
 		} catch (Exception e) {
-			log.error(e.getMessage());
+			log.error(e.getMessage(),e);
 			throw new ErroAoAcessarBancoDadosException();
 		}
 		

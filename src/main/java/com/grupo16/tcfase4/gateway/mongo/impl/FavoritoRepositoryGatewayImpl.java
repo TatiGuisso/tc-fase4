@@ -27,7 +27,7 @@ public class FavoritoRepositoryGatewayImpl implements FavoritoRepositoryGateway 
 			FavoritoDocument favoritoDocument = new FavoritoDocument(favorito);
 			return favoritoRepository.save(favoritoDocument).getId();
 		} catch (Exception e) {
-			log.error(e.getMessage());
+			log.error(e.getMessage(),e);
 			throw new ErroAoAcessarBancoDadosException();
 		}
 		
@@ -48,7 +48,7 @@ public class FavoritoRepositoryGatewayImpl implements FavoritoRepositoryGateway 
 			return favoritoOp;
 			
 		} catch (Exception e) {
-			log.error(e.getMessage());
+			log.error(e.getMessage(),e);
 			throw new ErroAoAcessarBancoDadosException();
 		}
 		
@@ -60,7 +60,7 @@ public class FavoritoRepositoryGatewayImpl implements FavoritoRepositoryGateway 
 			List<FavoritoDocument> favoritosDoc = favoritoRepository.findByUsuarioId(usuarioId);
 			return favoritosDoc.stream().map(FavoritoDocument::mapperDocumentToDomain).toList(); 
 		} catch (Exception e) {
-			log.error(e.getMessage());
+			log.error(e.getMessage(),e);
 			throw new ErroAoAcessarBancoDadosException();
 		}
 	}
