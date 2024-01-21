@@ -49,8 +49,8 @@ public class ObterVideoUseCase {
 		return videoRepositoryGateway.buscaFiltrada(titulo, dataPublicacao, categoria);
 	}
 
-	public List<Video> obterPorCategoria(Categoria categoriaMaisFavorita) {
+	public List<Video> obter3PorCategoriaFavorita(Categoria categoriaMaisFavorita) {
 		
-		return videoRepositoryGateway.obterPorCategoria(categoriaMaisFavorita);
+		return videoRepositoryGateway.obter3PorCategoriaFavorita(categoriaMaisFavorita);
 	}
 }

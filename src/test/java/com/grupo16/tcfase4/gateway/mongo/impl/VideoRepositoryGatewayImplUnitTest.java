@@ -118,7 +118,7 @@ class VideoRepositoryGatewayImplUnitTest {
 		List<VideoDocument> videosDoc = Arrays.asList(video1, video2);
 		when(videoRepository.findTop3ByCategoria(Categoria.ACAO)).thenReturn(videosDoc);
 		
-		List<Video> videos = videoRepositoryGatewayImpl.obterPorCategoria(Categoria.ACAO);
+		List<Video> videos = videoRepositoryGatewayImpl.obter3PorCategoriaFavorita(Categoria.ACAO);
 		
 		assertEquals(2, videos.size());
 	}
@@ -129,7 +129,7 @@ class VideoRepositoryGatewayImplUnitTest {
 		doThrow(new RuntimeException()).when(videoRepository).findTop3ByCategoria(Categoria.ACAO);
 		
 		assertThrows(ErroAoAcessarBancoDadosException.class, 
-				() -> videoRepositoryGatewayImpl.obterPorCategoria(Categoria.ACAO));
+				() -> videoRepositoryGatewayImpl.obter3PorCategoriaFavorita(Categoria.ACAO));
 	}
 	
 }

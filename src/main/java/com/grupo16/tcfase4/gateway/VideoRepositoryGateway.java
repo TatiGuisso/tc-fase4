@@ -21,5 +21,5 @@ public interface VideoRepositoryGateway {
 
 	List<Video> buscaFiltrada(String titulo, LocalDate dataPublicacao, String categoria);
 
-	List<Video> obterPorCategoria(Categoria categoriaMaisFavorita);
+	List<Video> obter3PorCategoriaFavorita(Categoria categoriaMaisFavorita);
 }

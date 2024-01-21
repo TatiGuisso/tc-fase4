@@ -41,7 +41,7 @@ public class RecomendarVideoUseCase {
 		    }
 		}
 		
-		return obterVideoUseCase.obterPorCategoria(categoriaMaisFavorita);
+		return obterVideoUseCase.obter3PorCategoriaFavorita(categoriaMaisFavorita);
 	}
 
 }

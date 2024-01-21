@@ -60,13 +60,13 @@ class RecomendarVideoUseCaseUnitTest {
 		}
 		
 		ArgumentCaptor<Categoria> categoriaCaptor = ArgumentCaptor.forClass(Categoria.class);
-		when(obterVideoUseCase.obterPorCategoria(any(Categoria.class))).thenReturn(videosRecomendados);
+		when(obterVideoUseCase.obter3PorCategoriaFavorita(any(Categoria.class))).thenReturn(videosRecomendados);
 		
 		recomendarVideoUseCase.recomendar(usuarioId);
 		
 		verify(favoritoRepositoryGateway).obterPorUsuarioId(usuarioId);
 		verify(obterVideoUseCase, times(4)).obterPorId(anyString());
-		verify(obterVideoUseCase).obterPorCategoria(categoriaCaptor.capture());
+		verify(obterVideoUseCase).obter3PorCategoriaFavorita(categoriaCaptor.capture());
 		
 	}
 

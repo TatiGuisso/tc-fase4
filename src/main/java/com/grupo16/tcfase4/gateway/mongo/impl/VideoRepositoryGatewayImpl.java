@@ -110,7 +110,7 @@ public class VideoRepositoryGatewayImpl implements VideoRepositoryGateway {
 	}
 
 	@Override
-	public List<Video> obterPorCategoria(Categoria categoriaMaisFavorita) {
+	public List<Video> obter3PorCategoriaFavorita(Categoria categoriaMaisFavorita) {
 		try {
 			List<VideoDocument> videosDocument = videoRepository.findTop3ByCategoria(categoriaMaisFavorita);
 			
