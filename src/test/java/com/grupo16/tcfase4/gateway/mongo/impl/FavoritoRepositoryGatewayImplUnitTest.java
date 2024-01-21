@@ -9,6 +9,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -130,5 +132,25 @@ class FavoritoRepositoryGatewayImplUnitTest {
 		
 		verify(favoritoRepository).findByUsuarioIdAndVideoId(id, id);
 	}
+	
+	@Test
+	void deveObterPorUsuarioId() {
+		String id = UUID.randomUUID().toString();
+		FavoritoDocument favoritoDoc1 = FavoritoDocument.builder().id(UUID.randomUUID().toString()).build();
+		FavoritoDocument favoritoDoc2 = FavoritoDocument.builder().id(UUID.randomUUID().toString()).build();
+		
+		List<FavoritoDocument> favoritosDoc = Arrays.asList(favoritoDoc1, favoritoDoc2);
+		
+		when(favoritoRepository.findByUsuarioId(id)).thenReturn(favoritosDoc);
+		
+		List<Favorito> favoritos = favoritoRepositoryGatewayImpl.obterPorUsuarioId(id);
+		
+		verify(favoritoRepository).findByUsuarioId(id);
+		assertEquals(2, favoritos.size());
+		assertEquals(favoritoDoc1.getId(), favoritos.get(0).getId());
+		assertEquals(favoritoDoc2.getId(), favoritos.get(1).getId());
+		
+	}
+	
 
 }
