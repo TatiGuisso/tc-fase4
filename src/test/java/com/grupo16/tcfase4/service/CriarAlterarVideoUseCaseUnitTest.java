@@ -1,6 +1,7 @@
 package com.grupo16.tcfase4.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -17,6 +18,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.grupo16.tcfase4.domain.Categoria;
 import com.grupo16.tcfase4.domain.Video;
+import com.grupo16.tcfase4.gateway.FileRepositoryGateway;
 import com.grupo16.tcfase4.gateway.VideoRepositoryGateway;
 
 @ExtendWith(MockitoExtension.class)
@@ -30,6 +32,9 @@ class CriarAlterarVideoUseCaseUnitTest {
 
 	@Mock
 	private ObterVideoUseCase obterVideoUseCase;
+
+	@Mock
+	private FileRepositoryGateway fileRepositoryGateway;
 	
 	@Test
 	void deveSalvar() {
@@ -79,6 +84,18 @@ class CriarAlterarVideoUseCaseUnitTest {
 		assertEquals(videoNovo.getCategoria(), videoSalvo.getCategoria());
 		assertEquals(videoAntigo.getDataPublicacao(), videoSalvo.getDataPublicacao());
 		
+	}
+	
+	@Test
+	void deveFazerUpload() {
+		String videoId = UUID.randomUUID().toString();
+		byte[] file = "fdaffnldsgfksg".getBytes();
+		
+		doNothing().when(fileRepositoryGateway).upload(videoId, file);
+		
+		criarAlterarVideoUseCase.upload(videoId, file);
+		
+		verify(fileRepositoryGateway).upload(videoId, file);
 	}
 
 }
