@@ -4,6 +4,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.grupo16.tcfase4.gateway.FileRepositoryGateway;
@@ -15,11 +16,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class FileRepositoryGatewayImpl implements FileRepositoryGateway {
 
+	@Value("${localPath}")
+	private String localPath;
+	
 	@Override
 	public void upload(String videoId, byte[] file) {
 		
 		try {
-			Path path = Paths.get("/home/tati/Documentos/develop/curso/FIAP/tc-4/videos/" + videoId);
+			Path path = Paths.get(localPath + videoId);
 			
 			Files.write(path, file);
 			

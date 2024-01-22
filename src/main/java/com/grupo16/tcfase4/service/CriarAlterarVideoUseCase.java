@@ -16,7 +16,7 @@ public class CriarAlterarVideoUseCase {
 	
 	private ObterVideoUseCase obterVideoUseCase;
 	
-	private FileRepositoryGateway uploadRepositoryGateway;
+	private FileRepositoryGateway fileRepositoryGateway;
 	
 	public String salvar(Video video) {
 		return videoRepositoryGateway.salvar(video);
@@ -37,7 +37,7 @@ public class CriarAlterarVideoUseCase {
 	}
 
 	public void upload(String videoId, byte[] file) {
-		uploadRepositoryGateway.upload(videoId, file);
+		fileRepositoryGateway.upload(videoId, file);
 	}
 	
 }

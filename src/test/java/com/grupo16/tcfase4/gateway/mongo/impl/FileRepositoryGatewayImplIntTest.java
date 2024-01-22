@@ -5,14 +5,18 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 
 import com.grupo16.tcfase4.service.exception.VideoNaoEncontradoException;
+import static org.springframework.test.util.ReflectionTestUtils.setField;
 
 class FileRepositoryGatewayImplIntTest {
 	
 	@Test
 	void deveFazerUpload() {
+
 		FileRepositoryGatewayImpl fileRepository = new FileRepositoryGatewayImpl();
 		
-		fileRepository.upload("fdsfsdffdf.avi", "adgagagads".getBytes());
+		setField(fileRepository, "localPath", "/home/tati/Documentos/develop/curso/FIAP/tc-4/videos/");
+		
+		fileRepository.upload("testsese.avi", "adgagagads".getBytes());
 	}
 
 	@Test
