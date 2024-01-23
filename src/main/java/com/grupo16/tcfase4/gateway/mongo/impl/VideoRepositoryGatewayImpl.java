@@ -3,6 +3,7 @@ package com.grupo16.tcfase4.gateway.mongo.impl;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 import com.grupo16.tcfase4.domain.Categoria;
 import org.springframework.data.domain.Page;
@@ -11,7 +12,6 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.grupo16.tcfase4.domain.Video;
 import com.grupo16.tcfase4.exception.ErroAoAcessarBancoDadosException;
@@ -89,7 +89,10 @@ public class VideoRepositoryGatewayImpl implements VideoRepositoryGateway {
 			Criteria criteria = new Criteria();
 
 			if (titulo != null && !titulo.isEmpty()) {
-				criteria.and("titulo").regex(titulo, "i");
+				boolean pattern = Pattern.matches("[a-zA-Z0-9 ]*", titulo);
+				if (pattern) {
+					criteria.and("titulo").regex(titulo, "i");
+				}
 			}
 
 			if (dataPublicacao != null) {
