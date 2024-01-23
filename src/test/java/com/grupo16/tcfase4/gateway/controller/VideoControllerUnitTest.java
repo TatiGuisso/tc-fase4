@@ -8,6 +8,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -75,6 +76,36 @@ class VideoControllerUnitTest {
 
 		verify(obterVideoUseCase).listarTodos(any(Pageable.class));
 		assertEquals(1, videoPage.getContent().size());
+	}
+
+	@Test
+	void devePesquisar() {
+		String titulo = "Teste";
+		LocalDate dataPublicacao = LocalDate.of(2024, 1, 22);
+		String categoria = "ACAO";
+
+		List<Video> videos = Arrays.asList(
+				Video.builder()
+						.titulo("Filme 1")
+						.dataPublicacao(LocalDate.now())
+						.categoria(Categoria.ACAO).build(),
+				Video.builder().titulo("Filme 2")
+						.dataPublicacao(LocalDate.now())
+						.categoria(Categoria.COMEDIA).build(),
+				Video.builder().titulo("Filme 3")
+						.dataPublicacao(LocalDate.now())
+						.categoria(Categoria.ACAO).build()
+		);
+
+		when(obterVideoUseCase.buscaFiltrada(titulo, dataPublicacao, categoria))
+				.thenReturn(videos.stream()
+						.filter(video -> video.getCategoria().equals(Categoria.ACAO))
+						.toList());
+
+		List<VideoJson> result = videoController.pesquisar(titulo, dataPublicacao, categoria);
+
+		verify(obterVideoUseCase).buscaFiltrada(titulo, dataPublicacao, categoria);
+		assertEquals(2, result.size());
 	}
 
 	@Test
