@@ -161,4 +161,16 @@ public class VideoController {
 		
 		log.trace("End");
 	}
+	
+	@GetMapping("{id}/url")
+	public String obterUrl(
+			@PathVariable(required=true, name="id") String videoId) {
+		log.trace("Start videoId={}",videoId);
+		
+		String url = obterVideoUseCase.obterUrl(videoId);
+		
+		log.trace("End url={}",url);
+		return url;		
+	}
+	
 }

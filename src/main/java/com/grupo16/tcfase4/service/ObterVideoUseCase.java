@@ -45,6 +45,8 @@ public class ObterVideoUseCase {
 			// TODO: criar uma nova exceção?
 			throw new VideoNaoEncontradoException();
 		}
+		
+		//TODO: ACHO Q NÃO PRECISA DE EXCEPTION PARA ESTE METODO. se não tem resultado deixa retornar uma lista vazia.
 
 		return videoRepositoryGateway.buscaFiltrada(titulo, dataPublicacao, categoria);
 	}
@@ -53,4 +55,5 @@ public class ObterVideoUseCase {
 		
 		return videoRepositoryGateway.obter3PorCategoriaFavorita(categoriaMaisFavorita);
 	}
+
 }

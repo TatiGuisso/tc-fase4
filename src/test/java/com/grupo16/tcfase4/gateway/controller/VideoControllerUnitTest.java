@@ -166,4 +166,16 @@ class VideoControllerUnitTest {
 		verify(criarAlterarVideoUseCase).upload(videoId, multipartFile.getBytes());
 	}
 	
+	@Test
+	void deveObterUrl() {
+		String videoId = UUID.randomUUID().toString();
+		String url = "www.video.com.br";
+		when(obterVideoUseCase.obterUrl(videoId)).thenReturn(url);
+		
+		String result = videoController.obterUrl(videoId);
+		
+		verify(obterVideoUseCase).obterUrl(videoId);
+		assertEquals(url, result);
+	}
+	
 }
