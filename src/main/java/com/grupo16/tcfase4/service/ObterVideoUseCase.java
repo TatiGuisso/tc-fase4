@@ -40,14 +40,6 @@ public class ObterVideoUseCase {
 	}
 
 	public List<Video> buscaFiltrada(String titulo, LocalDate dataPublicacao, String categoria) {
-		if (titulo == null && dataPublicacao == null && categoria == null) {
-			log.warn("Nenhum filtro informado");
-			// TODO: criar uma nova exceção?
-			throw new VideoNaoEncontradoException();
-		}
-		
-		//TODO: ACHO Q NÃO PRECISA DE EXCEPTION PARA ESTE METODO. se não tem resultado deixa retornar uma lista vazia.
-
 		return videoRepositoryGateway.buscaFiltrada(titulo, dataPublicacao, categoria);
 	}
 
