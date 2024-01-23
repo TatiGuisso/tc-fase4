@@ -1,6 +1,7 @@
 package com.grupo16.tcfase4.gateway.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -8,6 +9,7 @@ import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,6 +19,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -49,7 +54,26 @@ class VideoControllerUnitTest {
 	
 	@Mock
 	private RecomendarVideoUseCase recomendarVideoUseCase;
-	
+
+
+	@Test
+	void deveListar() {
+		Page<Video> videoPage = new PageImpl<>(Collections.singletonList(
+				Video.builder()
+						.id(UUID.randomUUID().toString())
+						.titulo("Teste")
+						.descricao("Teste de paginação")
+						.categoria(Categoria.FICCAO)
+						.build()));
+
+		when(obterVideoUseCase.listarTodos(any(Pageable.class))).thenReturn(videoPage);
+
+		videoController.listar(0, 5);
+
+		verify(obterVideoUseCase).listarTodos(any(Pageable.class));
+		assertEquals(1, videoPage.getContent().size());
+	}
+
 	@Test
 	void deveSalvar() {
 		Video video = Video.builder().id(UUID.randomUUID().toString()).build();
@@ -82,8 +106,11 @@ class VideoControllerUnitTest {
 	@Test
 	void deveRemover() {
 		String videoId = UUID.randomUUID().toString();
+
 		doNothing().when(removerVideoUseCase).remover(videoId);
-		videoController.remover(videoId);		
+
+		videoController.remover(videoId);
+
 		verify(removerVideoUseCase).remover(videoId);
 	}
 	
@@ -171,9 +198,9 @@ class VideoControllerUnitTest {
 		String videoId = UUID.randomUUID().toString();
 		String url = "www.video.com.br";
 		when(obterVideoUseCase.obterUrl(videoId)).thenReturn(url);
-		
+
 		String result = videoController.obterUrl(videoId);
-		
+
 		verify(obterVideoUseCase).obterUrl(videoId);
 		assertEquals(url, result);
 	}
