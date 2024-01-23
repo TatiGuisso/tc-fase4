@@ -22,6 +22,7 @@ class VideoJsonUnitTest {
 				.descricao("BlaBla")
 				.categoria("COMEDIA")
 				.url("www.anyvideo.com")
+				.quantidadeVisualizacao(0L)
 				.build();
 		
 		Video video = videoJson.mapperJsonToDomain(videoJson.getId());
@@ -31,6 +32,7 @@ class VideoJsonUnitTest {
 		assertEquals(videoJson.getDescricao(), video.getDescricao());
 		assertEquals(videoJson.getCategoria(), video.getCategoria().toString());
 		assertEquals(videoJson.getUrl(), video.getUrl());
+		assertEquals(0L, video.getQuantidadeVisualizacao());
 		
 	}
 	

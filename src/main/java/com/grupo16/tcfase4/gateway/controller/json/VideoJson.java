@@ -42,6 +42,7 @@ public class VideoJson {
 				.url(url)
 				.dataPublicacao(LocalDate.now())
 				.categoria(Categoria.valueOf(categoria))
+				.quantidadeVisualizacao(0L)
 				.build();
 	}
 	

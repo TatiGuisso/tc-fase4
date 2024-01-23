@@ -31,6 +31,7 @@ public class CriarAlterarVideoUseCase {
 				.descricao(video.getDescricao())
 				.categoria(video.getCategoria())
 				.dataPublicacao(videoAntigo.getDataPublicacao())
+				.quantidadeVisualizacao(videoAntigo.getQuantidadeVisualizacao())
 				.build();
 		
 		videoRepositoryGateway.salvar(videoNovo);
