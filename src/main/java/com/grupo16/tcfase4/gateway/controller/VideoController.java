@@ -23,6 +23,7 @@ import com.grupo16.tcfase4.domain.Video;
 import com.grupo16.tcfase4.gateway.controller.json.VideoJson;
 import com.grupo16.tcfase4.service.CriarAlterarVideoUseCase;
 import com.grupo16.tcfase4.service.CriarFavoritoUseCase;
+import com.grupo16.tcfase4.service.ObterUrlVideoUseCase;
 import com.grupo16.tcfase4.service.ObterVideoUseCase;
 import com.grupo16.tcfase4.service.RecomendarVideoUseCase;
 import com.grupo16.tcfase4.service.RemoverVideoUseCase;
@@ -44,6 +45,8 @@ public class VideoController {
 	private RemoverVideoUseCase removerVideoUseCase;
 
 	private ObterVideoUseCase obterVideoUseCase;
+
+	private ObterUrlVideoUseCase obterUrlVideoUseCase;
 	
 	private RecomendarVideoUseCase recomendarVideoUseCase;
 
@@ -167,7 +170,7 @@ public class VideoController {
 			@PathVariable(required=true, name="id") String videoId) {
 		log.trace("Start videoId={}",videoId);
 		
-		String url = obterVideoUseCase.obterUrl(videoId);
+		String url = obterUrlVideoUseCase.obterUrl(videoId);
 		
 		log.trace("End url={}",url);
 		return url;		

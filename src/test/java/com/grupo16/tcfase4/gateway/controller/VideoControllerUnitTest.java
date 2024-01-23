@@ -13,7 +13,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -30,6 +29,7 @@ import com.grupo16.tcfase4.domain.Video;
 import com.grupo16.tcfase4.gateway.controller.json.VideoJson;
 import com.grupo16.tcfase4.service.CriarAlterarVideoUseCase;
 import com.grupo16.tcfase4.service.CriarFavoritoUseCase;
+import com.grupo16.tcfase4.service.ObterUrlVideoUseCase;
 import com.grupo16.tcfase4.service.ObterVideoUseCase;
 import com.grupo16.tcfase4.service.RecomendarVideoUseCase;
 import com.grupo16.tcfase4.service.RemoverVideoUseCase;
@@ -48,6 +48,9 @@ class VideoControllerUnitTest {
 
 	@Mock
 	private ObterVideoUseCase obterVideoUseCase;
+
+	@Mock
+	private ObterUrlVideoUseCase obterUrlVideoUseCase;
 	
 	@Mock
 	private CriarFavoritoUseCase favoritoUseCase;
@@ -197,11 +200,11 @@ class VideoControllerUnitTest {
 	void deveObterUrl() {
 		String videoId = UUID.randomUUID().toString();
 		String url = "www.video.com.br";
-		when(obterVideoUseCase.obterUrl(videoId)).thenReturn(url);
+		when(obterUrlVideoUseCase.obterUrl(videoId)).thenReturn(url);
 
 		String result = videoController.obterUrl(videoId);
 
-		verify(obterVideoUseCase).obterUrl(videoId);
+		verify(obterUrlVideoUseCase).obterUrl(videoId);
 		assertEquals(url, result);
 	}
 	
