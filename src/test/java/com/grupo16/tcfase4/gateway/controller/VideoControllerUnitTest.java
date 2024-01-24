@@ -155,7 +155,7 @@ class VideoControllerUnitTest {
 				.id(id)
 				.titulo("ABCD")
 				.descricao("Novo filme")
-				.categoria(Categoria.GERRA)
+				.categoria(Categoria.GUERRA)
 				.build();
 		
 		when(obterVideoUseCase.obterPorId(id)).thenReturn(video);
@@ -192,13 +192,13 @@ class VideoControllerUnitTest {
 				.id(UUID.randomUUID().toString())
 				.titulo("Platoon")
 				.descricao("Baseado em fatos reais.")
-				.categoria(Categoria.GERRA)
+				.categoria(Categoria.GUERRA)
 				.build();
 		Video video2 = Video.builder()
 				.id(UUID.randomUUID().toString())
 				.titulo("Soldado")
 				.descricao("Novo filme")
-				.categoria(Categoria.GERRA)
+				.categoria(Categoria.GUERRA)
 				.build();
 		
 		List<Video> videos = Arrays.asList(video1, video2);

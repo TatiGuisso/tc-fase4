@@ -8,7 +8,7 @@ public enum Categoria {
 	ACAO,
 	COMEDIA,
 	DRAMA,
-	GERRA,
+	GUERRA,
 	DOCUMENTARIO,
 	SUSPENSE,
 	FICCAO,
