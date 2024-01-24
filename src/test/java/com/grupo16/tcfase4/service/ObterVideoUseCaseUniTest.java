@@ -6,10 +6,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.grupo16.tcfase4.domain.Categoria;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -78,4 +81,27 @@ class ObterVideoUseCaseUniTest {
 		verify(videoRepositoryGateway).obterPorId(id);
 	}
 
+	@Test
+	void deveRealizarBuscaFiltrada() {
+		String titulo = "Teste";
+		LocalDate dataPublicacao = LocalDate.now();
+		String categoria = "ACAO";
+
+		List<Video> videos = Arrays.asList(
+				Video.builder()
+						.titulo("Filme 1")
+						.dataPublicacao(LocalDate.now())
+						.categoria(Categoria.ACAO).build(),
+				Video.builder().titulo("Filme 2")
+						.dataPublicacao(LocalDate.now())
+						.categoria(Categoria.COMEDIA).build());
+
+		when(videoRepositoryGateway.buscaFiltrada(titulo, dataPublicacao, categoria)).thenReturn(videos);
+
+		var result = obterVideoUseCase.buscaFiltrada(titulo, dataPublicacao, categoria);
+
+		assertThat(result).isNotEmpty()
+				.allSatisfy(video -> assertThat(video).isNotNull().isInstanceOf(Video.class));
+		verify(videoRepositoryGateway).buscaFiltrada(titulo, dataPublicacao, categoria);
+	}
 }
