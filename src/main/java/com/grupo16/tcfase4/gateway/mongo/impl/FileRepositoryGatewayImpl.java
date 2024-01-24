@@ -24,9 +24,7 @@ public class FileRepositoryGatewayImpl implements FileRepositoryGateway {
 		
 		try {
 			
-			//FIXME salvar todos os videos com a mesma extensão.
-			
-			Path path = Paths.get(localPath + videoId);
+			Path path = Paths.get(localPath + videoId + ".mp4");
 			
 			Files.write(path, file);
 			
@@ -41,7 +39,7 @@ public class FileRepositoryGatewayImpl implements FileRepositoryGateway {
 	public String obterUrl(String videoId) {
 		try {
 			
-			return localPath + videoId;
+			return localPath + "/" + videoId + ".mp4";
 			
 		} catch (Exception e) {
 			log.error(e.getMessage(),e);
