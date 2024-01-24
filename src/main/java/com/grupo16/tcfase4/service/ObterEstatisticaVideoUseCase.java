@@ -24,4 +24,9 @@ public class ObterEstatisticaVideoUseCase {
 
         return favoritoRepositoryGateway.obterPorUsuarioId(usuarioId).size();
     }
+
+    public Float obterMediaVisualizacoes() {
+        // TODO: implementar
+        return 0f;
+    }
 }
