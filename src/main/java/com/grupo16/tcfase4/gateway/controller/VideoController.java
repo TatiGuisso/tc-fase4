@@ -180,9 +180,11 @@ public class VideoController {
 
 		var totalVideos = obterEstatisticaVideoUseCase.obterTotalVideos();
 		var totalVideosFavoritados = obterEstatisticaVideoUseCase.obterTotalFavoritos(usuarioId);
+		var mediaVisualizacoes = obterEstatisticaVideoUseCase.obterMediaVisualizacoes();
 
 		log.trace("End");
 		return "Total de videos: " + totalVideos + "\n" +
-				"Total de videos favoritados: " + totalVideosFavoritados;
+				"Total de videos favoritados: " + totalVideosFavoritados + "\n" +
+				"Media de visualizacoes: " + mediaVisualizacoes;
 	}
 }
