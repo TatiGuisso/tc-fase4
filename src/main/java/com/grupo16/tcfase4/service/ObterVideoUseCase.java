@@ -25,7 +25,7 @@ public class ObterVideoUseCase {
 	
 
 	public Page<Video> listarTodos(Pageable pagina) {
-		return videoRepositoryGateway.listarTodos(pagina);
+		return videoRepositoryGateway.obterTodosPageable(pagina);
 	}
 
 	public Video obterPorId(String id) {
