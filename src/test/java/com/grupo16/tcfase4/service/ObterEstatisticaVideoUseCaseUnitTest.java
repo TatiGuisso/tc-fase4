@@ -65,4 +65,23 @@ class ObterEstatisticaVideoUseCaseUnitTest {
         assertEquals(2, result);
         verify(favoritoRepositoryGateway).obterPorUsuarioId(usuario.getId());
     }
+
+    @Test
+    void deveObterMediaVisualizacoes() {
+    	List<Video> videos = List.of(
+    			Video.builder()
+                        .quantidadeVisualizacao(2L)
+                        .build(),
+    			Video.builder()
+                        .quantidadeVisualizacao(0L)
+                        .build()
+    	);
+
+    	when(videoRepositoryGateway.obterTodosList()).thenReturn(videos);
+
+    	var result = obterEstatisticaVideoUseCase.obterMediaVisualizacoes();
+
+    	assertEquals(1L, result);
+    	verify(videoRepositoryGateway).obterTodosList();
+    }
 }
