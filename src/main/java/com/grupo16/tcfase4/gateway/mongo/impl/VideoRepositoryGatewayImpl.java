@@ -32,7 +32,7 @@ public class VideoRepositoryGatewayImpl implements VideoRepositoryGateway {
 	private final MongoTemplate mongoTemplate;
 
 	@Override
-	public Page<Video> listarTodos(Pageable pageable) {
+	public Page<Video> obterTodosPageable(Pageable pageable) {
 		try {
 			return videoRepository.findAllByOrderByDataPublicacaoDesc(pageable).map(VideoDocument::mapperDocumentToDomain);
 		} catch (Exception e) {
@@ -125,4 +125,13 @@ public class VideoRepositoryGatewayImpl implements VideoRepositoryGateway {
 		}
 	}
 
+	@Override
+	public List<Video> obterTodosList() {
+		try {
+			return videoRepository.findAll().stream().map(VideoDocument::mapperDocumentToDomain).toList();
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw new ErroAoAcessarBancoDadosException();
+		}
+	}
 }
