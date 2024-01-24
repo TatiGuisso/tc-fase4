@@ -1,6 +1,9 @@
 package com.grupo16.tcfase4.service;
 
+import com.grupo16.tcfase4.domain.Favorito;
+import com.grupo16.tcfase4.domain.Usuario;
 import com.grupo16.tcfase4.domain.Video;
+import com.grupo16.tcfase4.gateway.FavoritoRepositoryGateway;
 import com.grupo16.tcfase4.gateway.VideoRepositoryGateway;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -9,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
@@ -24,6 +28,9 @@ class ObterEstatisticaVideoUseCaseUnitTest {
     @Mock
     private VideoRepositoryGateway videoRepositoryGateway;
 
+    @Mock
+    private FavoritoRepositoryGateway favoritoRepositoryGateway;
+
 
     @Test
     void deveObterTotalVideos() {
@@ -38,5 +45,24 @@ class ObterEstatisticaVideoUseCaseUnitTest {
 
         assertEquals(3, result);
         verify(videoRepositoryGateway).obterTodosList();
+    }
+
+    @Test
+    void deveObterTotalFavoritos() {
+        Usuario usuario = Usuario.builder()
+                .id(UUID.randomUUID().toString())
+                .nome("User Teste")
+                .build();
+
+        List<Favorito> favoritosList = List.of(
+                Favorito.builder().build(),
+                Favorito.builder().build());
+
+        when(favoritoRepositoryGateway.obterPorUsuarioId(usuario.getId())).thenReturn(favoritosList);
+
+        var result = obterEstatisticaVideoUseCase.obterTotalFavoritos(usuario.getId());
+
+        assertEquals(2, result);
+        verify(favoritoRepositoryGateway).obterPorUsuarioId(usuario.getId());
     }
 }
