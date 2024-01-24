@@ -12,7 +12,7 @@ import com.grupo16.tcfase4.domain.Video;
 
 public interface VideoRepositoryGateway {
 
-	Page<Video> listarTodos(Pageable pageable);
+	Page<Video> obterTodosPageable(Pageable pageable);
 
 	String salvar(Video video);
 
@@ -24,4 +24,5 @@ public interface VideoRepositoryGateway {
 
 	List<Video> obter3PorCategoriaFavorita(Categoria categoriaMaisFavorita);
 
+	List<Video> obterTodosList();
 }
