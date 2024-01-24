@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.grupo16.tcfase4.service.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -21,12 +22,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.grupo16.tcfase4.domain.Video;
 import com.grupo16.tcfase4.gateway.controller.json.VideoJson;
-import com.grupo16.tcfase4.service.CriarAlterarVideoUseCase;
-import com.grupo16.tcfase4.service.CriarFavoritoUseCase;
-import com.grupo16.tcfase4.service.ObterUrlVideoUseCase;
-import com.grupo16.tcfase4.service.ObterVideoUseCase;
-import com.grupo16.tcfase4.service.RecomendarVideoUseCase;
-import com.grupo16.tcfase4.service.RemoverVideoUseCase;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -49,6 +44,8 @@ public class VideoController {
 	private ObterUrlVideoUseCase obterUrlVideoUseCase;
 	
 	private RecomendarVideoUseCase recomendarVideoUseCase;
+
+	private ObterEstatisticaVideoUseCase obterEstatisticaVideoUseCase;
 
 
 	@GetMapping
@@ -175,5 +172,17 @@ public class VideoController {
 		log.trace("End url={}",url);
 		return url;		
 	}
-	
+
+	@GetMapping("estatisticas/{usuarioId}")
+	public String obterEstatisticas(
+			@PathVariable(required = true, name = "usuarioId") String usuarioId) {
+		log.trace("Start usuarioId={}", usuarioId);
+
+		var totalVideos = obterEstatisticaVideoUseCase.obterTotalVideos();
+		var totalVideosFavoritados = obterEstatisticaVideoUseCase.obterTotalFavoritos(usuarioId);
+
+		log.trace("End");
+		return "Total de videos: " + totalVideos + "\n" +
+				"Total de videos favoritados: " + totalVideosFavoritados;
+	}
 }
