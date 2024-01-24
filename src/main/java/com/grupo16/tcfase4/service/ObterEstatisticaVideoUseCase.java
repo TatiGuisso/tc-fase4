@@ -1,9 +1,12 @@
 package com.grupo16.tcfase4.service;
 
+import com.grupo16.tcfase4.domain.Video;
 import com.grupo16.tcfase4.gateway.FavoritoRepositoryGateway;
 import com.grupo16.tcfase4.gateway.VideoRepositoryGateway;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 @Service
@@ -25,8 +28,14 @@ public class ObterEstatisticaVideoUseCase {
         return favoritoRepositoryGateway.obterPorUsuarioId(usuarioId).size();
     }
 
-    public Float obterMediaVisualizacoes() {
-        // TODO: implementar
-        return 0f;
+    public Long obterMediaVisualizacoes() {
+
+        List<Video> videos = videoRepositoryGateway.obterTodosList();
+
+        if (!videos.isEmpty()) {
+            return videos.stream().mapToLong(Video::getQuantidadeVisualizacao).sum() / videos.size();
+        }
+
+        return 0L;
     }
 }
