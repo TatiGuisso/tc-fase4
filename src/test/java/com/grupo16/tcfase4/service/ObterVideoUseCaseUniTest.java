@@ -104,4 +104,20 @@ class ObterVideoUseCaseUniTest {
 				.allSatisfy(video -> assertThat(video).isNotNull().isInstanceOf(Video.class));
 		verify(videoRepositoryGateway).buscaFiltrada(titulo, dataPublicacao, categoria);
 	}
+	
+	@Test
+	void deveObter3VideosPorCategoriaFavorita() {
+		
+		List<Video> videos = Arrays.asList(
+				Video.builder().categoria(Categoria.ANIMACAO).build(),
+				Video.builder().categoria(Categoria.ANIMACAO).build(),
+				Video.builder().categoria(Categoria.ANIMACAO).build());
+		
+		when(videoRepositoryGateway.obter3PorCategoriaFavorita(Categoria.ANIMACAO)).thenReturn(videos);
+		
+		List<Video> resultList = obterVideoUseCase.obter3PorCategoriaFavorita(Categoria.ANIMACAO);
+		
+		verify(videoRepositoryGateway).obter3PorCategoriaFavorita(Categoria.ANIMACAO);
+		assertEquals(3, resultList.size());
+	}
 }
