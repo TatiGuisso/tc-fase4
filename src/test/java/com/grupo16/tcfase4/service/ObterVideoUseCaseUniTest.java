@@ -43,7 +43,7 @@ class ObterVideoUseCaseUniTest {
 				Video.builder().build(),
 				Video.builder().build()));
 
-		when(videoRepositoryGateway.listarTodos(any(Pageable.class))).thenReturn(listaDeVideos);
+		when(videoRepositoryGateway.obterTodosPageable(any(Pageable.class))).thenReturn(listaDeVideos);
 
 		var resultadoObtido = obterVideoUseCase.listarTodos(Pageable.unpaged());
 
@@ -51,7 +51,7 @@ class ObterVideoUseCaseUniTest {
 		assertThat(resultadoObtido.getContent())
 				.asList()
 				.allSatisfy(video -> assertThat(video).isNotNull().isInstanceOf(Video.class));
-		verify(videoRepositoryGateway, times(1)).listarTodos(any(Pageable.class));
+		verify(videoRepositoryGateway, times(1)).obterTodosPageable(any(Pageable.class));
 	}
 
 	@Test
