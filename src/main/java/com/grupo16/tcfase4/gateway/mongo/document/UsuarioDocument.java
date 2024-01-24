@@ -23,11 +23,6 @@ public class UsuarioDocument {
 	private String id;
 	private String nome;
 
-	public UsuarioDocument(Usuario usuario) {
-		this.id = usuario.getId();
-		this.nome = usuario.getNome();
-	}
-	
 	public Usuario mapperDocumentToDomain() {
 		return Usuario.builder()
 				.id(id)

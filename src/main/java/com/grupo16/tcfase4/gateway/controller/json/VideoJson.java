@@ -32,7 +32,6 @@ public class VideoJson {
 	
 	@NotBlank
 	private String categoria;
-	private List<FavoritoJson> favoritos;
 	
 	public Video mapperJsonToDomain(String videoId) {
 		return Video.builder()
