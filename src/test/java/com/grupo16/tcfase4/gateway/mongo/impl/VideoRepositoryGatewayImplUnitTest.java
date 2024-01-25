@@ -132,4 +132,11 @@ class VideoRepositoryGatewayImplUnitTest {
 				() -> videoRepositoryGatewayImpl.obter3PorCategoriaFavorita(Categoria.ACAO));
 	}
 	
+	@Test
+	void deveRemover() {
+		String videoId = UUID.randomUUID().toString();
+		videoRepositoryGatewayImpl.remover(videoId);
+		verify(videoRepository).deleteById(videoId);
+	}
+	
 }
