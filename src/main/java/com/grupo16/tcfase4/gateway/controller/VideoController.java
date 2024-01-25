@@ -173,18 +173,9 @@ public class VideoController {
 		return url;		
 	}
 
-	@GetMapping("estatisticas/{usuarioId}")
-	public String obterEstatisticas(
-			@PathVariable(required = true, name = "usuarioId") String usuarioId) {
-		log.trace("Start usuarioId={}", usuarioId);
+	@GetMapping("estatisticas")
+	public String obterEstatisticas() {
 
-		var totalVideos = obterEstatisticaVideoUseCase.obterTotalVideos();
-		var totalVideosFavoritados = obterEstatisticaVideoUseCase.obterTotalFavoritos(usuarioId);
-		var mediaVisualizacoes = obterEstatisticaVideoUseCase.obterMediaVisualizacoes();
-
-		log.trace("End");
-		return "Total de videos: " + totalVideos + "\n" +
-				"Total de videos favoritados: " + totalVideosFavoritados + "\n" +
-				"Media de visualizacoes: " + mediaVisualizacoes;
+		return obterEstatisticaVideoUseCase.obterEstatisticas();
 	}
 }
