@@ -139,4 +139,13 @@ class VideoRepositoryGatewayImplUnitTest {
 		verify(videoRepository).deleteById(videoId);
 	}
 	
+	@Test
+	void deveRetornarExceptionAoRemover() {
+		String videoId = UUID.randomUUID().toString();
+		doThrow(new RuntimeException()).when(videoRepository).deleteById(videoId);
+		
+		assertThrows(ErroAoAcessarBancoDadosException.class,
+				() -> videoRepositoryGatewayImpl.remover(videoId));
+	}
+	
 }
