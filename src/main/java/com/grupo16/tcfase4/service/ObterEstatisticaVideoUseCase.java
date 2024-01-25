@@ -18,17 +18,24 @@ public class ObterEstatisticaVideoUseCase {
     private FavoritoRepositoryGateway favoritoRepositoryGateway;
 
 
-    public int obterTotalVideos() {
+    public String obterEstatisticas() {
+
+        return "Total de videos: " + obterTotalVideos() + "\n" +
+                "Total de videos favoritados: " + obterTotalFavoritos() + "\n" +
+                "Media de visualizacoes: " + obterMediaVisualizacoes();
+    }
+
+    private int obterTotalVideos() {
 
         return videoRepositoryGateway.obterTodosList().size();
     }
 
-    public int obterTotalFavoritos(String usuarioId) {
+    private int obterTotalFavoritos() {
 
-        return favoritoRepositoryGateway.obterPorUsuarioId(usuarioId).size();
+        return favoritoRepositoryGateway.obterTodosReferenciandoVideoId().size();
     }
 
-    public Double obterMediaVisualizacoes() {
+    private Double obterMediaVisualizacoes() {
 
         List<Video> videos = videoRepositoryGateway.obterTodosList();
 
