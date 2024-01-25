@@ -28,14 +28,14 @@ public class ObterEstatisticaVideoUseCase {
         return favoritoRepositoryGateway.obterPorUsuarioId(usuarioId).size();
     }
 
-    public Long obterMediaVisualizacoes() {
+    public Double obterMediaVisualizacoes() {
 
         List<Video> videos = videoRepositoryGateway.obterTodosList();
 
         if (!videos.isEmpty()) {
-            return videos.stream().mapToLong(Video::getQuantidadeVisualizacao).sum() / videos.size();
+            return videos.stream().mapToDouble(Video::getQuantidadeVisualizacao).sum() / videos.size();
         }
 
-        return 0L;
+        return 0.0;
     }
 }
