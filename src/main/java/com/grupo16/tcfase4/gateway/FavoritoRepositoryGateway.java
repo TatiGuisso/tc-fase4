@@ -13,4 +13,5 @@ public interface FavoritoRepositoryGateway {
 
 	List<Favorito> obterPorUsuarioId(String usuarioId);
 
+	List<Favorito> obterTodosReferenciandoVideoId();
 }
