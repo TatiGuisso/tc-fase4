@@ -4,10 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -27,6 +24,10 @@ import com.grupo16.tcfase4.domain.Video;
 import com.grupo16.tcfase4.exception.ErroAoAcessarBancoDadosException;
 import com.grupo16.tcfase4.gateway.mongo.document.FavoritoDocument;
 import com.grupo16.tcfase4.gateway.mongo.repository.FavoritoRepository;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import org.springframework.data.mongodb.core.aggregation.AggregationResults;
+import org.springframework.data.mongodb.core.aggregation.TypedAggregation;
 
 @ExtendWith(MockitoExtension.class)
 class FavoritoRepositoryGatewayImplUnitTest {
@@ -36,6 +37,10 @@ class FavoritoRepositoryGatewayImplUnitTest {
 	
 	@Mock
 	private FavoritoRepository favoritoRepository;
+
+	@Mock
+	private MongoTemplate mongoTemplate;
+
 	
 	@Test
 	void deveSalvar() {
@@ -164,6 +169,38 @@ class FavoritoRepositoryGatewayImplUnitTest {
 		verify(favoritoRepository).findByUsuarioId(id);
 		
 	}
-	
 
+	@Test
+	void deveObterTodosReferenciandoVideoId() {
+		List<FavoritoDocument> favoritoDocumentList = Arrays.asList(
+				FavoritoDocument.builder()
+						.videoId("123456")
+						.build(),
+				FavoritoDocument.builder()
+						.videoId("123456")
+						.build());
+
+//		AggregationResults<FavoritoDocument> aggregationResultsMock = mock(AggregationResults.class);
+//		when(aggregationResultsMock.getMappedResults()).thenReturn(favoritoDocumentList);
+//
+//		TypedAggregation<FavoritoDocument> aggregation = Aggregation.newAggregation(
+//				FavoritoDocument.class,
+//				Aggregation.group("videoId"));
+//
+//		when(mongoTemplate.aggregate(eq(aggregation), eq(FavoritoDocument.class)))
+//				.thenReturn(aggregationResultsMock);
+
+		List<Favorito> result = favoritoRepositoryGatewayImpl.obterTodosReferenciandoVideoId();
+
+		assertEquals(1, result.size());
+	}
+
+	@Test
+	void deveRetornarExceptionAoObterTodosReferenciandoVideoId() {
+		doThrow(new RuntimeException())
+			.when(mongoTemplate).aggregate(any(TypedAggregation.class), eq(FavoritoDocument.class));
+
+		assertThrows(ErroAoAcessarBancoDadosException.class,
+				() -> favoritoRepositoryGatewayImpl.obterTodosReferenciandoVideoId());
+	}
 }
