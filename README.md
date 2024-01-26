@@ -527,17 +527,17 @@ Nossa plataforma também oferece funcionalidades de estatísticas, exibindo info
 
 <p align="right">(<a href="#readme-top">Ir ao topo</a>)</p>
 
-### ``POST``
-`*Para favoritar o video`
+### ``GET``
+`*Para visualizar estatísticas da plataforma`
 
 ```
-	/videos/{id}/favoritos/{usuarioId}
+	/videos/estatisticas
 ```
 <details>
   <summary>Exemplo Request Body:</summary>
 
 ```
-curl --location --request POST 'http://localhost:8080/videos/65b2ca7d0b134c5bdd2bf7c6/favoritos/65a71b4d2a165a93957d321d'
+curl --location 'http://localhost:8080/videos/estatisticas'
 ```
 
 </details>
@@ -546,10 +546,12 @@ curl --location --request POST 'http://localhost:8080/videos/65b2ca7d0b134c5bdd2
   <summary>Exemplo Responses:</summary>
 
 200 - _OK_
-`- Será retornado o id de favorito`
 
 ```
-65b310dbaf84df654ece47ea
+Total de videos: 7
+Total de videos favoritados: 6
+Media de visualizacoes: 1.2857142857142858
+
 ```
 
 </details>
@@ -558,35 +560,17 @@ curl --location --request POST 'http://localhost:8080/videos/65b2ca7d0b134c5bdd2
 ---------
 ### Usuário
 
->[ Base URL: http://localhost:8080 ]
+> UsuarioDocument
 
-//TODO 
-
-<p align="right">(<a href="#readme-top">Ir ao topo</a>)</p>
-
-### ``POST``
-`*Para favoritar o video`
-
-```
-	/videos/{id}/favoritos/{usuarioId}
-```
-<details>
-  <summary>Exemplo Request Body:</summary>
-
-```
-curl --location --request POST 'http://localhost:8080/videos/65b2ca7d0b134c5bdd2bf7c6/favoritos/65a71b4d2a165a93957d321d'
-```
-
-</details>
+Na versão atual do sistema, não há um endpoint disponível para o cadastro de usuários. Para garantir o funcionamento adequado do sistema, é essencial realizar uma carga inicial no banco de dados, inserindo os nomes das pessoas para criar os registros de usuário necessários. Isso assegurará que o sistema opere adequadamente. 
 
 <details>
-  <summary>Exemplo Responses:</summary>
-
-200 - _OK_
-`- Será retornado o id de favorito`
+  <summary>Modelo JSON para criar o usuário conforme mencionado:</summary>
 
 ```
-65b310dbaf84df654ece47ea
+{
+  "nome": "Nome Usuario"
+}
 ```
 
 </details>
