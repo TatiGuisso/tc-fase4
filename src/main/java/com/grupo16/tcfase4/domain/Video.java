@@ -15,10 +15,8 @@ public class Video {
 	private String id;
 	private String titulo;
 	private String descricao;
-	private String url;
 	private LocalDate dataPublicacao;
 	private Long quantidadeVisualizacao;
-	private List<Favorito> favoritos;
 	private Categoria categoria; 
 
 }

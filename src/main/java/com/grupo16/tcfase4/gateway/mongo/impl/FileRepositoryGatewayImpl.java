@@ -16,15 +16,18 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class FileRepositoryGatewayImpl implements FileRepositoryGateway {
 
-	@Value("${localPath}")
-	private String localPath;
+	@Value("${uploadPath}")
+	private String uploadPath;
+
+	@Value("${downloadUrl}")
+	private String downloadUrl;
 	
 	@Override
 	public void upload(String videoId, byte[] file) {
 		
 		try {
 			
-			Path path = Paths.get(localPath + videoId + ".mp4");
+			Path path = Paths.get(uploadPath + videoId + ".mp4");
 			
 			Files.write(path, file);
 			
@@ -39,7 +42,7 @@ public class FileRepositoryGatewayImpl implements FileRepositoryGateway {
 	public String obterUrl(String videoId) {
 		try {
 			
-			return localPath + "/" + videoId + ".mp4";
+			return downloadUrl + videoId + ".mp4";
 			
 		} catch (Exception e) {
 			log.error(e.getMessage(),e);

@@ -16,7 +16,7 @@ class FileRepositoryGatewayImplIntTest {
 
 		FileRepositoryGatewayImpl fileRepository = new FileRepositoryGatewayImpl();
 		
-		setField(fileRepository, "localPath", "/home/tati/Documentos/develop/curso/FIAP/tc-4/videos/");
+		setField(fileRepository, "uploadPath", "/home/tati/Documentos/develop/curso/FIAP/tc-4/videos/");
 		
 		fileRepository.upload("testsese.avi", "adgagagads".getBytes());
 	}

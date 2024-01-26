@@ -26,7 +26,6 @@ public class VideoDocument {
 	private String id;	
 	private String titulo;
 	private String descricao;
-	private String url;
 	private LocalDate dataPublicacao;
 	private Long quantidadeVisualizacao;
 	private String categoria;
@@ -35,7 +34,6 @@ public class VideoDocument {
 		this.id = video.getId();
 		this.titulo = video.getTitulo();
 		this.descricao = video.getDescricao();
-		this.url = video.getUrl();
 		this.dataPublicacao = video.getDataPublicacao();
 		this.quantidadeVisualizacao = video.getQuantidadeVisualizacao();
 		this.categoria = video.getCategoria().toString();
@@ -46,7 +44,6 @@ public class VideoDocument {
 				.id(id)
 				.titulo(titulo)
 				.descricao(descricao)
-				.url(url)
 				.dataPublicacao(dataPublicacao)
 				.quantidadeVisualizacao(quantidadeVisualizacao)
 				.categoria(Categoria.valueOf(categoria))

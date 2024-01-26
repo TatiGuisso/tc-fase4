@@ -21,7 +21,6 @@ class VideoDocumentUnitTest {
 				.titulo("TESTEAAA")
 				.descricao("BlaBla")
 				.categoria("COMEDIA")
-				.url("www.anyvideo.com")
 				.dataPublicacao(LocalDate.now())
 				.quantidadeVisualizacao(15L)
 				.build();
@@ -32,7 +31,6 @@ class VideoDocumentUnitTest {
 		assertEquals(videoDocument.getTitulo(), video.getTitulo());
 		assertEquals(videoDocument.getDescricao(), video.getDescricao());
 		assertEquals(videoDocument.getCategoria(), video.getCategoria().toString());
-		assertEquals(videoDocument.getUrl(), video.getUrl());
 		assertEquals(videoDocument.getDataPublicacao(), video.getDataPublicacao());
 		assertEquals(videoDocument.getQuantidadeVisualizacao(), video.getQuantidadeVisualizacao());
 	}

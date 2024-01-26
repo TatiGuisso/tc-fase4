@@ -2,12 +2,12 @@
 
 # Introdução
 
-O projeto em questão é uma aplicação de gerenciamento de vídeos, e apresenta uma solução para atender às necessidades de upload, armazenamento e download de vídeos de maneira eficaz e intuitiva.
+O projeto em questão é uma aplicação de gerenciamento de videos, e apresenta uma solução para atender às necessidades de upload, armazenamento e download de videos de maneira eficaz e intuitiva.
 
 
 ## Sumário
 * [Instruções](#instruções)
-* [Registro de Condutores](#registro-de-condutores)
+* [CRUD de Video](#crud-de-video)
 * [Registro de Veículo](#registro-de-veículo)
 * [Registro de Estacionamento](#registro-de-estacionamento)
 * [Notificação](#notificação)
@@ -28,39 +28,30 @@ O projeto em questão é uma aplicação de gerenciamento de vídeos, e apresent
 <a name="funcionalidades-do-projeto"></a>
 ## 🔨  Funcionalidades do projeto
 
-### Registro de Condutores
+### CRUD de Video
 
 >[ Base URL: http://localhost:8080 ]
 
-O registro de condutores permite que os usuários se cadastrem no sistema, fornecendo informações pessoais como nome, endereço e detalhes de contato.
+O CRUD de video contempla as funcionalidades de criar, atualizar, listar e excluir videos.
 
 <p align="right">(<a href="#readme-top">Ir ao topo</a>)</p>
 
 ### ``POST``  
-`*Para cadastro de Condutor`
+`*Para cadastrar Video`
 
 ```
-	/condutores
+	/videos
 ```
 <details>
   <summary>Exemplo Request:</summary>
 
 ```
-curl --location 'http://localhost:8080/usuarios' \
+curl --location 'http://localhost:8080/videos' \
 --header 'Content-Type: application/json' \
 --data '{
-    "nome": "Pedro Gonçalves Nunes",
-    "cpf": "041.276.747-33",
-    "email": "pedro_nunes@gmail.com",
-    "telefone": "(98)99764-0567",
-    "endereco": {
-        "rua": "Avenida Viana Vaz",
-        "numero": "914",
-        "bairro": "Centro",
-        "cidade": "Timon",
-        "estado": "MA",
-        "cep": "65630-150"
-    }
+    "titulo": "Robocop",
+    "descricao": "Policial fatalmente ferido é usado como cobaia por uma empresa de tecnologia robótica.",
+    "categoria": "FICCAO"
 }'
 ```
 </details>
@@ -69,28 +60,18 @@ curl --location 'http://localhost:8080/usuarios' \
   <summary>Exemplo Responses:</summary>
 
 201 - _Created_
-`- Será retornado o id do condutor`
+`- Será retornado o id do video`
 
 ```
-6544027c1d769121eb36feb1
+65a5b14ba6bf7a1d75bbc83d
 ```
 
 400 - _Bad Request_
 
 ```
 {
-    "code": "argumentNotValid",
-    "message": "cpf:número do registro de contribuinte individual brasileiro (CPF) inválido;"
-}
-```
-
-422 - _Unprocessable Entity_
-`- Caso o CPF já esteja cadastrado`
-
-```
-{
-    "code": "sgp.cpfJaCadastrado",
-    "message": "CPF já cadastrado"
+    "code": "tc.argumentNotValid",
+    "message": "titulo:não deve estar em branco;"
 }
 ```
 
@@ -99,16 +80,17 @@ curl --location 'http://localhost:8080/usuarios' \
 <p align="right">(<a href="#readme-top">Ir ao topo</a>)</p>
 
 ### ``GET``
+`*Para obter Video por id`
 
 ```
-	/condutores/{CPF}
+	/videos/{id}
 ```
 
 <details>
   <summary>Exemplo Request:</summary>
 
 ```
-curl --location 'http://localhost:8080/condutores/04127674733'
+curl --location 'http://localhost:8080/videos/65a5b14ba6bf7a1d75bbc83d'
 ```
 </details>
 
@@ -116,23 +98,16 @@ curl --location 'http://localhost:8080/condutores/04127674733'
   <summary>Exemplo Responses:</summary>
 
 200 - _OK_
-`- Será retornado o usuário`
+`- Será retornado o video`
 
 ```
 {
-    "id": "6544027c1d769121eb36feb1",
-    "nome": "Pedro Gonçalves Nunes",
-    "cpf": "04127674733",
-    "email": "pedro_nunes@gmail.com",
-    "telefone": "(98)99764-0567",
-    "endereco": {
-        "rua": "Avenida Viana Vaz",
-        "numero": "914",
-        "bairro": "Centro",
-        "cidade": "Timon",
-        "estado": "MA",
-        "cep": "65630-150"
-    }
+    "id": "65a5b14ba6bf7a1d75bbc83d",
+    "titulo": "Robocop",
+    "descricao": "Policial fatalmente ferido é usado como cobaia por uma empresa de tecnologia robótica",
+    "dataPublicacao": "2024-01-08",
+    "quantidadeVisualizacao": 2,
+    "categoria": "FICCAO"
 }
 ```
 
@@ -140,8 +115,104 @@ curl --location 'http://localhost:8080/condutores/04127674733'
 
 ```
 {
-    "code": "sgp.condutorNaoEncontrado",
-    "message": "Condutor não encontrado"
+    "code": "tc.videoNaoEncontrado",
+    "message": "Video não encontrado."
+}
+```
+</details>
+
+<p align="right">(<a href="#readme-top">Ir ao topo</a>)</p>
+
+### ``GET``
+`*Para obter a lista de videos paginado e ordenado por data publicação`
+
+```
+	/videos
+```
+
+<details>
+  <summary>Exemplo Request:</summary>
+
+```
+curl --location 'http://localhost:8080/videos?pagina=0&tamanho=5'
+```
+</details>
+
+<details>
+  <summary>Exemplo Responses:</summary>
+
+200 - _OK_
+`- Será retornada a lista de videos`
+
+```
+{
+    "content": [
+        {
+            "id": "65b0474705db02742c9d0bba",
+            "titulo": "Monstros",
+            "descricao": "Pessoas são obrigadas a atravessar o território hostil infectado por aliens.",
+            "dataPublicacao": "2024-01-23",
+            "quantidadeVisualizacao": 0,
+            "categoria": "TERROR"
+        },
+        {
+            "id": "65ac5e17bc5f92526a7184b7",
+            "titulo": "A Origem",
+            "descricao": "Em um mundo onde é possível entrar na mente humana e roubar segredos valiosos do inconsciente",
+            "dataPublicacao": "2024-01-20",
+            "quantidadeVisualizacao": 0,
+            "categoria": "FICCAO"
+        },
+        {
+            "id": "65ac5d60bc5f92526a7184b6",
+            "titulo": "Distrito 9",
+            "descricao": "Há 20 anos uma gigantesca nave espacial pairou sobre a capital da África do Sul",
+            "dataPublicacao": "2024-01-20",
+            "quantidadeVisualizacao": 3,
+            "categoria": "FICCAO"
+        },
+        {
+            "id": "65ac5e6ebc5f92526a7184b8",
+            "titulo": "Interestelar",
+            "descricao": "Um grupo de astronautas recebe a missão de verificar possíveis planetas para receberem a população mundial",
+            "dataPublicacao": "2024-01-20",
+            "quantidadeVisualizacao": 1,
+            "categoria": "FICCAO"
+        },
+        {
+            "id": "65a5bac7102f771509eae998",
+            "titulo": "Marley e Eu",
+            "descricao": "Filme baseado em fatos reais.",
+            "dataPublicacao": "2024-01-15",
+            "quantidadeVisualizacao": 0,
+            "categoria": "ROMANCE"
+        }
+    ],
+    "pageable": {
+        "pageNumber": 0,
+        "pageSize": 5,
+        "sort": {
+            "sorted": false,
+            "empty": true,
+            "unsorted": true
+        },
+        "offset": 0,
+        "paged": true,
+        "unpaged": false
+    },
+    "last": false,
+    "totalPages": 2,
+    "totalElements": 7,
+    "sort": {
+        "sorted": false,
+        "empty": true,
+        "unsorted": true
+    },
+    "first": true,
+    "size": 5,
+    "number": 0,
+    "numberOfElements": 5,
+    "empty": false
 }
 ```
 </details>
@@ -149,31 +220,22 @@ curl --location 'http://localhost:8080/condutores/04127674733'
 <p align="right">(<a href="#readme-top">Ir ao topo</a>)</p>
 
 ### ``PUT``
-`*Para alteração de dados do Condutor`
+`*Para alteração de dados do Video`
 
 ```
-	/condutores/{id}
+	/videos/{id}
 ```
 
 <details>
   <summary>Exemplo Request:</summary>
 
 ```
-curl --location --request PUT 'http://localhost:8080/condutores/6544027c1d769121eb36feb1' \
+curl --location --request PUT 'http://localhost:8080/videos/65a5b14ba6bf7a1d75bbc83d' \
 --header 'Content-Type: application/json' \
---data-raw '{
-    "nome": "Pedro Alves Nunes",
-    "cpf": "04127674733",
-    "email": "pedro_nunes@nunes.com",
-    "telefone": "(98)99764-0567",
-    "endereco": {
-        "rua": "Rua Viana Vaz",
-        "numero": "15",
-        "bairro": "Centro",
-        "cidade": "Timon",
-        "estado": "MA",
-        "cep": "65630-150"
-    }
+--data '{
+    "titulo": "Robocop - O Policial do Futuro",
+    "descricao": "Policial fatalmente ferido é usado como cobaia por uma empresa de tecnologia robótica",
+    "categoria": "ACAO"
 }'
 ```
 </details>
@@ -188,8 +250,8 @@ curl --location --request PUT 'http://localhost:8080/condutores/6544027c1d769121
 
 ```
 {
-    "code": "sgp.condutorNaoEncontrado",
-    "message": "Condutor não encontrado"
+    "code": "tc.videoNaoEncontrado",
+    "message": "Video não encontrado."
 }
 ```
 </details>
@@ -197,17 +259,17 @@ curl --location --request PUT 'http://localhost:8080/condutores/6544027c1d769121
 <p align="right">(<a href="#readme-top">Ir ao topo</a>)</p>
 
 ### ``DELETE``
-`*Para excluir Condutor`
+`*Para excluir video`
 
 ```
-	/condutores/{id}
+	/videos/{id}
 ```
 
 <details>
   <summary>Exemplo Request:</summary>
 
 ```
-curl --location --request DELETE 'http://localhost:8080/condutores/654404c222882b466fed9e00'
+curl --location --request DELETE 'http://localhost:8080/videos/65a5b026ecad581794fcb2d3'
 ```
 </details>
 
@@ -218,67 +280,107 @@ curl --location --request DELETE 'http://localhost:8080/condutores/654404c222882
 
 ```
 ```
-404 - _Not Found_  
 
-```
-{
-    "code": "sgp.condutorNaoEncontrado",
-    "message": "Condutor não encontrado"
-}
-```
 </details>
 
 <p align="right">(<a href="#readme-top">Ir ao topo</a>)</p>
 
 ---------
-### Registro de Veículo
+### Uploade de Video
 
 >[ Base URL: http://localhost:8080 ]
 
 
-A funcionalidade de registro de veículos permite que o condutor após o seu cadastro, inclua informações sobre seu(s) veículo(s). Essa etapa possibilita inclusão de detalhes de um ou vários veículos que o condutor possua ou opere.
 
 <p align="right">(<a href="#readme-top">Ir ao topo</a>)</p>
 
-### ``POST``
-`*Para cadastro de Veículo`
+### ``GET``
+`*Para pesquisar por videos utilizando filtros de busca`
 
 ```
-	/veiculos
+	/videos/filtros
 ```
 <details>
   <summary>Exemplo Request Body:</summary>
 
 ```
-curl --location 'http://localhost:8080/veiculos' \
---header 'Content-Type: application/json' \
---data '{
-    "marca": "VW - VolksWagen",
-    "modelo": "Gol Rallye 1.6 T. Flex 16V 5p",
-    "placa": "MUU-2202",
-    "condutor": {
-        "id": "6544027c1d769121eb36feb1"
-    }
-}'
+curl --location 'http://localhost:8080/videos/filtros?titulo=robocop&dataPublicacao=2024-01-08&categoria=ACAO'
 ```
 </details>
 
 <details>
   <summary>Exemplo Responses:</summary>
 
-201 - _Created_
-`- Será retornado o id do veículo`
+200 - _OK_
+`- Serão retornados os videos desejados`
 
 ```
-65441af928166b3360397af4
+[
+    {
+        "id": "65a5b14ba6bf7a1d75bbc83d",
+        "titulo": "Robocop - O Policial do Futuro",
+        "descricao": "Policial fatalmente ferido é usado como cobaia por uma empresa de tecnologia robótica",
+        "dataPublicacao": "2024-01-08",
+        "quantidadeVisualizacao": 2,
+        "categoria": "ACAO"
+    }
+]
 ```
-400 - _Bad Request
+200 - _OK_
+`- Caso não tenha encontrado nenhum registro`
 
 ```
-{
-    "code": "argumentNotValid",
-    "message": "placa:não deve estar em branco;"
-}
+[]
+```
+</details>
+<p align="right">(<a href="#readme-top">Ir ao topo</a>)</p>
+
+---------
+### Pesquisa por Videos
+
+>[ Base URL: http://localhost:8080 ]
+
+A pesquisa por filtros facilita a localização de videos desejados, permitindo que o usuário refine sua busca por: título, dataPublicacao ou categoria.
+
+<p align="right">(<a href="#readme-top">Ir ao topo</a>)</p>
+
+### ``GET``
+`*Para pesquisar por videos utilizando filtros de busca`
+
+```
+	/videos/filtros
+```
+<details>
+  <summary>Exemplo Request Body:</summary>
+
+```
+curl --location 'http://localhost:8080/videos/filtros?titulo=robocop&dataPublicacao=2024-01-08&categoria=ACAO'
+```
+</details>
+
+<details>
+  <summary>Exemplo Responses:</summary>
+
+200 - _OK_
+`- Serão retornados os videos desejados`
+
+```
+[
+    {
+        "id": "65a5b14ba6bf7a1d75bbc83d",
+        "titulo": "Robocop - O Policial do Futuro",
+        "descricao": "Policial fatalmente ferido é usado como cobaia por uma empresa de tecnologia robótica",
+        "dataPublicacao": "2024-01-08",
+        "quantidadeVisualizacao": 2,
+        "categoria": "ACAO"
+    }
+]
+```
+200 - _OK_
+`- Caso não tenha encontrado nenhum registro`
+
+```
+[]
 ```
 </details>
 <p align="right">(<a href="#readme-top">Ir ao topo</a>)</p>
@@ -765,7 +867,7 @@ Na versão atual do sistema, o administrador do estabelecimento insere manualmen
 - Boas práticas da Linguagem/Framework
 - Clean architecture
 - Banco de Dados MongoDB
-- JUnit e Mockito para implementação de testes unitários
+- Serviços em nuvem (AWS)
 
 <p align="right">(<a href="#readme-top">Ir ao topo</a>)</p>
 

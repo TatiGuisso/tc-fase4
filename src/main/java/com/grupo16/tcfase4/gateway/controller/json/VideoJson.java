@@ -1,7 +1,6 @@
 package com.grupo16.tcfase4.gateway.controller.json;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -26,7 +25,6 @@ public class VideoJson {
 	@NotBlank
 	private String titulo;
 	private String descricao;
-	private String url;
 	private LocalDate dataPublicacao;
 	private Long quantidadeVisualizacao;
 	
@@ -38,7 +36,6 @@ public class VideoJson {
 				.id(videoId == null ? this.id : videoId)
 				.titulo(titulo)
 				.descricao(descricao)
-				.url(url)
 				.dataPublicacao(LocalDate.now())
 				.categoria(Categoria.valueOf(categoria))
 				.quantidadeVisualizacao(0L)
@@ -49,9 +46,9 @@ public class VideoJson {
 		this.id = video.getId();
 		this.titulo = video.getTitulo();
 		this.descricao = video.getDescricao();
-		this.url = video.getUrl();
 		this.dataPublicacao = video.getDataPublicacao();
 		this.categoria = video.getCategoria().toString();
+		this.quantidadeVisualizacao = video.getQuantidadeVisualizacao();
 	}
 
 }
