@@ -3,15 +3,10 @@ package com.grupo16.tcfase4.gateway.mongo.impl;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,6 +21,9 @@ import com.grupo16.tcfase4.domain.Video;
 import com.grupo16.tcfase4.exception.ErroAoAcessarBancoDadosException;
 import com.grupo16.tcfase4.gateway.mongo.document.VideoDocument;
 import com.grupo16.tcfase4.gateway.mongo.repository.VideoRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
 @ExtendWith(MockitoExtension.class)
 class VideoRepositoryGatewayImplUnitTest {
@@ -35,7 +33,38 @@ class VideoRepositoryGatewayImplUnitTest {
 	
 	@InjectMocks
 	private VideoRepositoryGatewayImpl videoRepositoryGatewayImpl;
-	
+
+
+	@Test
+	void deveObterTodosPageable() {
+		Page<VideoDocument> videoPage = new PageImpl<>(Collections.singletonList(
+				VideoDocument.builder()
+						.id(UUID.randomUUID().toString())
+						.titulo("Teste")
+						.descricao("Teste de paginação")
+						.categoria("DRAMA")
+						.build()));
+
+		when(videoRepository.findAllByOrderByDataPublicacaoDesc(any(Pageable.class))).thenReturn(videoPage);
+
+		videoRepositoryGatewayImpl.obterTodosPageable(Pageable.unpaged());
+
+		verify(videoRepository).findAllByOrderByDataPublicacaoDesc(any(Pageable.class));
+	}
+
+	@Test
+	void deveGerarExceptionAoObterTodosPageable() {
+		var pageable = Pageable.unpaged();
+
+		doThrow(new RuntimeException())
+				.when(videoRepository).findAllByOrderByDataPublicacaoDesc(any(Pageable.class));
+
+		assertThrows(ErroAoAcessarBancoDadosException.class,
+				() -> videoRepositoryGatewayImpl.obterTodosPageable(pageable));
+
+		verify(videoRepository).findAllByOrderByDataPublicacaoDesc(any(Pageable.class));
+	}
+
 	@Test
 	void deveSalvarOuAlterar() {
 		Video video = Video.builder()
