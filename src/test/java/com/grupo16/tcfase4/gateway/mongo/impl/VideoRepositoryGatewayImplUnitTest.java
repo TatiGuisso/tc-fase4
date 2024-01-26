@@ -24,12 +24,17 @@ import com.grupo16.tcfase4.gateway.mongo.repository.VideoRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Query;
 
 @ExtendWith(MockitoExtension.class)
 class VideoRepositoryGatewayImplUnitTest {
 	
 	@Mock
 	private VideoRepository videoRepository;
+	
+	@Mock
+	private MongoTemplate mongoTemplate;
 	
 	@InjectMocks
 	private VideoRepositoryGatewayImpl videoRepositoryGatewayImpl;
@@ -209,5 +214,27 @@ class VideoRepositoryGatewayImplUnitTest {
 
 		assertThrows(ErroAoAcessarBancoDadosException.class,
 				() -> videoRepositoryGatewayImpl.obterTodosList());
+	}
+	
+	@Test
+	void deveObterPorFiltroTitulo() {
+		String titulo = "Titulo";
+		List<VideoDocument> videos = Arrays.asList(VideoDocument.builder()
+						.id(UUID.randomUUID().toString())
+						.titulo(titulo)
+						.categoria("COMEDIA")
+						.build());
+		
+		when(mongoTemplate.find(any(Query.class), eq(VideoDocument.class)))
+			.thenReturn(videos);
+		
+		List<Video> result = videoRepositoryGatewayImpl.buscaFiltrada(titulo, null, null);
+		
+		verify(mongoTemplate).find(any(Query.class), eq(VideoDocument.class));
+		
+		assertEquals(titulo, result.get(0).getTitulo());
+		assertEquals("COMEDIA", result.get(0).getCategoria().toString());
+		assertEquals(1, result.size());
+		
 	}
 }
