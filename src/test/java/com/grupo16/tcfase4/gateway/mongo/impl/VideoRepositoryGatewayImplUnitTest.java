@@ -256,4 +256,23 @@ class VideoRepositoryGatewayImplUnitTest {
 		assertEquals(dataTeste, result.get(0).getDataPublicacao());
 		assertEquals(1, result.size());
 	}
+
+	@Test
+	void deveObterPorFiltroCategoria() {
+		String categoria = "ACAO";
+		List<VideoDocument> videoDocumentList = Arrays.asList(
+				VideoDocument.builder()
+						.id(UUID.randomUUID().toString())
+						.categoria("ACAO")
+						.build());
+
+		when(mongoTemplate.find(any(Query.class), eq(VideoDocument.class))).thenReturn(videoDocumentList);
+
+		var result = videoRepositoryGatewayImpl.buscaFiltrada(null, null, categoria);
+
+		verify(mongoTemplate).find(any(Query.class), eq(VideoDocument.class));
+
+		assertEquals(categoria, result.get(0).getCategoria().toString());
+		assertEquals(1, result.size());
+	}
 }
