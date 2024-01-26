@@ -74,7 +74,7 @@ class ObterEstatisticaVideoUseCaseUnitTest {
 
     	var result = obterEstatisticaVideoUseCase.obterMediaVisualizacoes();
 
-    	assertEquals(1L, result);
+    	assertEquals(1.0, result);
     	verify(videoRepositoryGateway).obterTodosList();
     }
 }
