@@ -580,14 +580,14 @@ Na versão atual do sistema, não há um endpoint disponível para o cadastro de
 <a name="tecnologias"></a>
 ## 📍️ Tecnologias
 
-- As API's foram construídas em Java 17 utilizando Spring Framework 3.1.4
+- As API's foram construídas em Java 17 utilizando Spring Framework 3.2.1
 - Padrão REST na construção das rotas e retornos
 - SLF4J para registro de logs
 - Utilização de código limpo e princípios **SOLID**
 - Boas práticas da Linguagem/Framework
 - Clean architecture
 - Banco de Dados MongoDB
-- Serviços em nuvem (AWS)
+- JUnit e Mockito
 
 <p align="right">(<a href="#readme-top">Ir ao topo</a>)</p>
 
