@@ -275,4 +275,12 @@ class VideoRepositoryGatewayImplUnitTest {
 		assertEquals(categoria, result.get(0).getCategoria().toString());
 		assertEquals(1, result.size());
 	}
+
+	@Test
+	void deveRetornarExceptionAoObterPorFiltro() {
+		doThrow(new RuntimeException()).when(mongoTemplate).find(any(Query.class), eq(VideoDocument.class));
+
+		assertThrows(ErroAoAcessarBancoDadosException.class,
+				() -> videoRepositoryGatewayImpl.buscaFiltrada(null, null, null));
+	}
 }
