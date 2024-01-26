@@ -14,6 +14,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+import com.grupo16.tcfase4.service.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -28,12 +29,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.grupo16.tcfase4.domain.Categoria;
 import com.grupo16.tcfase4.domain.Video;
 import com.grupo16.tcfase4.gateway.controller.json.VideoJson;
-import com.grupo16.tcfase4.service.CriarAlterarVideoUseCase;
-import com.grupo16.tcfase4.service.CriarFavoritoUseCase;
-import com.grupo16.tcfase4.service.ObterUrlVideoUseCase;
-import com.grupo16.tcfase4.service.ObterVideoUseCase;
-import com.grupo16.tcfase4.service.RecomendarVideoUseCase;
-import com.grupo16.tcfase4.service.RemoverVideoUseCase;
 
 @ExtendWith(MockitoExtension.class)
 class VideoControllerUnitTest {
@@ -58,6 +53,9 @@ class VideoControllerUnitTest {
 	
 	@Mock
 	private RecomendarVideoUseCase recomendarVideoUseCase;
+
+	@Mock
+	private ObterEstatisticaVideoUseCase obterEstatisticaVideoUseCase;
 
 
 	@Test
@@ -238,5 +236,14 @@ class VideoControllerUnitTest {
 		verify(obterUrlVideoUseCase).obterUrl(videoId);
 		assertEquals(url, result);
 	}
-	
+
+	@Test
+	void deveObterEstatisticas() {
+		when(obterEstatisticaVideoUseCase.obterEstatisticas()).thenReturn("Estatisticas");
+
+		String result = videoController.obterEstatisticas();
+
+		verify(obterEstatisticaVideoUseCase).obterEstatisticas();
+		assertEquals("Estatisticas", result);
+	}
 }
