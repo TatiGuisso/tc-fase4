@@ -461,12 +461,12 @@ curl --location --request POST 'http://localhost:8080/videos/65b2ca7d0b134c5bdd2
 
 >[ Base URL: http://localhost:8080 ]
 
-//TODO 
+Nosso sistema oferece a funcionalidade de recomendar vídeos aos usuários com base em suas listas de favoritos. 
 
 <p align="right">(<a href="#readme-top">Ir ao topo</a>)</p>
 
 ### ``GET``
-`*Para recomendar videos`
+`*Para recomendação de videos`
 
 ```
 	/videos/recomendacoes/{usuarioId}
@@ -523,7 +523,7 @@ curl --location 'http://localhost:8080/videos/recomendacoes/65a71b4d2a165a93957d
 
 >[ Base URL: http://localhost:8080 ]
 
-//TODO 
+Nossa plataforma também oferece funcionalidades de estatísticas, exibindo informações como a quantidade total de vídeos, o número de vídeos favoritados e a média de visualizações. Esses dados permitem aos usuários e administradores compreenderem melhor o uso da plataforma e o envolvimento com o conteúdo. 
 
 <p align="right">(<a href="#readme-top">Ir ao topo</a>)</p>
 
