@@ -164,7 +164,9 @@ class VideoRepositoryGatewayImplUnitTest {
 	@Test
 	void deveRemover() {
 		String videoId = UUID.randomUUID().toString();
+
 		videoRepositoryGatewayImpl.remover(videoId);
+
 		verify(videoRepository).deleteById(videoId);
 	}
 	
@@ -176,5 +178,36 @@ class VideoRepositoryGatewayImplUnitTest {
 		assertThrows(ErroAoAcessarBancoDadosException.class,
 				() -> videoRepositoryGatewayImpl.remover(videoId));
 	}
-	
+
+	@Test
+	void deveObterTodosList() {
+		List<VideoDocument> videoDocumentList = List.of(
+				VideoDocument.builder()
+						.id(UUID.randomUUID().toString())
+						.categoria("COMEDIA")
+						.build(),
+				VideoDocument.builder()
+						.id(UUID.randomUUID().toString())
+						.categoria("ACAO")
+						.build(),
+				VideoDocument.builder()
+						.id(UUID.randomUUID().toString())
+						.categoria("DRAMA")
+						.build());
+
+		when(videoRepository.findAll()).thenReturn(videoDocumentList);
+
+		var result = videoRepositoryGatewayImpl.obterTodosList();
+
+		verify(videoRepository).findAll();
+		assertEquals(3, result.size());
+	}
+
+	@Test
+	void deveRetornarExceptionAoObterTodosList() {
+		doThrow(new RuntimeException()).when(videoRepository).findAll();
+
+		assertThrows(ErroAoAcessarBancoDadosException.class,
+				() -> videoRepositoryGatewayImpl.obterTodosList());
+	}
 }
