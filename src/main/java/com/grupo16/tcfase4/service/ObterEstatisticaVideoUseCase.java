@@ -25,17 +25,17 @@ public class ObterEstatisticaVideoUseCase {
                 "Media de visualizacoes: " + obterMediaVisualizacoes();
     }
 
-    private int obterTotalVideos() {
+    protected int obterTotalVideos() {
 
         return videoRepositoryGateway.obterTodosList().size();
     }
 
-    private int obterTotalFavoritos() {
+    protected int obterTotalFavoritos() {
 
         return favoritoRepositoryGateway.obterTodosReferenciandoVideoId().size();
     }
 
-    private Double obterMediaVisualizacoes() {
+    protected Double obterMediaVisualizacoes() {
 
         List<Video> videos = videoRepositoryGateway.obterTodosList();
 
