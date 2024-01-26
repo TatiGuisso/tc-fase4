@@ -31,6 +31,34 @@ class ObterEstatisticaVideoUseCaseUnitTest {
 
 
     @Test
+    void deveObterEstatisticas() {
+        List<Video> videosList = List.of(
+                Video.builder()
+                        .quantidadeVisualizacao(1L)
+                        .build(),
+                Video.builder()
+                        .quantidadeVisualizacao(1L)
+                        .build(),
+                Video.builder()
+                        .quantidadeVisualizacao(1L)
+                        .build());
+
+        List<Favorito> favoritosList = List.of(
+                Favorito.builder().build(),
+                Favorito.builder().build());
+
+        String resultado = """
+                Total de videos: 3
+                Total de videos favoritados: 2
+                Media de visualizacoes: 1.0""";
+
+        when(videoRepositoryGateway.obterTodosList()).thenReturn(videosList);
+        when(favoritoRepositoryGateway.obterTodosReferenciandoVideoId()).thenReturn(favoritosList);
+
+        assertEquals(resultado, obterEstatisticaVideoUseCase.obterEstatisticas());
+    }
+
+    @Test
     void deveObterTotalVideos() {
         List<Video> videos = List.of(
                 Video.builder().build(),
