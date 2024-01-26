@@ -15,4 +15,6 @@ public interface FavoritoRepository extends MongoRepository<FavoritoDocument, St
 
 	List<FavoritoDocument> findByUsuarioId(String usuarioId);
 
+	void deleteByVideoId(String videoId);
+
 }

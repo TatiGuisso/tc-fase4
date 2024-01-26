@@ -87,4 +87,15 @@ public class FavoritoRepositoryGatewayImpl implements FavoritoRepositoryGateway 
 			throw new ErroAoAcessarBancoDadosException();
 		}
 	}
+
+	@Override
+	public void removerPorVideoId(String videoId) {
+		try {
+			favoritoRepository.deleteByVideoId(videoId);
+		} catch (Exception e) {
+			log.error(e.getMessage(),e);
+			throw new ErroAoAcessarBancoDadosException();
+		}
+		
+	}
 }

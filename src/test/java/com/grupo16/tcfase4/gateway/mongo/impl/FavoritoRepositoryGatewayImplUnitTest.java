@@ -4,7 +4,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 import java.util.List;
@@ -18,6 +23,8 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.aggregation.TypedAggregation;
 
 import com.grupo16.tcfase4.domain.Favorito;
 import com.grupo16.tcfase4.domain.Usuario;
@@ -25,10 +32,6 @@ import com.grupo16.tcfase4.domain.Video;
 import com.grupo16.tcfase4.exception.ErroAoAcessarBancoDadosException;
 import com.grupo16.tcfase4.gateway.mongo.document.FavoritoDocument;
 import com.grupo16.tcfase4.gateway.mongo.repository.FavoritoRepository;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.aggregation.Aggregation;
-import org.springframework.data.mongodb.core.aggregation.AggregationResults;
-import org.springframework.data.mongodb.core.aggregation.TypedAggregation;
 
 @ExtendWith(MockitoExtension.class)
 class FavoritoRepositoryGatewayImplUnitTest {
@@ -86,7 +89,7 @@ class FavoritoRepositoryGatewayImplUnitTest {
 	}
 	
 	@Test
-	void deveObterPorUsuarioIdeVideoId() {
+	void deveObterPorUsuarioIdEVideoId() {
 		Video video = Video.builder().id(UUID.randomUUID().toString()).build();
 		Usuario usuario = Usuario.builder().id(UUID.randomUUID().toString()).build();
 		Favorito favorito = Favorito.builder()
@@ -170,8 +173,25 @@ class FavoritoRepositoryGatewayImplUnitTest {
 		verify(favoritoRepository).findByUsuarioId(id);
 		
 	}
+	
+	@Test
+	void deveRemoverPorVideoId() {
+		favoritoRepositoryGatewayImpl.removerPorVideoId(anyString());
+		verify(favoritoRepository).deleteByVideoId(anyString());
+	}
+	
+	@Test
+	void deveRetornarExcecaoAoRemoverPorVideoId() {
+		String id = UUID.randomUUID().toString();
+		doThrow(new RuntimeException()).when(favoritoRepository).deleteByVideoId(id);
+		
+		assertThrows(ErroAoAcessarBancoDadosException.class, 
+				() -> favoritoRepositoryGatewayImpl.removerPorVideoId(id));
+		
+		verify(favoritoRepository).deleteByVideoId(id);
+	}
 
-	@Disabled//FIXME 
+	@Disabled//FIXME remover ou concluir.
 	@Test
 	void deveObterTodosReferenciandoVideoId() {
 		List<FavoritoDocument> favoritoDocumentList = Arrays.asList(

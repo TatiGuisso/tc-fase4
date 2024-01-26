@@ -1,15 +1,18 @@
 package com.grupo16.tcfase4.service;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.verify;
 
-import com.grupo16.tcfase4.gateway.VideoRepositoryGateway;
+import java.util.UUID;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.UUID;
+import com.grupo16.tcfase4.gateway.FavoritoRepositoryGateway;
+import com.grupo16.tcfase4.gateway.VideoRepositoryGateway;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -21,15 +24,20 @@ class RemoverVideoUseCaseUnitTest {
     @Mock
     private VideoRepositoryGateway videoRepositoryGateway;
 
+    @Mock
+    private FavoritoRepositoryGateway favoritoRepositoryGateway;
+
 
     @Test
     void deveRemoverVideo(){
         String videoId = UUID.randomUUID().toString();
 
+        doNothing().when(favoritoRepositoryGateway).removerPorVideoId(videoId);
         doNothing().when(videoRepositoryGateway).remover(videoId);
 
         removerVideoUseCase.remover(videoId);
 
-        verify(videoRepositoryGateway, times(1)).remover(videoId);
+        verify(favoritoRepositoryGateway).removerPorVideoId(videoId);
+        verify(videoRepositoryGateway).remover(videoId);
     }
 }
