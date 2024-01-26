@@ -105,4 +105,14 @@ class ObterEstatisticaVideoUseCaseUnitTest {
     	assertEquals(1.0, result);
     	verify(videoRepositoryGateway).obterTodosList();
     }
+
+    @Test
+    void deveRetornarZeroSeNaoExistirVideos() {
+        when(videoRepositoryGateway.obterTodosList()).thenReturn(List.of());
+
+        var result = obterEstatisticaVideoUseCase.obterMediaVisualizacoes();
+
+        assertEquals(0.0, result);
+        verify(videoRepositoryGateway).obterTodosList();
+    }
 }
