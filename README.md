@@ -414,21 +414,21 @@ http://localhost:8081/65ac5d60bc5f92526a7184b6.mp4
 
 >[ Base URL: http://localhost:8080 ]
 
-Após o usuário selecionar o video desejado, a aplicação disponibiliza uma URL para download de arquivo do video escolhido, permitindo ao usuário assistir ao conteúdo.
+A funcionalidade de Favoritar Vídeo permite que o usuário marque os vídeos que mais lhe agradaram.
 
 <p align="right">(<a href="#readme-top">Ir ao topo</a>)</p>
 
-### ``GET``
-`*Para obter url para download`
+### ``POST``
+`*Para favoritar o video`
 
 ```
-	/videos/{id}/url
+	/videos/{id}/favoritos/{usuarioId}
 ```
 <details>
   <summary>Exemplo Request Body:</summary>
 
 ```
-curl --location 'http://127.0.0.1:8080/videos/65ac5d60bc5f92526a7184b6/url'
+curl --location --request POST 'http://localhost:8080/videos/65b2ca7d0b134c5bdd2bf7c6/favoritos/65a71b4d2a165a93957d321d'
 ```
 
 </details>
@@ -437,12 +437,186 @@ curl --location 'http://127.0.0.1:8080/videos/65ac5d60bc5f92526a7184b6/url'
   <summary>Exemplo Responses:</summary>
 
 200 - _OK_
-`- Será retornada a url de download`
+`- Será retornado o id de favorito`
 
 ```
-http://localhost:8081/65ac5d60bc5f92526a7184b6.mp4
+65b310dbaf84df654ece47ea
+```
+
+422 - _OK_
+`- Caso o usuário tente favoritar o mesmo video mais de uma vez`
+
+```
+{
+    "code": "tc.videoFavoritadoMaisDeUmaVezPeloUsuario",
+    "message": "Video não pode ser favoritado mais de uma vez pelo mesmo usuário."
+}
 ```
 
 </details>
 <p align="right">(<a href="#readme-top">Ir ao topo</a>)</p>
 
+---------
+### Recomendação de Videos
+
+>[ Base URL: http://localhost:8080 ]
+
+//TODO 
+
+<p align="right">(<a href="#readme-top">Ir ao topo</a>)</p>
+
+### ``GET``
+`*Para recomendar videos`
+
+```
+	/videos/recomendacoes/{usuarioId}
+```
+<details>
+  <summary>Exemplo Request Body:</summary>
+
+```
+curl --location 'http://localhost:8080/videos/recomendacoes/65a71b4d2a165a93957d321d'
+```
+
+</details>
+
+<details>
+  <summary>Exemplo Responses:</summary>
+
+200 - _OK_
+`- Será retornada uma lista com videos recomendados`
+
+```
+[
+    {
+        "id": "65a5b14ba6bf7a1d75bbc83d",
+        "titulo": "Robocop - O Policial do Futuro",
+        "descricao": "Policial fatalmente ferido é usado como cobaia por uma empresa de tecnologia robótica",
+        "dataPublicacao": "2024-01-08",
+        "quantidadeVisualizacao": 2,
+        "categoria": "FICCAO"
+    },
+    {
+        "id": "65ac5d60bc5f92526a7184b6",
+        "titulo": "Distrito 9",
+        "descricao": "Há 20 anos uma gigantesca nave espacial pairou sobre a capital da África do Sul",
+        "dataPublicacao": "2024-01-20",
+        "quantidadeVisualizacao": 6,
+        "categoria": "FICCAO"
+    },
+    {
+        "id": "65ac5e17bc5f92526a7184b7",
+        "titulo": "A Origem",
+        "descricao": "Em um mundo onde é possível entrar na mente humana e roubar segredos valiosos do inconsciente",
+        "dataPublicacao": "2024-01-20",
+        "quantidadeVisualizacao": 0,
+        "categoria": "FICCAO"
+    }
+]
+```
+
+</details>
+<p align="right">(<a href="#readme-top">Ir ao topo</a>)</p>
+
+---------
+### Estatística
+
+>[ Base URL: http://localhost:8080 ]
+
+//TODO 
+
+<p align="right">(<a href="#readme-top">Ir ao topo</a>)</p>
+
+### ``POST``
+`*Para favoritar o video`
+
+```
+	/videos/{id}/favoritos/{usuarioId}
+```
+<details>
+  <summary>Exemplo Request Body:</summary>
+
+```
+curl --location --request POST 'http://localhost:8080/videos/65b2ca7d0b134c5bdd2bf7c6/favoritos/65a71b4d2a165a93957d321d'
+```
+
+</details>
+
+<details>
+  <summary>Exemplo Responses:</summary>
+
+200 - _OK_
+`- Será retornado o id de favorito`
+
+```
+65b310dbaf84df654ece47ea
+```
+
+</details>
+<p align="right">(<a href="#readme-top">Ir ao topo</a>)</p>
+
+---------
+### Usuário
+
+>[ Base URL: http://localhost:8080 ]
+
+//TODO 
+
+<p align="right">(<a href="#readme-top">Ir ao topo</a>)</p>
+
+### ``POST``
+`*Para favoritar o video`
+
+```
+	/videos/{id}/favoritos/{usuarioId}
+```
+<details>
+  <summary>Exemplo Request Body:</summary>
+
+```
+curl --location --request POST 'http://localhost:8080/videos/65b2ca7d0b134c5bdd2bf7c6/favoritos/65a71b4d2a165a93957d321d'
+```
+
+</details>
+
+<details>
+  <summary>Exemplo Responses:</summary>
+
+200 - _OK_
+`- Será retornado o id de favorito`
+
+```
+65b310dbaf84df654ece47ea
+```
+
+</details>
+<p align="right">(<a href="#readme-top">Ir ao topo</a>)</p>
+
+---------
+<a name="tecnologias"></a>
+## 📍️ Tecnologias
+
+- As API's foram construídas em Java 17 utilizando Spring Framework 3.1.4
+- Padrão REST na construção das rotas e retornos
+- SLF4J para registro de logs
+- Utilização de código limpo e princípios **SOLID**
+- Boas práticas da Linguagem/Framework
+- Clean architecture
+- Banco de Dados MongoDB
+- Serviços em nuvem (AWS)
+
+<p align="right">(<a href="#readme-top">Ir ao topo</a>)</p>
+
+---------
+
+<a name="desafios"></a>
+## 📍️ Desafios
+
+No decorrer do desenvolvimento do Sistema de Gestão de Parquímetro (SGP), enfrentamos desafios significativos, destacando-se a transição para o uso do MongoDB, que demandou uma mudança na abordagem do banco de dados. A adaptação da equipe a um modelo NoSQL, saindo do tradicional banco relacional, foi um processo desafiador que exigiu revisão de práticas e estratégias de desenvolvimento.
+
+Além disso, um dos maiores obstáculos que enfrentamos foi relacionado ao deployment na AWS (Amazon Web Services) e suas configurações. A complexidade das configurações e otimizações necessárias para garantir um ambiente estável e escalável na nuvem representou um desafio adicional para a equipe. A curva de aprendizado para lidar com as peculiaridades do ambiente de nuvem AWS foi um processo desafiador que demandou tempo e esforço consideráveis.
+
+Esses desafios, tanto na transição para o MongoDB quanto no deploy na AWS, exigiram que a equipe superasse obstáculos técnicos e se adaptasse a novos paradigmas tecnológicos, resultando em um aprendizado valioso e na capacidade aprimorada de lidar com complexidades técnicas em futuros projetos. 
+
+
+<p align="right">(<a href="#readme-top">Ir ao topo</a>)</p>
