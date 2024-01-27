@@ -8,10 +8,13 @@ O projeto em questão é uma aplicação de gerenciamento de videos, e apresenta
 ## Sumário
 * [Instruções](#instruções)
 * [CRUD de Video](#crud-de-video)
-* [Registro de Veículo](#registro-de-veículo)
-* [Registro de Estacionamento](#registro-de-estacionamento)
-* [Notificação](#notificação)
-* [Tarifa](#tarifa)
+* [Upload de Video](#upload-de-video)
+* [Pesquisa Videos](#pesquisa-videos)
+* [Obter Url](#obter-url)
+* [Favoritar Video](#favoritar-video)
+* [Recomendação de Videos](#recomendacao-de-videos)
+* [Estatística](#estatistica)
+* [Usuário](#usuario)
 * [Tecnologias](#tecnologias)
 * [Desafios](#desafios)
 
