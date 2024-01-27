@@ -596,11 +596,11 @@ Na versão atual do sistema, não há um endpoint disponível para o cadastro de
 <a name="desafios"></a>
 ## 📍️ Desafios
 
-No decorrer do desenvolvimento do Sistema de Gestão de Parquímetro (SGP), enfrentamos desafios significativos, destacando-se a transição para o uso do MongoDB, que demandou uma mudança na abordagem do banco de dados. A adaptação da equipe a um modelo NoSQL, saindo do tradicional banco relacional, foi um processo desafiador que exigiu revisão de práticas e estratégias de desenvolvimento.
+Durante o desenvolvimento do projeto, optamos por não utilizar o WebFlux principalmente devido à predominância do CRUD da aplicação. Além disso, houve uma mudança nos requisitos que permitiu a disponibilização direta do link do vídeo, eliminando a necessidade de recursos avançados fornecidos pelo WebFlux.
 
-Além disso, um dos maiores obstáculos que enfrentamos foi relacionado ao deployment na AWS (Amazon Web Services) e suas configurações. A complexidade das configurações e otimizações necessárias para garantir um ambiente estável e escalável na nuvem representou um desafio adicional para a equipe. A curva de aprendizado para lidar com as peculiaridades do ambiente de nuvem AWS foi um processo desafiador que demandou tempo e esforço consideráveis.
+No entanto, essa decisão foi tomada um pouco tarde, já que havíamos iniciado o projeto utilizando o MongoDB, que não era nossa primeira escolha de banco de dados. Isso resultou em contratempos adicionais com testes unitários e de integração.
 
-Esses desafios, tanto na transição para o MongoDB quanto no deploy na AWS, exigiram que a equipe superasse obstáculos técnicos e se adaptasse a novos paradigmas tecnológicos, resultando em um aprendizado valioso e na capacidade aprimorada de lidar com complexidades técnicas em futuros projetos. 
+Também reconhecemos a ausência da prática de Desenvolvimento Orientado por Testes (TDD) em nosso fluxo de trabalho diário. Isso impactou a capacidade de antecipar e resolver questões de teste desde o início do desenvolvimento, resultando em uma abordagem mais reativa em relação aos testes.
 
 
 <p align="right">(<a href="#readme-top">Ir ao topo</a>)</p>
