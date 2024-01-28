@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -37,100 +38,114 @@ import com.grupo16.tcfase4.service.RemoverVideoUseCase;
 @WebMvcTest(VideoController.class)
 class VideoControllerIT {
 
-    @Autowired
-    private MockMvc mockMvc;
-    
+	@Autowired
+	private MockMvc mockMvc;
+
 	private ObjectMapper objectMapper = new ObjectMapper();
 
-    @MockBean
-    private CriarAlterarVideoUseCase criarAlterarVideoUseCase; 
-    
-    @MockBean   
-    private CriarFavoritoUseCase favoritoUseCase;
+	@MockBean
+	private CriarAlterarVideoUseCase criarAlterarVideoUseCase; 
 
-    @MockBean
+	@MockBean   
+	private CriarFavoritoUseCase favoritoUseCase;
+
+	@MockBean
 	private RemoverVideoUseCase removerVideoUseCase;
 
-    @MockBean
+	@MockBean
 	private ObterVideoUseCase obterVideoUseCase;
 
-    @MockBean
+	@MockBean
 	private ObterUrlVideoUseCase obterUrlVideoUseCase;
-	
-    @MockBean
+
+	@MockBean
 	private RecomendarVideoUseCase recomendarVideoUseCase;
 
-    @MockBean
+	@MockBean
 	private ObterEstatisticaVideoUseCase obterEstatisticaVideoUseCase;
-    
+
 	private VideoJson videoJson = VideoJson.builder()
-	    		.id(UUID.randomUUID().toString())
-	    		.titulo("Teste")
-	    		.categoria("ACAO")
-	    		.build();
-	
+			.id(UUID.randomUUID().toString())
+			.titulo("Teste")
+			.categoria("ACAO")
+			.build();
+
 	private Video video = Video.builder()
 			.id(UUID.randomUUID().toString())
 			.titulo("Teste1")
 			.categoria(Categoria.ACAO)
+			.dataPublicacao(LocalDate.now())
 			.build();
-	
+
 	private List<Video> videos = Arrays.asList(
-				Video.builder()
-		    		.id(UUID.randomUUID().toString())
-		    		.titulo("Teste1")
-		    		.categoria(Categoria.ACAO)
-	    		.build(),
-	    		Video.builder()
-		    		.id(UUID.randomUUID().toString())
-		    		.titulo("Teste2")
-		    		.categoria(Categoria.ACAO)
-	    		.build());
-    
-    @Test
-    void deveSalvar()throws Exception{
-    	when(criarAlterarVideoUseCase.salvar(any(Video.class))).thenReturn(videoJson.getId());
-    	
-    	mockMvc.perform(MockMvcRequestBuilders.post("/videos")
+			Video.builder()
+			.id(UUID.randomUUID().toString())
+			.titulo("Teste1")
+			.categoria(Categoria.ACAO)
+			.build(),
+			Video.builder()
+			.id(UUID.randomUUID().toString())
+			.titulo("Teste2")
+			.categoria(Categoria.ACAO)
+			.build());
+
+	@Test
+	void deveSalvar()throws Exception{
+		when(criarAlterarVideoUseCase.salvar(any(Video.class))).thenReturn(videoJson.getId());
+
+		mockMvc.perform(MockMvcRequestBuilders.post("/videos")
 				.content(objectMapper.writeValueAsString(videoJson))
 				.contentType(MediaType.APPLICATION_JSON))
 		.andExpect(status().isCreated());
-    	
-    }
 
-    @Test
-    void deveObterUrl()throws Exception{
-    	String videoId = videoJson.getId(); 
-    	when(obterUrlVideoUseCase.obterUrl(anyString())).thenReturn("www.urlvideo.com");
-    	
-    	mockMvc.perform(MockMvcRequestBuilders.get("/videos/{id}/url", videoId))
-    			.andExpect(status().isOk());
-    	
-    }
+	}
+
+	@Test
+	void deveObterUrl()throws Exception{
+		String videoId = videoJson.getId(); 
+		when(obterUrlVideoUseCase.obterUrl(anyString())).thenReturn("www.urlvideo.com");
+
+		mockMvc.perform(MockMvcRequestBuilders.get("/videos/{id}/url", videoId))
+		.andExpect(status().isOk());
+
+	}
 
 
-    @Test
-    void deveListar() throws Exception {
-    	Page<Video> page = new PageImpl<>(videos);
-    	
-    	when(obterVideoUseCase.listarTodos(any(Pageable.class))).thenReturn(page);
-    	
-        mockMvc.perform(MockMvcRequestBuilders.get("/videos")
-                        .param("pagina", "0")
-                        .param("tamanho", "10"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(page.getContent().size()))); 
-    }
-    
-    @Test
-    void deveObterPorId() throws Exception {
-    	String videoId = videoJson.getId(); 
-    	when(obterVideoUseCase.obterPorId(videoId)).thenReturn(video);
-    	
-    	mockMvc.perform(MockMvcRequestBuilders.get("/videos/{id}", videoId))
-    			.andExpect(status().isOk())
-    			.andExpect(jsonPath("$.id").value(video.getId()));
-    	
-    }
-    
+	@Test
+	void deveListar() throws Exception {
+		Page<Video> page = new PageImpl<>(videos);
+
+		when(obterVideoUseCase.listarTodos(any(Pageable.class))).thenReturn(page);
+
+		mockMvc.perform(MockMvcRequestBuilders.get("/videos")
+				.param("pagina", "0")
+				.param("tamanho", "10"))
+		.andExpect(status().isOk())
+		.andExpect(jsonPath("$", hasSize(page.getContent().size()))); 
+	}
+
+	@Test
+	void deveObterPorId() throws Exception {
+		String videoId = videoJson.getId(); 
+		when(obterVideoUseCase.obterPorId(videoId)).thenReturn(video);
+
+		mockMvc.perform(MockMvcRequestBuilders.get("/videos/{id}", videoId))
+		.andExpect(status().isOk())
+		.andExpect(jsonPath("$.id").value(video.getId()));
+
+	}
+
+	@Test
+	void devePesquisarPorFiltros() throws Exception {
+		
+		when(obterVideoUseCase.buscaFiltrada(anyString(), any(LocalDate.class), anyString())).thenReturn(videos);
+		
+		mockMvc.perform(MockMvcRequestBuilders.get("/videos/filtros")
+				.param("titulo", "Teste")
+				.param("dataPublicacao", LocalDate.now().toString())
+				.param("categoria", "ACAO"))
+		.andExpect(status().isOk())
+		.andExpect(jsonPath("$", hasSize(videos.size()))); 
+	}
+
 }

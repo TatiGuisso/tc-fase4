@@ -56,8 +56,8 @@ public class VideoController {
 		log.trace("Start pagina={}, tamanho={}", pagina, tamanho);
 		PageRequest pageRequest = PageRequest.of(pagina, tamanho);
 
-		Page<Video> todos = obterVideoUseCase.listarTodos(pageRequest);
-		List<VideoJson> videosJson = todos.stream().map(VideoJson::new).toList();
+		Page<Video> videosPage = obterVideoUseCase.listarTodos(pageRequest);
+		List<VideoJson> videosJson = videosPage.stream().map(VideoJson::new).toList();
 		
 		log.trace("End videosJson={}", videosJson);
 		return videosJson; 
