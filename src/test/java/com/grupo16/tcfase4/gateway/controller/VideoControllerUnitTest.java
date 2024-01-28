@@ -70,10 +70,10 @@ class VideoControllerUnitTest {
 
 		when(obterVideoUseCase.listarTodos(any(Pageable.class))).thenReturn(videoPage);
 
-		videoController.listar(0, 5);
+		List<VideoJson> videosJson = videoController.listar(0, 5);
 
 		verify(obterVideoUseCase).listarTodos(any(Pageable.class));
-		assertEquals(1, videoPage.getContent().size());
+		assertEquals(1, videosJson.size());
 	}
 
 	@Test

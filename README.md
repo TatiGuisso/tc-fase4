@@ -148,75 +148,48 @@ curl --location 'http://localhost:8080/videos?pagina=0&tamanho=5'
 `- Será retornada a lista de videos`
 
 ```
-{
-    "content": [
-        {
-            "id": "65b0474705db02742c9d0bba",
-            "titulo": "Monstros",
-            "descricao": "Pessoas são obrigadas a atravessar o território hostil infectado por aliens.",
-            "dataPublicacao": "2024-01-23",
-            "quantidadeVisualizacao": 0,
-            "categoria": "TERROR"
-        },
-        {
-            "id": "65ac5e17bc5f92526a7184b7",
-            "titulo": "A Origem",
-            "descricao": "Em um mundo onde é possível entrar na mente humana e roubar segredos valiosos do inconsciente",
-            "dataPublicacao": "2024-01-20",
-            "quantidadeVisualizacao": 0,
-            "categoria": "FICCAO"
-        },
-        {
-            "id": "65ac5d60bc5f92526a7184b6",
-            "titulo": "Distrito 9",
-            "descricao": "Há 20 anos uma gigantesca nave espacial pairou sobre a capital da África do Sul",
-            "dataPublicacao": "2024-01-20",
-            "quantidadeVisualizacao": 3,
-            "categoria": "FICCAO"
-        },
-        {
-            "id": "65ac5e6ebc5f92526a7184b8",
-            "titulo": "Interestelar",
-            "descricao": "Um grupo de astronautas recebe a missão de verificar possíveis planetas para receberem a população mundial",
-            "dataPublicacao": "2024-01-20",
-            "quantidadeVisualizacao": 1,
-            "categoria": "FICCAO"
-        },
-        {
-            "id": "65a5bac7102f771509eae998",
-            "titulo": "Marley e Eu",
-            "descricao": "Filme baseado em fatos reais.",
-            "dataPublicacao": "2024-01-15",
-            "quantidadeVisualizacao": 0,
-            "categoria": "ROMANCE"
-        }
-    ],
-    "pageable": {
-        "pageNumber": 0,
-        "pageSize": 5,
-        "sort": {
-            "sorted": false,
-            "empty": true,
-            "unsorted": true
-        },
-        "offset": 0,
-        "paged": true,
-        "unpaged": false
+[
+    {
+        "id": "65b59a22b9009143a85ee07e",
+        "titulo": "Nemo",
+        "descricao": "A história de um peixe-palhaço aventureiro",
+        "dataPublicacao": "2024-01-27",
+        "quantidadeVisualizacao": 0,
+        "categoria": "ANIMACAO"
     },
-    "last": false,
-    "totalPages": 2,
-    "totalElements": 7,
-    "sort": {
-        "sorted": false,
-        "empty": true,
-        "unsorted": true
+    {
+        "id": "65b2ca7d0b134c5bdd2bf7c6",
+        "titulo": "Lili",
+        "descricao": "uma chihuwawa caramelo",
+        "dataPublicacao": "2024-01-25",
+        "quantidadeVisualizacao": 0,
+        "categoria": "ANIMACAO"
     },
-    "first": true,
-    "size": 5,
-    "number": 0,
-    "numberOfElements": 5,
-    "empty": false
-}
+    {
+        "id": "65b0474705db02742c9d0bba",
+        "titulo": "Monstros",
+        "descricao": "Pessoas são obrigadas a atravessar o território hostil infectado por aliens.",
+        "dataPublicacao": "2024-01-23",
+        "quantidadeVisualizacao": 0,
+        "categoria": "TERROR"
+    },
+    {
+        "id": "65ac5e6ebc5f92526a7184b8",
+        "titulo": "Interestelar",
+        "descricao": "Um grupo de astronautas recebe a missão de verificar possíveis planetas para receberem a população mundial",
+        "dataPublicacao": "2024-01-20",
+        "quantidadeVisualizacao": 1,
+        "categoria": "FICCAO"
+    },
+    {
+        "id": "65ac5e17bc5f92526a7184b7",
+        "titulo": "A Origem",
+        "descricao": "Em um mundo onde é possível entrar na mente humana e roubar segredos valiosos do inconsciente",
+        "dataPublicacao": "2024-01-20",
+        "quantidadeVisualizacao": 0,
+        "categoria": "FICCAO"
+    }
+]
 ```
 </details>
 

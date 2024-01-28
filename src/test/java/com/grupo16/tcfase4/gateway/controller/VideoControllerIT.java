@@ -1,21 +1,29 @@
 package com.grupo16.tcfase4.gateway.controller;
 
+import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.grupo16.tcfase4.domain.Categoria;
 import com.grupo16.tcfase4.domain.Video;
 import com.grupo16.tcfase4.gateway.controller.json.VideoJson;
 import com.grupo16.tcfase4.service.CriarAlterarVideoUseCase;
@@ -60,6 +68,24 @@ class VideoControllerIT {
 	    		.titulo("Teste")
 	    		.categoria("ACAO")
 	    		.build();
+	
+	private Video video = Video.builder()
+			.id(UUID.randomUUID().toString())
+			.titulo("Teste1")
+			.categoria(Categoria.ACAO)
+			.build();
+	
+	private List<Video> videos = Arrays.asList(
+				Video.builder()
+		    		.id(UUID.randomUUID().toString())
+		    		.titulo("Teste1")
+		    		.categoria(Categoria.ACAO)
+	    		.build(),
+	    		Video.builder()
+		    		.id(UUID.randomUUID().toString())
+		    		.titulo("Teste2")
+		    		.categoria(Categoria.ACAO)
+	    		.build());
     
     @Test
     void deveSalvar()throws Exception{
@@ -83,12 +109,28 @@ class VideoControllerIT {
     }
 
 
-//    @Test
-//    void deveListar() throws Exception {
-//        mockMvc.perform(get("/videos")
-//                        .param("pagina", "0")
-//                        .param("tamanho", "10"))
-//                .andDo(print())
-//                .andExpect(status().isOk());
-//    }
+    @Test
+    void deveListar() throws Exception {
+    	Page<Video> page = new PageImpl<>(videos);
+    	
+    	when(obterVideoUseCase.listarTodos(any(Pageable.class))).thenReturn(page);
+    	
+        mockMvc.perform(MockMvcRequestBuilders.get("/videos")
+                        .param("pagina", "0")
+                        .param("tamanho", "10"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(page.getContent().size()))); 
+    }
+    
+    @Test
+    void deveObterPorId() throws Exception {
+    	String videoId = videoJson.getId(); 
+    	when(obterVideoUseCase.obterPorId(videoId)).thenReturn(video);
+    	
+    	mockMvc.perform(MockMvcRequestBuilders.get("/videos/{id}", videoId))
+    			.andExpect(status().isOk())
+    			.andExpect(jsonPath("$.id").value(video.getId()));
+    	
+    }
+    
 }

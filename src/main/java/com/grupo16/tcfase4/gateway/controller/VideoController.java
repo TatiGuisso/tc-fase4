@@ -49,15 +49,19 @@ public class VideoController {
 
 
 	@GetMapping
-	public Page<VideoJson> listar(
+	public List<VideoJson> listar(
 			@RequestParam(required = true, value = "pagina", defaultValue = "0") Integer pagina,
 			@RequestParam(required = true, value = "tamanho", defaultValue = "10") Integer tamanho
 	) {
 		log.trace("Start pagina={}, tamanho={}", pagina, tamanho);
 		PageRequest pageRequest = PageRequest.of(pagina, tamanho);
 
-		log.trace("End");
-		return obterVideoUseCase.listarTodos(pageRequest).map(VideoJson::new);
+		Page<Video> todos = obterVideoUseCase.listarTodos(pageRequest);
+		List<VideoJson> videosJson = todos.stream().map(VideoJson::new).toList();
+		
+		log.trace("End videosJson={}", videosJson);
+		return videosJson; 
+		
 	}
 	
 	@GetMapping("{id}")
