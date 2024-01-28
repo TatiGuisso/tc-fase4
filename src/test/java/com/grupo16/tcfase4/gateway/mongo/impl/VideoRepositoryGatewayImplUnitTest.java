@@ -133,6 +133,19 @@ class VideoRepositoryGatewayImplUnitTest {
 	}
 	
 	@Test
+	void deveRetornarOptionalVazioAoObterPorId() {
+		String id = UUID.randomUUID().toString();
+
+		when(videoRepository.findById(id)).thenReturn(Optional.empty());
+
+		Optional<Video> videoOptionalResult = videoRepositoryGatewayImpl.obterPorId(id);
+		
+		verify(videoRepository).findById(id);
+		assertEquals(Optional.empty(), videoOptionalResult);
+		
+	}
+	
+	@Test
 	void deveGerarExceptionAoObterPorId() {
 		String id = UUID.randomUUID().toString();
 		
